@@ -1,0 +1,74 @@
+---
+title: "Taller 1: R como una calculadora"
+author: "Mario Morales"
+format: pdf
+---
+
+
+
+# Taller Dirigido: R como Entorno de Cálculo Científico
+
+**Asignatura:** Laboratorio de Estadística
+
+**Plataforma de ejecución:** Kaggle.com
+
+**Documento base:** Clase 1 - R como calculadora
+
+---
+
+### Introducción al Entorno
+
+Antes de iniciar, asegúrense de haber creado su sesión en Kaggle y haber abierto un nuevo *Notebook* configurado con el lenguaje **R**. Recuerden que cada bloque de código se ejecuta con `Ctrl + Enter`.
+
+### I. Aritmética Básica y Jerarquía de Operaciones
+
+*R no solo suma y resta; gestiona la prioridad de operaciones siguiendo reglas matemáticas estrictas. Realice los siguientes cálculos:*
+
+1. **Sintaxis de Potencias y Raíces:** Calcule el resultado de $3^4 + \sqrt{144}$. En R, la raíz cuadrada se obtiene con la función `sqrt()`.
+2. **El Uso de Paréntesis:** Ejecute las siguientes dos líneas y explique por qué los resultados son diferentes, haciendo referencia a la jerarquía de operaciones:
+* `10 + 5 / 2`
+* `(10 + 5) / 2`
+
+
+3. **Operadores Especiales:** Utilizando los datos de la página 6 del PDF, encuentre el **cociente entero** (`%/%`) y el **residuo/módulo** (`%%`) de la división $25 \div 4$.  Explique qué utilidad tendría el operador módulo para un estadístico (Pista: Números pares e impares).
+
+### II. Asignación de Objetos y Memoria
+
+*En estadística, rara vez trabajamos con valores aislados; los almacenamos en objetos para su posterior análisis.*
+
+4. **Métodos de Asignación:** Cree tres objetos distintos (`a`, `b` y `c`) que almacenen los valores 10, 20 y 30 respectivamente, utilizando las tres formas permitidas en R (Pág. 6):
+* El operador flecha izquierda `<-`.
+* El signo igual `=`.
+* La función `assign()`.
+
+
+5. **Persistencia y Sobrescritura:** Si usted define `x <- 5` y en la siguiente línea ejecuta `x <- 10`, ¿qué valor conserva R en su memoria global? Verifique su respuesta usando la función `print(x)`.
+
+### III. Aplicación Financiera: Valor Presente
+
+*Utilizando la fórmula de la página 7 del documento:*
+
+6. **Cálculo de Inversión:** Un inversionista desea recibir \$1.500.000 dentro de 3 años ($n=3$). La tasa de interés anual es del 5% ($i = 0.05$).
+* Asigne cada valor a una variable en R.
+* Escriba la fórmula del Valor Presente ($VP = \frac{VF}{(1+i)^n}$)  en una sola línea de código.
+* ¿Cuánto debe invertir hoy?
+
+
+
+### IV. Tipos de Datos y Vectores
+
+*El rigor estadístico requiere saber qué tipo de información estamos procesando.*
+
+7. **Exploración de Clases:** Cree un vector llamado `mi_vector` que contenga los números del 7 al 15. Utilice las funciones `mode()`, `class()` y `typeof()` (Pág. 25) para describir el objeto. ¿Cuál es la diferencia técnica entre un dato *numeric* y uno *integer* en R?
+8. **Vectores y Operaciones Elemento a Elemento:** Multiplique el vector creado en el punto anterior por 2. ¿R multiplicó solo el primer número o todos los elementos? Explique este comportamiento.
+
+---
+
+### Entrega Técnica
+
+Este taller debe ser finalizado en Kaggle. Para su revisión:
+
+1. Hagan clic en **"Save Version"**.
+2. Cambien la visibilidad a **"Public"** y compartan el enlace en la tarea en Cintia.
+3. Asegúrense de que todos los *outputs* (resultados) sean visibles debajo de cada celda de código.
+

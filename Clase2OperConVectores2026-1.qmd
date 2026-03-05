@@ -1,0 +1,1163 @@
+---
+title: "Operaciones con vectores"
+subtitle: " "   
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+---
+
+# Operaciones con vectores
+
+## ¿Qué aprenderemos?
+
+- Comprender el concepto de vectorización en R 
+- Comprender qué son los vectores lógicos y cómo manipularlos.
+- Usar la indexación lógica para seleccionar subconjuntos de un vector. 
+- Ser capaz de utilizar valores infinitos y perdidos.
+
+
+## Operaciones con vectores
+
+Los vectores son muy útiles porque permiten a R realizar operaciones en múltiples elementos simultáneamente, con velocidad y eficiencia. Este comportamiento `orientado a vectores`, `vectorizado` o `de elementos` es una característica clave del lenguaje.
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+1:5
+#class(1:5)
+#mode(1:5)
+6:10
+1:5 + 6:10 # vectorizacion  
+```
+
+## Operación Suma
+
+La operación suma de dos vectores se hace componente a componente
+
+```{r echo=TRUE, eval=TRUE}
+c(1, 3, 6, 10, 15) + c(0, 1, 3, 6, 10) 
+```
+
+## Operación Resta
+
+La operación resta de dos vectores se hace componente a componente
+
+```{r echo=TRUE, eval=TRUE}
+c(1, 3, 6, 10, 15) - c(0, 1, 3, 6, 10) 
+```
+
+## Operación producto
+
+La operación producto de dos vectores se hace componente a componente
+
+```{r echo=TRUE, eval=TRUE}
+c(1, 3, 6, 10, 15) * c(0, 1, 3, 6, 10) 
+```
+
+## Operación cociente
+
+La operación cociente de dos vectores se hace componente a componente
+
+```{r echo=TRUE, eval=TRUE}
+c(1, 3, 6, 10, 15) / c(0, 1, 3, 6, 10) 
+```
+
+## Reciclado de valores
+
+Cuando los vectores no tienen la misma longitud, el vector más corto se replica hasta alcanzar la longitud del más largo. En caso de que la longitud del más largo no sea un múltiplo de la longitud del más corto manda un mensaje de advertencia.
+
+```{r echo=TRUE, eval=TRUE}
+c(1, 3, 6, 10, 15,17)+c(3,6,8)
+```
+
+## Reciclado de valores (II)
+
+```{r echo=TRUE, eval=TRUE}
+# mensaje de advertencia 
+c(1, 3, 6, 10, 15,17)+c(3,6,8,10)  
+```
+
+```         
+Warning message in c(1, 3, 6, 10, 15, 17) + c(3, 6, 8, 10):
+“longitud de objeto mayor no es múltiplo de la longitud de uno menor”
+```
+
+## Resta
+
+
+```{r echo=TRUE, eval=TRUE}
+foo<-c(1, 3, 6, 10, 15,17)
+bar<-c(3,6,8)
+foo-bar
+```
+
+
+
+
+## ¿Cómo trabaja?
+
+```{r echo=TRUE}
+x=rep(-1,length(foo)) 
+plot(x,1:length(foo),axes=FALSE,ann=FALSE,type="p",col='white',xlim=c(-2,2))
+arrows(x-0.5,length(foo):1,x+0.5,length(foo):1,code=3,angle=20,length = 0.15)
+text(x-0.6,length(foo):1,labels=foo)
+text(x-0.8,length(foo):1,labels=paste('[',1:length(foo),']',sep=''))
+text(x+0.6,length(foo):1,labels=bar)
+text(x+0.8,length(foo):1,labels=paste('[',1:length(bar),']',sep=''))
+text(x+0.8,length(foo):1,labels=paste('[',1:length(bar),']',sep=''))
+mtext("foo",side=3, at=-1-0.8)
+mtext("bar",side=3, at=-1+0.8)
+mtext("_",side=3, at=-1)
+
+# cuando la longitud del más corto no es divisor de la long del mas largo
+x=rep(1,length(foo))
+bar<-c(3,6,8,4)
+
+arrows(x-0.5,length(foo):1,x+0.5,length(foo):1,code=3,angle=20,length = 0.15)
+text(x-0.6,length(foo):1,labels=foo)
+text(x-0.8,length(foo):1,labels=paste('[',1:length(foo),']',sep=''))
+text(x+0.6,length(foo):1,labels=bar)
+text(x+0.8,length(foo):1,labels=paste('[',1:length(bar),']',sep=''))
+text(x+0.8,length(foo):1,labels=paste('[',1:length(bar),']',sep=''))
+mtext("foo",side=3, at=1-0.8)
+mtext("bar",side=3, at=1+0.8)
+mtext("_",side=3, at=1)
+```
+
+<!--
+## Operación `a:b`
+
+La operación `a:b` crea una secuencia del número `a` al número `b` incrementando de uno en uno, y la función `c` concatena valores, en este caso para crear vectores (concatenar es una palabra latina que significa “conectar en una cadena”).
+
+-->
+
+## Vectorización
+
+-   **En las operaciones anteriores se ha usado el concepto de *vectorización***, el cual tiene varios significados en R, el más común de los cuales es que 
+
+::: callout-important
+Un operador o una función actuará sobre cada elemento de un vector sin la necesidad de que usted escriba un bucle.
+::: 
+
+## Vectorización: segundo significado
+
+-   Un segundo significado de *vectorización* es cuando una función toma un vector como entrada y calcula una estadística de resumen.
+
+```{r echo=TRUE, eval=TRUE}
+# primer concepto de vectorización
+x=c(3,5,1,7,4) 
+# raiz usando vectorizacion
+sqrt(x)
+```
+
+```{r echo=TRUE, eval=TRUE}
+sqrt(c(4,9,16,1)) 
+```
+
+## Sin Vectorización (no recomendado) 
+
+```{r echo=TRUE, eval=TRUE}
+# raiz usando un bucle for 
+# no recomendado
+for(i in x){
+print(sqrt(i))
+}
+```
+
+## Segundo concepto de vectorizacion
+
+```{r echo=TRUE, eval=TRUE}
+# segundo concepto de vectorizacion 
+# la función se aplica sobre un vector
+sum(1:5)  
+sum(x)
+```
+
+```{r echo=TRUE, eval=TRUE}
+median(1:5) 
+median(x)
+```
+
+## Ejemplos de vectorización 
+
+Todos los operadores aritméticos en R están vectorizados. Los siguientes ejemplos demuestran la resta, la multiplicación, la exponenciación y dos tipos de división, así como el residuo de la división:
+
+```{r echo=TRUE, eval=TRUE}
+c(2, 3, 5, 7, 11, 13) - 2  #subtración  
+
+-2:2 * -2:2 #multiplicación 
+
+1:10 / 3  ## división usual (de punto flotante)
+
+1:10 %/% 3 ## división entera 
+
+1:10 %% 3 ## residuo de la división
+```
+
+## Ejemplo de aplicación
+
+::: callout-important
+¿Cuántos números del 1 al 10 son divisibles por 3?  
+:::
+
+```{r echo=TRUE, eval=TRUE}
+1:10 %% 3 
+1:10 %% 3 == 0 
+sum(1:10 %% 3 ==0 )  
+# cuantos no divisibles por 3 
+#sum(1:10 %% 3!=0 ) 
+#(1:10)[1:10 %% 3 == 0]
+```
+
+## Indexación lógica
+
+```{r echo=TRUE, eval=TRUE}
+x=c(3,5,1,7,4)
+x[c(TRUE,FALSE,TRUE,FALSE,FALSE)]
+```
+
+
+::: callout-important
+¿Cuáles números del 1 al 10 son divisibles por 3?  
+:::
+
+```{r echo=TRUE, eval=TRUE}
+(1:10)[1:10 %% 3 == 0] 
+```
+
+## Cálculos por niveles de un factor 
+
+::: callout-important
+
+Datos de personas, `sexo` y `edad`, 
+
+* ¿Cuántas personas de cada sexo hay?
+* Calcular la media de edad para cada sexo.
+
+:::
+
+```{r echo=TRUE, eval=TRUE}
+sexo=c("M","M","F","M","M","F","F","F","M") 
+edad=c(18,15,16,18,17,15,20,19,15) 
+```
+
+## Solución 
+
+* ¿Cuántos hay? 
+
+```{r echo=TRUE, eval=TRUE}
+sum(sexo=="M")
+sum(sexo=="F")
+```
+
+* Media de edad para cada sexo
+
+
+```{r echo=TRUE, eval=TRUE}
+mean(edad[sexo=="M"])  
+mean(edad[sexo=="F"]) 
+mean(edad[sexo!="M"]) 
+```
+
+<!--
+## Solución (cont)
+
+```{r echo=TRUE, eval=TRUE}
+sum( (x-mean(x))^2 )/(length(x)-1) 
+var(x)
+```
+
+```{r echo=TRUE, eval=TRUE}
+sum(abs(x-median(x)))/length(x) 
+```
+
+```{r echo=TRUE, eval=TRUE}
+cos(c(0, pi / 4, pi / 2, pi)) 
+```
+
+--> 
+
+## Ejercicio
+
+Practicar el cálculo de las funciones trigonométricas, exponencial, logaritmica, usando el concepto de vectorización. 
+
+## Operadores de comparación
+
+Para determinar si dos valores enteros son iguales se usa `==` (no use `=` recuerde que es para asignar). Los operadores relacionales son:
+
+-   `==` igual a, idéntico a
+-   `!=` distinto a, diferente a , no igual a
+-   `>` Mayor que
+-   `>=` Mayor o igual que
+-   `<` Menor que
+-   `<=` Menor o igual que
+
+## Operadores de comparación II
+
+Todos estos operadores son vectorizados, veamos algunos ejemplos.
+
+```{r echo=TRUE, eval=TRUE}
+c(3, 4 - 1, 1 + 1 + 1) == 3 
+l=c(3, 4 - 1, 1 + 1 + 1) == 3 
+class(l)
+```
+
+El resultado de este operador es un vector lógico, es decir, un vector cuyas entradas son `TRUE` o `FALSE` , estudiaremos en detalle estos vectores más adelante.
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+1:3 != 3:1 # diferente 
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+exp(1:5) < 100 # menor que 
+```
+
+## Problema de aplicación 
+
+::: callout-important
+Un grupo de estudiantes obtuvo las siguientes notas 3.5,4.1,2.0,3.0,1.5,4.5,3.9 escribir código R que me diga cuantos estudiantes tienen una nota mayor o igual que el promedio de nota del curso.
+::: 
+
+
+## Solución
+
+```{r echo=TRUE, eval=TRUE}
+notas=c(3.5,4.1,2.0,3.0,1.5,4.5,3.9)
+mean(notas)
+```
+
+### ¿Cuántos estudiantes tienen una nota mayor o igual que el promedio del curso?
+
+```{r echo=TRUE, eval=TRUE}
+notas>=mean(notas)
+table(notas>=mean(notas))
+sum(notas>=mean(notas))
+```
+
+## Solución no vectorizada (no recomendada) 
+
+```{r echo=TRUE, eval=TRUE}
+media=mean(notas)
+cont=0
+for(i in notas){
+if(i>=media){cont=cont+1} 
+}
+cont
+```
+
+## Ejercicio
+
+::: callout-important
+Un grupo de estudiantes obtuvo las notas que se encuentran en el vector `nota` y su sexo se encuentra en el vector `sexo` 
+- Cuántas mujeres y cuantos hombres hay?
+- Cuál es la nota promedio de mujeres y hombres?
+- Escribir código R que me diga cuántos estudiantes tienen una nota mayor o igual que el promedio de nota del curso. 
+- Escribir código R que me diga cuantos estudiantes mujeres (`sexo=="F"`) tienen una nota mayor o igual que el promedio de nota de las mujeres.  
+::: 
+
+```{r echo=TRUE, eval=TRUE}
+set.seed(1234)
+sexo=sample(c("M","F"),500,replace=TRUE)
+n1=sum(sexo=="M")
+n2=500-n1
+nota=numeric(500)
+nota[sexo=="M"]=round( rnorm(n1,3.5,0.5), 1)
+nota[sexo=="F"]=round( rnorm(n2,3.5,0.5), 1) 
+```
+
+## Solución 
+
+```{r echo=TRUE, eval=TRUE}
+sum(sexo=="M")
+length(sexo)-sum(sexo=="M")
+sum(sexo=="F") 
+c("Femeninos"=sum(sexo=="F") , "Masculinos"=sum(sexo=="M")) 
+```
+
+<!-- 
+## Recuperar todos los 
+
+```{r echo=TRUE, eval=TRUE}
+sexo[sexo=="M"]
+sexo[sexo=="F"]
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+(1:5) ^ 2 >= 16 # mayor o igual que 
+```
+
+--> 
+
+
+## Comparación de números no enteros (reales o floats)
+
+Comparar no enteros usando `==` es problemático. Todos los números que hemos tratado hasta ahora son números de punto flotante (`float`). Eso significa que se almacenan en la forma $a\times 2 ^ b$, para dos números $a$ y $b$. Dado que todo este formato debe almacenarse en 32 bits, el número resultante es solo una aproximación de lo que realmente se desea. Esto significa que los errores de redondeo a menudo se introducen en los cálculos y las respuestas esperadas pueden ser incorrectas.
+
+## Comparación de números no enteros: ejemplos  
+
+Observe el siguiente ejemplo donde se compara $\left (\sqrt 2\right)^2$ con 2, sabemos por matemáticas básicas que esa igualdad es cierta, sin embargo ...
+
+```{r echo=TRUE, eval=TRUE}
+sqrt(2) ^ 2 == 2 
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+sqrt(2) ^ 2-2  # 
+```
+
+ese valor que es `casi` cero es el error de redondeo.
+
+
+## Comparación de números no enteros: ejemplos 
+
+R también proporciona la función `all.equal()` para verificar la igualdad de números. Esta funcion proporciona un nivel de tolerancia (por defecto, alrededor de $1.5\times 10^{-8}$), de modo que se ignoran los errores de redondeo menores que la tolerancia:
+
+```{r echo=TRUE, eval=TRUE}
+all.equal(sqrt(2) ^ 2, 2)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+all.equal(sqrt(2) ^ 2, 3)
+```
+
+## Uso de `all.equal` 
+
+Si los valores a comparar no son los mismos, `all.equal` devuelve un informe sobre las diferencias. Si necesita un valor VERDADERO o FALSO, debe incluir la llamada a `all.equal` en una llamada a `isTRUE`
+
+```{r echo=TRUE, eval=TRUE}
+isTRUE(all.equal(sqrt(2) ^ 2, 3))
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+isTRUE(all.equal(sqrt(2) ^ 2, 2))
+```
+
+## Comparación de cadenas 
+
+También podemos usar `==` para comparar cadenas. En este caso, la comparación distingue entre mayúsculas y minúsculas, por lo que las cadenas deben coincidir exactamente. También es teóricamente posible comparar cadenas usando mayor o menor que (`>` y `<`):
+
+```{r echo=TRUE, eval=TRUE}
+c("Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?"
+) == "can"
+```
+
+## Comparación de cadenas (Cont)
+
+```{r echo=TRUE, eval=TRUE}
+c("A", "B", "C", "D") < "C"
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+c("a", "b", "c", "d")< "C"
+```
+
+
+## Asignando y nombrando variables
+
+Los nombres de las variables pueden contener letras, números, puntos y guiones bajos, pero no pueden comenzar con un número o un punto seguido de un número.
+
+No se permiten palabras reservadas como `if` y `for`. En algunos lugares, se permiten letras que no sean ASCII, pero para la portabilidad del código es mejor ceñirse a la `a` a la `z` (y `A` a la `Z`). La página de ayuda `?make.names` ofrece detalles precisos sobre lo que está permitido y lo que no.
+
+## Asignando y nombrando variables
+
+```{r echo=TRUE, eval=TRUE}
+.x5<-4
+#?make.names
+x<-1:5
+y=6:10
+#ls()
+print(.x5)
+```
+
+## Asignando y nombrando variables
+
+Ahora podemos reutilizar estos valores en nuestros cálculos posteriores:
+
+```{r echo=TRUE, eval=TRUE}
+x + 2 * y - 3
+```
+
+## Asignando y nombrando variables
+
+También podemos hacer asignaciones globales usando `<< -`. Esto se usa en la programación de funciones para crear una variable disponible en cualquier lugar, lo cual estudiaremos más adelante.
+
+## Asignando y nombrando variables
+
+Observe que cuando asigna una variable, no ve el valor que se le ha dado. Para ver qué valor contiene una variable, simplemente escriba su nombre en el símbolo del sistema
+
+```{r echo=TRUE, eval=TRUE}
+z<-x + 2 * y - 3
+z
+```
+
+
+## Asignando y nombrando variables
+
+Si desea asignar un valor e imprimirlo todo en una línea, tiene dos posibilidades.
+
+-   En primer lugar, puede poner varias declaraciones en una línea separándolas con un punto y coma (`;`) .
+
+-   En segundo lugar, puede envolver la tarea entre paréntesis, (). En los siguientes ejemplos, `rnorm` genera números aleatorios a partir de una distribución **normal** y `rlnorm` genera ellos de una distribución **lognormal**
+
+## Asignando y nombrando variables 
+
+
+
+```{r echo=TRUE, eval=TRUE}
+## primera forma 
+z<-x + 2 * y - 3;z
+```
+
+
+
+
+```{r echo=TRUE, eval=TRUE}
+## segunda forma 
+( z<-x + 2 * y - 3 )
+```
+
+
+## Números epeciales
+
+Para ayudar con la aritmética, R admite cuatro valores numéricos especiales: `Inf`, `-Inf`, `NaN` y `NA`
+
+-   `Inf` infinito positivo
+
+-   `-Inf` infinito negativo
+
+-   `NaN` es la abreviatura de <span style="color:red;">Not-a-Number</span> "no es un número" y significa que nuestro cálculo no tenía sentido matemático o no se pudo realizar correctamente
+
+-   `NA` es la abreviatura de <span style="color:red;">Not Available</span>  “**no disponible**” y representa un valor perdido, un problema demasiado común en el análisis de datos.
+
+## Cálculos con faltantes  
+
+En general, si nuestro cálculo implica un valor faltante, entonces también faltarán los resultados
+
+```{r echo=TRUE, eval=TRUE}
+5/0
+log(0)
+sqrt(-2)
+```
+
+
+```         
+Warning message in sqrt(-2):
+“Se han producido NaNs”
+```
+
+## Ejemplo de `NA`
+
+```{r echo=TRUE, eval=TRUE}
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/cursos/estadisticacomputacional/PresentacionesQmd") 
+datos=read.csv2("ejemplo.csv") 
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+datos
+```
+
+
+
+## Aritmética con  `Inf` e  -`Inf`   
+
+<!--
+```{r echo=TRUE, eval=TRUE}
+x=pretty(c(0,5),100) 
+#x[-1]
+y=log(x[-1])
+plot(x[-1],y,type='l') 
+abline(h=0,col="red",lty=2)
+```
+--> 
+
+```{r echo=TRUE, eval=TRUE}
+c(Inf + 5, Inf - 1000, Inf - Inf,Inf+Inf)  
+```
+
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+x=Inf + 5 
+y=Inf-1000
+x-y
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+c(10000 / Inf, Inf / 1, Inf / Inf) 
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+c(sqrt(Inf), sin(Inf)) 
+```
+
+```
+Warning message in sin(Inf):
+“Se han producido NaNs”
+```
+
+## 
+
+
+```{r echo=TRUE, eval=TRUE}
+c(log(Inf), log(Inf, base = Inf)) 
+```
+
+```         
+Warning message:
+“Se han producido NaNs”
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+c(NA + 1, NA * 5, NA + Inf)  
+```
+
+##   Aritmética con `NA` y `NaN`  
+
+Cuando la aritmética involucra `NA` y `NaN`, la respuesta es uno de esos dos valores, pero cuál de esos dos depende del sistema:
+
+```{r echo=TRUE, eval=TRUE}
+c(NA + NA, NaN + NaN, NaN + NA, NA + NaN)
+```
+
+Hay funciones disponibles para verificar estos valores especiales. 
+
+## 
+
+Observe que `NaN` y `NA` no son finitos ni infinitos, y falta `NaN`, pero `NA` es un número:
+
+```{r echo=TRUE, eval=TRUE}
+x <- c(0, Inf, -Inf, NaN, NA) 
+is.finite(x)
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+is.infinite(x)
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+is.nan(x)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+s=c("M","F","F","F","M") 
+sum(s=="F")  
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+is.na(x)
+z<-c(3,1,NA,7,9,3,NA)
+sum(is.na(z))
+```
+
+## 
+
+```{r echo=TRUE, eval=FALSE}
+mean(z)
+mean(na.omit(z))
+mean(z,na.rm=TRUE)
+min(z)
+min(z,na.rm=TRUE)
+max(z)
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+mean(na.omit(z))
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+mean(z,na.rm=TRUE)
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+min(z)
+min(z,na.rm=TRUE) 
+sum(is.na(z))
+```
+
+
+## Valores lógicos
+
+Además de los números, el cálculo científico a menudo involucra valores lógicos, particularmente como resultado del uso de operadores relacionales (`<`,`>`,`==`, etc.). Muchos lenguajes de programación usan lógica booleana, donde los valores pueden ser VERDADEROS o FALSOS. En R, la situación es un poco más complicada, ya que también podemos tener valores perdidos, NA.
+
+## Valores lógicos (cont)
+
+
+`TRUE` y `FALSE` son palabras reservadas en R: no puede crear una variable con ninguno de esos nombres (aunque las versiones en minúsculas o en mayúsculas y minúsculas como True están bien). Cuando inicia R, las variables T y F ya están definidas para usted, tomando los valores `TRUE` y `FALSE`, respectivamente. Esto puede ahorrarle un poco de escritura, pero también puede causar grandes problemas. `T` y `F` no son palabras reservadas, por lo que los usuarios pueden redefinirlas.
+
+## Valores lógicos (cont) 
+
+Esto significa que está bien usar los nombres abreviados si está trabajando en la línea de comando, pero no si su código va a interactuar con el de otra persona
+
+-   `!` se usa para la negación `no` (`not`)\
+-   `&` se usa para la conjunción `y` (`and`).
+-   `|` se usa para la disyunción `o` (`or`).
+
+
+## Valores lógicos (cont) 
+
+```{r echo=TRUE, eval=TRUE}
+b<-3
+if(!b<0){print("b no es Negativo")}
+!is.na(z) 
+(x <- 1:10 >= 5) 
+```
+
+##  Valores lógicos (negación ) 
+
+```{r echo=TRUE, eval=TRUE}
+x
+# negación de x 
+!x 
+```
+
+
+##  Valores lógicos (aplicación)  
+
+```{r echo=TRUE, eval=TRUE}
+## TRUE donde  se encuetre un par  
+(y <- 1:10 %% 2 == 0) 
+# Seleccionar los pares en b  
+b<-1:10
+b[y]
+b[!y]
+```
+
+##  Valores lógicos (aplicación )  
+
+
+```{r echo=TRUE, eval=TRUE}
+z<-c(6,1,4,7,9,8,1,9,7)
+# los números pares en z  
+z[z%%2==0] 
+```
+
+
+### Ejercicios
+
+Considere el vector z anterior y escriba código que nos permita saber
+
+* ¿En qué posición están los pares? 
+* ¿Cuál es el mínimo valor de z? 
+* ¿Cuántas veces está el minimo en z? 
+* ¿En qué posición(es) está(n) el (los) mínimo(s)? 
+* Repita los tres anteriores pero con el máximo
+
+<!-- 
+
+```{r echo=TRUE, eval=TRUE}
+min(z)
+```
+
+1
+
+```{r echo=TRUE, eval=TRUE}
+min(z)
+sum(z==min(z))  
+(1:length(z))[z==min(z)]
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+# cuantos pares hay en z ? 
+sum(z%%2==0) 
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+# dónde estan los números pares?
+which(c(TRUE,FALSE,FALSE,TRUE,TRUE))  
+```
+
+```{r echo=TRUE, eval=TRUE}
+which(z%%2==0)
+```
+
+```{r echo=TRUE, eval=TRUE}
+# en que posición esta el máximo de z 
+max(z)
+which(z==max(z))  
+which.max(z)
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+#Cuantos elementos de z son mayores que la media de z?
+sum(z>mean(z))
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+# en qué posición están los pares 
+s<-1:length(z)
+s[z%%2==0]
+# una forma más eficiente 
+which(z%%2==0)
+```
+
+-->
+
+## Función `which`  
+
+La función `which` recibe un vector lógico y regresa las posiciones donde se encuentran los valores lógicos `TRUE`
+
+```{r echo=TRUE, eval=TRUE}
+which(c(TRUE,FALSE,TRUE,TRUE,FALSE))
+```
+
+
+## Aplicaciones de which
+
+Saber donde se encuentran los numeros pares en un vector
+
+```{r echo=TRUE, eval=TRUE}
+z<-c(6,1,4,7,9,8,1,9,7)
+which(z%%2==0)
+```
+
+
+## Aplicaciones de which
+
+Saber en qué posición está un número particular, por ejemplo saber la pocición de 9 en `z`
+
+```{r echo=TRUE, eval=TRUE}
+which(z==9)
+```
+
+
+## Funciones `which.max` y `which.min`   
+
+```{r echo=TRUE, eval=TRUE}
+which.max(z)
+which.min(z)
+
+which(z==max(z))
+which(z==min(z))
+```
+
+
+<!--
+
+```{r echo=TRUE, eval=TRUE}
+z
+z>3 
+z<=7
+z>3 & z<=7
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+z
+z<=1 
+z>=8
+z<=1 | z>=8  
+```
+
+--> 
+
+## Operadores lógicos
+
+Estudiaremos los operadores lógicos `and` (`&`), `or` (`|`) y la negación lógica `not` (`!`)
+
+### Operador `&`
+
+```{r echo=TRUE, eval=TRUE}
+x
+y
+# operador &
+x & y 
+```
+
+### Operador `|`
+
+```{r echo=TRUE, eval=TRUE}
+# operador | 
+x | y
+```
+
+
+## Operaciones con los tres valores lógicos {.smaller}
+
+```{r echo=FALSE, eval=TRUE}
+# los tres valores lógicos 
+x <- c(TRUE, FALSE, NA)  
+```
+
+
+```{r echo=FALSE, eval=TRUE}
+xy <- expand.grid(x = x, y = x) # todas 
+
+OpLog=within(
+#make the next assignments within xy
+xy,
+{
+x_and_y <- x & y
+x_or_y <- x | y
+not.y <- !y
+not.x <- !x
+}
+)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+library(knitr) 
+kable(OpLog, format = "html", table.attr = "class='striped'") 
+```
+
+
+## Cálculo de estadísticas en precencia de datos faltantes
+
+* Por defecto, cuando un vector tiene datos faltantes, R regresa `NA` 
+
+* Ejemplo con la media 
+
+
+```{r echo=TRUE, eval=TRUE}
+edad=c(20,18,15,19,NA,23,NA)
+mean(edad)
+mean(na.omit(edad))  
+```
+
+##  Máximo y mínimo  
+
+```{r echo=TRUE, eval=TRUE}
+max(edad,na.rm=TRUE)
+min(edad)
+```
+
+## ¿Cuántos faltantes hay? 
+
+
+```{r echo=TRUE, eval=TRUE}
+sum(is.na(edad)) 
+```
+
+## Imputación 
+
+* En algunas aplicaciones nos piden que reemplacemos los datos faltantes por la media o mediana de los datos disponibles, esto se conoce como <span style="color:red;">Imputación</span>
+
+
+
+```{r echo=TRUE, eval=TRUE}
+edad[5]=median(edad,na.rm=TRUE)  
+edad[7]=median(edad,na.rm=TRUE)   
+edad
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+edad=c(20,18,15,19,NA,23,NA) 
+edad
+edad[is.na(edad)]=median(edad,na.rm=TRUE)  
+edad
+```
+
+
+
+## Funciones  `any()` y `all()` 
+
+Otras dos funciones útiles para tratar con vectores lógicos son `any()` y `all()`, que devuelven `TRUE` si el vector de entrada contiene al menos un valor `TRUE` o solo valores `TRUE`, respectivamente:
+
+```{r echo=TRUE, eval=TRUE}
+no_trues<-c(FALSE,FALSE,FALSE) 
+algun_true<-c(FALSE,TRUE,FALSE) 
+todos_true<-c(TRUE,TRUE,TRUE)
+```
+
+```{r echo=TRUE, eval=TRUE}
+any(no_trues) 
+any(algun_true)
+any(todos_true) 
+```
+
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+all(no_trues) 
+all(algun_true)
+all(todos_true)  
+```
+
+## Aplicación: averiguar si hay algún par 
+
+```{r echo=TRUE, eval=TRUE}
+# averiguar si hay algún par 
+v=c(3,5,7,9,6) 
+v%%2==0
+any(v%%2==0)
+```
+
+
+
+
+```{r echo=TRUE, eval=TRUE}
+if(any(v%%2==0)){
+    cat("Hay algún número par en el vector  ")
+}else{
+    cat("No hay número par en el vector  ") 
+}
+```
+
+
+## Aplicación: averiguar si todos son impares 
+
+
+
+```{r echo=TRUE, eval=TRUE}
+# averiguar si todos son impares 
+v=c(3,5,7,9,8) 
+v%%2!=0 
+all(v%%2!=0) 
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+any(no_trues)
+any(algun_true)
+any(todos_true)
+```
+
+## 
+
+
+```{r echo=TRUE, eval=TRUE}
+#log(-3)
+#sqrt(-4)
+x=c(4,7,-4,1)  
+log(x) 
+```
+
+## 
+
+
+```{r echo=TRUE, eval=TRUE}
+edad=c(20,18,15,19,NA,23,NA)  
+any(is.na(edad))
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+n=1:5
+any(is.na(n))
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+all(!is.na(n)) 
+```
+
+
+## 
+
+
+```{r echo=TRUE, eval=TRUE}
+z<-c(5,7,1,7,3)
+# hay algun par en z ? 
+any(z%%2==0)
+```
+
+## 
+
+```{r echo=TRUE, eval=TRUE}
+all(no_trues)
+all(algun_true)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+all(todos_true)
+# todos los elementos de z son impares ?
+all(!z%%2==0)
+```
+
+
+## Cuantos 6 tiene el vector `a` 
+
+```{r echo=TRUE, eval=TRUE}
+a=c(6,9,7,3,6,7,9,6,3,6,6,7,1,9,1)
+```
+
+```{r echo=TRUE, eval=TRUE}
+a==6
+sum(a==6)
+```
+
+
+
+```{r echo=TRUE, eval=TRUE}
+a>=6
+sum(a>=6)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+a<6+2
+sum(a<6+2)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+a!=6
+sum(a!=6)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+which(a==6)
+```
+
