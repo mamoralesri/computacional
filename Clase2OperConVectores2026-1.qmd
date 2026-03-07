@@ -869,7 +869,7 @@ which(z%%2==0)
 
 ## Aplicaciones de which
 
-Saber en qué posición está un número particular, por ejemplo saber la pocición de 9 en `z`
+Saber en qué posición está un número particular, por ejemplo saber la posición de 9 en `z`
 
 ```{r echo=TRUE, eval=TRUE}
 which(z==9)
