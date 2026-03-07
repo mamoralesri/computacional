@@ -579,8 +579,8 @@ Warning message in sqrt(-2):
 ## Ejemplo de `NA`
 
 ```{r echo=TRUE, eval=TRUE}
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/cursos/estadisticacomputacional/PresentacionesQmd") 
-datos=read.csv2("ejemplo.csv") 
+#setwd("~/Library/Mobile #Documents/com~apple~CloudDocs/cursos/estadist#icacomputacional/PresentacionesQmd") 
+datos=read.csv2("./datos/ejemplo.csv") 
 ```
 
 
