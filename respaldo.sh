@@ -2,34 +2,35 @@
 #!/bin/zsh
 
 # ============================
-# Script: respaldo_clase.sh
-# Objetivo: Respaldar SOLO esta carpeta de clase
+# Script: respaldo_pro.sh
+# Objetivo: Sincronizar y respaldar cambios (Mac <-> Ubuntu)
 # ============================
 
-echo "=== Iniciando respaldo único para: $(basename "$PWD") ==="
+echo "=== Iniciando sincronización para: $(basename "$PWD") ==="
 echo "Fecha: $(date)"
 
-# Verificamos que sea un repositorio Git
 if [[ -d ".git" ]]; then
-    echo "→ Ejecutando git add..."
+    # 1. Traer cambios de la nube por si trabajó en Ubuntu
+    echo "→ Sincronizando con la nube (Pull)..."
+    git pull origin main --no-rebase
+
+    # 2. Preparar cambios locales
+    echo "→ Verificando cambios locales..."
     git add .
 
-    # Verificamos si hay cambios reales para no subir basura
+    # 3. Solo si hay cambios, crear el commit y subir
     if git diff-index --quiet HEAD --; then
-        echo "   No hay cambios nuevos que respaldar."
+        echo "   No hay cambios locales nuevos. ¡Todo está al día!"
     else
-        echo "→ Creando commit..."
-        # Usamos el formato de fecha que usted ya prefiere
-        git commit -m "Respaldo independiente: $(date +"%Y-%m-%d %H:%M")"
+        echo "→ Registrando cambios nuevos..."
+        git commit -m "Respaldo automático: $(date +"%Y-%m-%d %H:%M")"
         
         echo "→ Subiendo a GitHub..."
-        git push
-        echo "   ✔ ¡Misión cumplida! Todo está en la nube."
+        git push origin main
+        echo "   ✔ ¡Misión cumplida! Todo está sincronizado."
     fi
 else
-    echo "   ⚠ ERROR: Esta carpeta no ha sido inicializada con Git."
-    echo "   Use 'git init' y vincúlela a un repo de GitHub primero."
+    echo "   ⚠ ERROR: Esta carpeta no es un repositorio Git."
 fi
 
 echo "=== Fin del proceso ==="
-

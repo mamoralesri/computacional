@@ -375,11 +375,15 @@ cont
 
 ::: callout-important
 Un grupo de estudiantes obtuvo las notas que se encuentran en el vector `nota` y su sexo se encuentra en el vector `sexo` 
-- Cuántas mujeres y cuantos hombres hay?
-- Cuál es la nota promedio de mujeres y hombres?
-- Escribir código R que me diga cuántos estudiantes tienen una nota mayor o igual que el promedio de nota del curso. 
-- Escribir código R que me diga cuantos estudiantes mujeres (`sexo=="F"`) tienen una nota mayor o igual que el promedio de nota de las mujeres.  
+
+* Cuántas mujeres y cuantos hombres hay?
+* Cuál es la nota promedio de mujeres y hombres?
+* Escribir código R que me diga cuántos estudiantes tienen una nota mayor o igual que el promedio de nota del curso. 
+* Escribir código R que me diga cuantos estudiantes mujeres (`sexo=="F"`) tienen una nota mayor o igual que el promedio de nota de las mujeres.  
 ::: 
+
+
+## Ejercicio (Cont) 
 
 ```{r echo=TRUE, eval=TRUE}
 set.seed(1234)
@@ -391,7 +395,8 @@ nota[sexo=="M"]=round( rnorm(n1,3.5,0.5), 1)
 nota[sexo=="F"]=round( rnorm(n2,3.5,0.5), 1) 
 ```
 
-## Solución 
+
+## Solución  
 
 ```{r echo=TRUE, eval=TRUE}
 sum(sexo=="M")
