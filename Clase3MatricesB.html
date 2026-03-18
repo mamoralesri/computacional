@@ -1,0 +1,3772 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<script src="Clase3MatricesB_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Clase3MatricesB_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Clase3MatricesB_files/libs/quarto-html/popper.min.js"></script>
+<script src="Clase3MatricesB_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Clase3MatricesB_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Clase3MatricesB_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="Clase3MatricesB_files/libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="author" content="Mario Morales">
+  <title>Matrices</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Clase3MatricesB_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Clase3MatricesB_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="Clase3MatricesB_files/libs/revealjs/dist/theme/quarto-0c8acc74dca0c2faaedea4940f202713.css">
+  <link href="Clase3MatricesB_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Clase3MatricesB_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Clase3MatricesB_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Clase3MatricesB_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Matrices</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+<a href="https://mariomorales.xyz/">Mario Morales</a> <a href="https://orcid.org/0000-0001-8814-0179" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:mamorales@correo.unicordoba.edu.co">mamorales@correo.unicordoba.edu.co</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidad de Córdoba, Montería
+          </p>
+    </div>
+</div>
+
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Tabla de contenidos</h2>
+<ul>
+<li><a href="#/matrices" id="/toc-matrices">Matrices</a></li>
+<li><a href="#/recuperación-y-edición-de-valores" id="/toc-recuperación-y-edición-de-valores">Recuperación y Edición de valores</a></li>
+<li><a href="#/operaciones-sobre-las-filas-y-las-columnas-de-una-matriz" id="/toc-operaciones-sobre-las-filas-y-las-columnas-de-una-matriz">Operaciones sobre las filas y las columnas de una matriz</a></li>
+<li><a href="#/matrices-especiales" id="/toc-matrices-especiales">Matrices especiales</a></li>
+<li><a href="#/matriz-inversa" id="/toc-matriz-inversa">Matriz inversa</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="matrices" class="title-slide slide level1 center">
+<h1>Matrices</h1>
+
+</section>
+<section id="objetivos" class="slide level2 center">
+<h2>Objetivos</h2>
+<p>Después de estudiar este capítulo, usted debería:</p>
+<ul>
+<li><p>Ser capaz de crear y manipular matrices.</p></li>
+<li><p>Realizar operaciones con matrices.</p></li>
+</ul>
+</section>
+<section id="matrices-1" class="slide level2 center">
+<h2>Matrices</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>En un sentido estricto, las matrices son arreglos de dos dimensiones, un <code>largo</code> y un <code>alto</code>. Las matrices son, por lo tanto, una estructura con forma rectangular, con filas y columnas.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="creación-de-matrices" class="slide level2 center">
+<h2>Creación de matrices</h2>
+<ul>
+<li><p>Para crear una matriz se usa la función <code>matrix</code>,</p></li>
+<li><p>También puede crear matrices con la función <code>array</code></p></li>
+</ul>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>) </span>
+<span id="cb1-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    3    1
+[2,]    5    4</code></pre>
+</div>
+</div>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>) </span>
+<span id="cb3-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    3    5
+[2,]    1    4</code></pre>
+</div>
+</div>
+</section>
+<section id="usando-array" class="slide level2 center">
+<h2>Usando <code>array()</code></h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>A<span class="ot">=</span><span class="fu">array</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">dim=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) </span>
+<span id="cb5-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    3    1
+[2,]    5    4</code></pre>
+</div>
+</div>
+</section>
+<section id="nombres-de-filas-y-columnas" class="slide level2 center">
+<h2>Nombres de filas y columnas</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>Ventas<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>),<span class="at">ncol=</span><span class="dv">5</span>, </span>
+<span id="cb7-2"><a href=""></a>    <span class="at">dimnames=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Mario"</span>,<span class="st">"Juan"</span>,<span class="st">"Miguel"</span>),<span class="fu">c</span>(<span class="st">"L"</span>,<span class="st">"M"</span>,<span class="st">"Mi"</span>,<span class="st">"J"</span>,<span class="st">"V"</span>) ))</span>
+<span id="cb7-3"><a href=""></a>Ventas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>       L M Mi J V
+Mario  5 7  3 2 0
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3</code></pre>
+</div>
+</div>
+</section>
+<section id="nombres-de-filas-y-columnas-ii" class="slide level2 center">
+<h2>Nombres de filas y columnas (II)</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>Ventas2<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>),<span class="at">ncol=</span><span class="dv">5</span>)</span>
+<span id="cb9-2"><a href=""></a>Ventas2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    5    7    3    2    0
+[2,]    4    6    2    1    4
+[3,]    9    3    5    8    3</code></pre>
+</div>
+</div>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">rownames</span>(Ventas2)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Mario"</span>,<span class="st">"Juan"</span>,<span class="st">"Miguel"</span>)</span>
+<span id="cb11-2"><a href=""></a><span class="fu">colnames</span>(Ventas2)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"L"</span>,<span class="st">"M"</span>,<span class="st">"Mi"</span>,<span class="st">"J"</span>,<span class="st">"V"</span>) </span>
+<span id="cb11-3"><a href=""></a>Ventas2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>       L M Mi J V
+Mario  5 7  3 2 0
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3</code></pre>
+</div>
+</div>
+</section>
+<section id="recuperar-nombres-de-filas-y-columnas" class="slide level2 center">
+<h2>Recuperar nombres de filas y columnas</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">rownames</span>(Ventas2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mario"  "Juan"   "Miguel"</code></pre>
+</div>
+</div>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">colnames</span>(Ventas2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "L"  "M"  "Mi" "J"  "V" </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="recuperación-y-edición-de-valores" class="title-slide slide level1 center">
+<h1>Recuperación y Edición de valores</h1>
+
+</section>
+<section id="indexación-por-número-de-fila-y-columna" class="slide level2 center">
+<h2>Indexación por número de fila y columna</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>Ventas[<span class="dv">1</span>,<span class="dv">4</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>Ventas[<span class="dv">1</span>,<span class="dv">5</span>]<span class="ot">=</span><span class="dv">5</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output-display column-screen-inset-shaded">
+<table class="table-striped caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">L</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">M</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mi</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">J</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">V</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mario</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Juan</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Miguel</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="indexación-por-nombre-de-fila-y-columna" class="slide level2 center">
+<h2>Indexación por nombre de fila y columna</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>Ventas[<span class="st">"Mario"</span>, ]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> L  M Mi  J  V 
+ 5  7  3  2  5 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>Ventas[,<span class="st">"L"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Mario   Juan Miguel 
+     5      4      9 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>Ventas[<span class="st">"Juan"</span>,<span class="st">"Mi"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section>
+<section id="indexación-por-nombre-de-fila-y-columna-1" class="slide level2 center">
+<h2>Indexación por nombre de fila y columna</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>Ventas[<span class="st">"Mario"</span>,<span class="st">"J"</span>] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>Ventas[<span class="st">"Mario"</span>,<span class="st">"V"</span>]<span class="ot">=</span><span class="dv">5</span> </span>
+<span id="cb28-2"><a href=""></a>Ventas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       L M Mi J V
+Mario  5 7  3 2 5
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3</code></pre>
+</div>
+</div>
+</section>
+<section id="ventas-de-mario-y-juan-lunes-y-viernes" class="slide level2 center">
+<h2>Ventas de mario y Juan lunes y viernes</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>Ventas[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>)] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>      L V
+Mario 5 5
+Juan  4 4</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>Ventas[<span class="fu">c</span>(<span class="st">"Mario"</span>,<span class="st">"Juan"</span>),<span class="fu">c</span>(<span class="st">"L"</span>,<span class="st">"V"</span>)] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      L V
+Mario 5 5
+Juan  4 4</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>Ventas[<span class="fu">c</span>(<span class="st">"Mario"</span>,<span class="st">"Juan"</span>),<span class="fu">c</span>(<span class="st">"L"</span>,<span class="st">"M"</span>,<span class="st">"Mi"</span>,<span class="st">"J"</span>,<span class="st">"V"</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      L M Mi J V
+Mario 5 7  3 2 5
+Juan  4 6  2 1 4</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>Ventas[<span class="fu">c</span>(<span class="st">"Mario"</span>,<span class="st">"Juan"</span>), ] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      L M Mi J V
+Mario 5 7  3 2 5
+Juan  4 6  2 1 4</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>Ventas[,<span class="fu">c</span>(<span class="st">"L"</span>,<span class="st">"M"</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       L M
+Mario  5 7
+Juan   4 6
+Miguel 9 3</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="operaciones-sobre-las-filas-y-las-columnas-de-una-matriz" class="title-slide slide level1 center">
+<h1>Operaciones sobre las filas y las columnas de una matriz</h1>
+
+</section>
+<section id="suma-por-filas-y-columnas" class="slide level2 center">
+<h2>Suma por filas y columnas</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># SUMA POR FILAS </span></span>
+<span id="cb40-2"><a href=""></a><span class="fu">rowSums</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Mario   Juan Miguel 
+    22     17     28 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># SUMA POR COLUMNAS </span></span>
+<span id="cb42-2"><a href=""></a><span class="fu">colSums</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> L  M Mi  J  V 
+18 16 10 11 12 </code></pre>
+</div>
+</div>
+</section>
+<section id="media-por-filas-y-columnas" class="slide level2 center">
+<h2>Media por filas y columnas</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="co"># Promedio POR FILAS </span></span>
+<span id="cb44-2"><a href=""></a><span class="fu">rowMeans</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Mario   Juan Miguel 
+   4.4    3.4    5.6 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="co"># promedio por columna </span></span>
+<span id="cb46-2"><a href=""></a><span class="fu">colMeans</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       L        M       Mi        J        V 
+6.000000 5.333333 3.333333 3.666667 4.000000 </code></pre>
+</div>
+</div>
+</section>
+<section id="estadísticas-de-fila-y-columna-con-apply" class="slide level2 center">
+<h2>Estadísticas de fila y columna con <code>apply</code></h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># varianza  POR FILAS </span></span>
+<span id="cb48-2"><a href=""></a><span class="fu">apply</span>(Ventas,<span class="dv">1</span>,var)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Mario   Juan Miguel 
+   3.8    3.8    7.8 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># máximo por columna </span></span>
+<span id="cb50-2"><a href=""></a><span class="fu">apply</span>(Ventas,<span class="dv">2</span>,max) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> L  M Mi  J  V 
+ 9  7  5  8  5 </code></pre>
+</div>
+</div>
+</section>
+<section id="transpuesta-de-una-matriz" class="slide level2 center">
+<h2>Transpuesta de una matriz</h2>
+<p>Operación que intercambia filas por columnas</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="fu">t</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Mario Juan Miguel
+L      5    4      9
+M      7    6      3
+Mi     3    2      5
+J      2    1      8
+V      5    4      3</code></pre>
+</div>
+</div>
+</section>
+<section id="operaciones-componente-a-componente" class="slide level2 center">
+<h2>Operaciones componente a componente</h2>
+<p>Las matrices deben tener la misma dimensión</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>) </span>
+<span id="cb54-2"><a href=""></a>B<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>),<span class="at">nrow=</span><span class="dv">2</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+
+</div>
+<h3 id="suma">Suma</h3>
+<p>Suma componente a componente</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>A<span class="sc">+</span>B   </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    8    8
+[2,]   13    7</code></pre>
+</div>
+</div>
+</section>
+<section id="producto-por-un-escalar" class="slide level2 center">
+<h2>Producto por un escalar</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="dv">2</span><span class="sc">*</span>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    6    2
+[2,]   10    8</code></pre>
+</div>
+</div>
+</section>
+<section id="resta" class="slide level2 center">
+<h2>Resta</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>A<span class="sc">-</span>B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   -2   -6
+[2,]   -3    1</code></pre>
+</div>
+</div>
+</section>
+<section id="producto-componente-a-componente" class="slide level2 center">
+<h2>Producto componente a componente</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>A<span class="sc">*</span>B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   15    7
+[2,]   40   12</code></pre>
+</div>
+</div>
+</section>
+<section id="cociente-componente-a-componente" class="slide level2 center">
+<h2>Cociente componente a componente</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>A<span class="sc">/</span>B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1]      [,2]
+[1,] 0.600 0.1428571
+[2,] 0.625 1.3333333</code></pre>
+</div>
+</div>
+</section>
+<section id="producto-usual-de-matrices" class="slide level2 center">
+<h2>Producto usual de matrices</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Para que se pueda realizar este producto se requiere que el número de columnas de la primera matriz, sea igual al número de filas de la segunda.</p>
+</div>
+</div>
+</div>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">0</span>),<span class="at">nrow=</span><span class="dv">2</span>);A </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    4
+[2,]    3    5    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>B<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>);B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0   -1    2
+[2,]    1    0    0
+[3,]    2    0    1</code></pre>
+</div>
+</div>
+</section>
+<section id="producto-usual-de-matrices-1" class="slide level2 center">
+<h2>Producto usual de matrices</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a>A<span class="sc">%*%</span>B </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]   10   -1    6
+[2,]    5   -3    6</code></pre>
+</div>
+</div>
+</section>
+<section id="producto-de-a-por-su-transpuesta" class="slide level2 center">
+<h2>Producto de <span class="math inline">\(A\)</span> por su transpuesta</h2>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a>A<span class="sc">%*%</span><span class="fu">t</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   21   13
+[2,]   13   34</code></pre>
+</div>
+</div>
+<div class="cell column-screen-inset-shaded">
+
+</div>
+</section>
+<section id="matriz-simétrica" class="slide level2 center">
+<h2>Matriz simétrica</h2>
+<p>Si <span class="math inline">\(A(i,j)=A(j,i)\)</span> para todo <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span> la matriz <span class="math inline">\(A\)</span> es simétrica</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a>S<span class="ot">=</span>Ventas<span class="sc">%*%</span><span class="fu">t</span>(Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+
+</div>
+</section>
+<section id="ejercicio" class="slide level2 center">
+<h2>Ejercicio</h2>
+<p>Escribir código <code>R</code> que permita averiguar su una matriz es simétrica o no</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a>S<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">5</span>),<span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb74-2"><a href=""></a>S</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    3    2    4
+[2,]    2    1    0
+[3,]    4    0    5</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a><span class="co"># averiguar si S es simétrica </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a><span class="co"># igualamos a S con su transpuesta </span></span>
+<span id="cb77-2"><a href=""></a>S<span class="sc">==</span><span class="fu">t</span>(S) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,] TRUE TRUE TRUE
+[2,] TRUE TRUE TRUE
+[3,] TRUE TRUE TRUE</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a><span class="fu">all</span>( S<span class="sc">==</span><span class="fu">t</span>(S) ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a>S<span class="sc">-</span><span class="fu">t</span>(S)  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-1" class="slide level2 center">
+<h2>Ejercicio</h2>
+<p>Escribir una función en R código <code>R</code> que permita averiguar su una matriz es cuadrada</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a><span class="co"># como averiguar si una matriz es cuadrada </span></span>
+<span id="cb83-2"><a href=""></a>is.cuadrada<span class="ot">=</span><span class="cf">function</span>(X){</span>
+<span id="cb83-3"><a href=""></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(X)<span class="sc">==</span><span class="fu">ncol</span>(X)){<span class="st">"La matriz es cuadrada"</span></span>
+<span id="cb83-4"><a href=""></a>    }<span class="cf">else</span>(<span class="st">"La matriz no es cuadrada"</span>)</span>
+<span id="cb83-5"><a href=""></a>        }</span>
+<span id="cb83-6"><a href=""></a><span class="fu">is.cuadrada</span>(B) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "La matriz es cuadrada"</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-2" class="slide level2 center">
+<h2>Ejercicio</h2>
+<p>Función que nos dice si una matriz cuadrada es simétrica o no</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a><span class="co">#  </span></span>
+<span id="cb85-2"><a href=""></a>prueba.simetria<span class="ot">=</span><span class="cf">function</span>(X){</span>
+<span id="cb85-3"><a href=""></a><span class="cf">if</span>(<span class="fu">nrow</span>(X)<span class="sc">!=</span><span class="fu">ncol</span>(X)){<span class="fu">stop</span>(<span class="st">"La matriz debe ser cuadrada"</span>)}</span>
+<span id="cb85-4"><a href=""></a><span class="cf">if</span>( <span class="fu">all</span>(X<span class="sc">==</span><span class="fu">t</span>(X)) ){<span class="st">"La matriz es simetrica "</span></span>
+<span id="cb85-5"><a href=""></a>}<span class="cf">else</span>{<span class="st">"La matriz no es simetrica"</span>}     </span>
+<span id="cb85-6"><a href=""></a>}</span>
+<span id="cb85-7"><a href=""></a><span class="fu">prueba.simetria</span>(B)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "La matriz no es simetrica"</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href=""></a><span class="fu">prueba.simetria</span>(A<span class="sc">%*%</span><span class="fu">t</span>(A)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "La matriz es simetrica "</code></pre>
+</div>
+</div>
+</section>
+<section id="combinando-matrices" class="slide level2 center">
+<h2>Combinando matrices</h2>
+<p>Podemos concatenar matrices por filas y columnas</p>
+<h3 id="rbind">rbind</h3>
+<p>Una matriz debajo de la otra</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href=""></a><span class="fu">rbind</span>(A,B)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    4
+[2,]    3    5    0
+[3,]    0   -1    2
+[4,]    1    0    0
+[5,]    2    0    1</code></pre>
+</div>
+</div>
+</section>
+<section id="combinando-matrices-ii" class="slide level2 center">
+<h2>Combinando matrices (II)</h2>
+<h3 id="cbind">cbind</h3>
+<p>Una matriz al lado de la otra</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href=""></a><span class="fu">cbind</span>(B,Ventas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>              L M Mi J V
+Mario  0 -1 2 5 7  3 2 5
+Juan   1  0 0 4 6  2 1 4
+Miguel 2  0 1 9 3  5 8 3</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href=""></a>Ventas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       L M Mi J V
+Mario  5 7  3 2 5
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3</code></pre>
+</div>
+</div>
+</section>
+<section id="filas-columnas-y-dimensiones" class="slide level2 center">
+<h2>Filas, columnas y dimensiones</h2>
+<p>Tanto para arreglos como para matrices, la función <code>dim</code> devuelve un vector de números enteros de las dimensiones de la variable:</p>
+<p>Para matrices, las funciones <code>nrow</code> y <code>ncol</code> devuelven el número de filas y columnas, respectivamente</p>
+<div class="cell column-screen-inset-shaded">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href=""></a><span class="fu">nrow</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell column-screen-inset-shaded fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href=""></a><span class="fu">ncol</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<!--
+
+## ¿Cómo saber si una matriz es cuadrada?
+
+
+::: {.cell}
+
+```{.r .cell-code}
+nrow(mat)==ncol(mat) ### no es cuadrada 
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] FALSE
+```
+
+
+:::
+
+```{.r .cell-code}
+A<-mat %*% t(mat)
+nrow(A)==ncol(A) ## Es cuadrada
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] TRUE
+```
+
+
+:::
+:::
+
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+is.cuadrada<-function(x){
+if(ncol(x)==nrow(x)){cat("Es cuadrada","\n")
+                    }else{cat("No es cuadrada","\n")}    
+}
+is.cuadrada(mat)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+No es cuadrada 
+```
+
+
+:::
+
+```{.r .cell-code}
+is.cuadrada(A) 
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Es cuadrada 
+```
+
+
+:::
+
+```{.r .cell-code}
+#is.cuadrada(1:5) 
+nrow(1:5)==ncol(1:5)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+logical(0)
+```
+
+
+:::
+
+```{.r .cell-code}
+#is.cuadrada(cruce)
+```
+:::
+
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+is.cuadrada<-function(x){
+if(is.matrix(x)){
+    if(ncol(x)==nrow(x)){cat("Es cuadrada","\n")}else{cat("No es cuadrada","\n")}
+    }else{cat("Se requiere una matriz, tonto","\n")}
+}
+is.cuadrada(1:5) 
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Se requiere una matriz, tonto 
+```
+
+
+:::
+
+```{.r .cell-code}
+#is.cuadrada(mat)
+#is.cuadrada(cruce)
+```
+:::
+
+
+
+
+## 
+
+
+`nrow`, `ncol` y `dim` devuelven `NULL` cuando se aplican a vectores. Las funciones `NROW` y `NCOL` son contrapartes de `nrow` y `ncol` que asumen que los vectores son matrices con una sola columna (es decir, vectores columna en el sentido matemático):
+
+## 
+
+De la misma manera que los vectores tienen nombres para los elementos, las matrices tienen nombres de filas y nombres de columnas. Por razones históricas, también hay una función `row.names`, que hace lo mismo que los `rownames` , pero no hay `col.names`, por lo que es mejor ignorarla y usar `rownames` en su lugar. Como en el caso de `nrow`, `ncol` y `dim`, la función equivalente para matrices es `dimnames`. Este último devuelve una lista de vectores de caracteres.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+rownames(mat)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "uno"    "dos"    "tres"   "cuatro"
+```
+
+
+:::
+
+```{.r .cell-code}
+colnames(mat)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "A" "B" "C"
+```
+
+
+:::
+
+```{.r .cell-code}
+dimnames(mat) ### es una lista 
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[[1]]
+[1] "uno"    "dos"    "tres"   "cuatro"
+
+[[2]]
+[1] "A" "B" "C"
+```
+
+
+:::
+
+```{.r .cell-code}
+class(dimnames(mat))
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] "list"
+```
+
+
+:::
+
+```{.r .cell-code}
+dimnames(mat)[1]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[[1]]
+[1] "uno"    "dos"    "tres"   "cuatro"
+```
+
+
+:::
+
+```{.r .cell-code}
+dimnames(mat)[2]
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[[1]]
+[1] "A" "B" "C"
+```
+
+
+:::
+:::
+
+
+
+## 
+
+
+::: {.cell}
+
+```{.r .cell-code}
+A
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+       uno dos tres cuatro
+uno    107 122  137    152
+dos    122 140  158    176
+tres   137 158  179    200
+cuatro 152 176  200    224
+```
+
+
+:::
+
+```{.r .cell-code}
+rownames(A)<-c("Fil 1","Fil 2","Fil 3","Fil 4") 
+colnames(A)<-c("Col 1","Col 2","Col 3","Col 4") 
+A
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+      Col 1 Col 2 Col 3 Col 4
+Fil 1   107   122   137   152
+Fil 2   122   140   158   176
+Fil 3   137   158   179   200
+Fil 4   152   176   200   224
+```
+
+
+:::
+
+```{.r .cell-code}
+dimnames(A)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[[1]]
+[1] "Fil 1" "Fil 2" "Fil 3" "Fil 4"
+
+[[2]]
+[1] "Col 1" "Col 2" "Col 3" "Col 4"
+```
+
+
+:::
+
+```{.r .cell-code}
+dimnames(A)<-list(Filas=c("F 1","F 2","F 3","F 4"), Columnas=c("C 1","C 2","C 3","C 4") )
+
+print(A)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+     Columnas
+Filas C 1 C 2 C 3 C 4
+  F 1 107 122 137 152
+  F 2 122 140 158 176
+  F 3 137 158 179 200
+  F 4 152 176 200 224
+```
+
+
+:::
+:::
+
+
+-->
+</section></section>
+<section>
+<section id="matrices-especiales" class="title-slide slide level1 center">
+<h1>Matrices especiales</h1>
+
+</section>
+<section id="matriz-de-puros-unos" class="slide level2 center">
+<h2>Matriz de puros unos</h2>
+<p>Matriz de puros unos <span class="math inline">\(A=(a_{i,j})_{m\times n}\)</span> con <span class="math inline">\(a_{i,j}=1\)</span> para todo <span class="math inline">\(i\)</span> y todo <span class="math inline">\(j\)</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href=""></a><span class="fu">matrix</span>(<span class="dv">1</span>,<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1</code></pre>
+</div>
+</div>
+</section>
+<section id="matriz-de-puros-unos-aplicación" class="slide level2 center">
+<h2>Matriz de puros unos (aplicación)</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href=""></a>Z<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">2</span>),<span class="at">byrow=</span><span class="cn">TRUE</span>,<span class="at">nrow=</span><span class="dv">2</span> )</span>
+<span id="cb101-2"><a href=""></a>Z</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1   -1
+[2,]    2   -2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href=""></a>U<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">1</span>,<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb103-2"><a href=""></a>U</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    1
+[2,]    1    1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href=""></a>Z<span class="sc">%*%</span>U</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    0    0
+[2,]    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href=""></a>U<span class="sc">%*%</span>Z</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    3   -3
+[2,]    3   -3</code></pre>
+</div>
+</div>
+</section>
+<section id="matriz-de-puros-ceros" class="slide level2 center">
+<h2>Matriz de puros ceros</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href=""></a><span class="co"># Puros ceros </span></span>
+<span id="cb109-2"><a href=""></a>C<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">ncol=</span><span class="dv">4</span>,<span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb109-3"><a href=""></a>C</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="matriz-idéntica" class="slide level2 center">
+<h2>Matriz idéntica</h2>
+<p>Matriz idéntica de orden 5</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href=""></a>I5<span class="ot">&lt;-</span><span class="fu">diag</span>(<span class="dv">5</span>)</span>
+<span id="cb111-2"><a href=""></a>I5</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1</code></pre>
+</div>
+</div>
+</section>
+<section id="matriz-diagonal" class="slide level2 center">
+<h2>Matriz diagonal</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href=""></a><span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    2    0    0
+[2,]    0    3    0
+[3,]    0    0    5</code></pre>
+</div>
+</div>
+</section>
+<section id="recuperar-la-diagonal-de-una-matriz" class="slide level2 center">
+<h2>Recuperar la diagonal de una matriz</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href=""></a>A<span class="ot">=</span><span class="fu">t</span>(mat)<span class="sc">%*%</span>mat </span>
+<span id="cb115-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    A   B   C
+A  30  70 110
+B  70 174 278
+C 110 278 446</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href=""></a><span class="fu">diag</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  A   B   C 
+ 30 174 446 </code></pre>
+</div>
+</div>
+</section>
+<section id="traza-de-una-matriz" class="slide level2 center">
+<h2>Traza de una matriz</h2>
+<p>Definicion: dada una matriz cuadrada, su traza se define como la suma de los elementos de la diagonal.</p>
+<p>Tarea, escribir codigo R que tome una matriz cuadrada y regrese la traza de ella.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href=""></a><span class="fu">sum</span>(<span class="fu">diag</span>(A))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 650</code></pre>
+</div>
+</div>
+</section>
+<section id="productos-cruzados" class="slide level2 center">
+<h2>Productos cruzados</h2>
+<p>Otra forma de calcular <span class="math inline">\(B^t\times B\)</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href=""></a><span class="fu">crossprod</span>(mat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    A   B   C
+A  30  70 110
+B  70 174 278
+C 110 278 446</code></pre>
+</div>
+</div>
+<!--
+
+## Aritmética de matrices
+
+Los operadores aritméticos estándar `(+, -, \ *, /)` funcionan elemento por elemento en arreglos y matrices, tal como lo hacen en vectores:
+
+``` r
+mat 
+mat2
+```
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
+``` r
+mat * mat2 
+mat/mat2
+```
+
++--------+----+----+-----+
+|        | A  | B  | C   |
++========+====+====+=====+
+| uno    | 1  | 25 | 81  |
++--------+----+----+-----+
+| dos    | 4  | 36 | 100 |
++--------+----+----+-----+
+| tres   | 9  | 49 | 121 |
++--------+----+----+-----+
+| cuatro | 16 | 64 | 144 |
++--------+----+----+-----+
+
+: A matrix: 4 × 3 of type int
+
++--------+---+---+---+
+|        | A | B | C |
++========+===+===+===+
+| uno    | 1 | 1 | 1 |
++--------+---+---+---+
+| dos    | 1 | 1 | 1 |
++--------+---+---+---+
+| tres   | 1 | 1 | 1 |
++--------+---+---+---+
+| cuatro | 1 | 1 | 1 |
++--------+---+---+---+
+
+: A matrix: 4 × 3 of type dbl
+
+Al realizar operaciones aritméticas en dos arreglos, debe asegurarse de que sean de un tamaño adecuado (deben ser "compatibles", en terminología de álgebra lineal). Por ejemplo, ambos arreglos deben tener el mismo tamaño al sumar. Para la multiplicación de matrices, el número de columnas de la primera matríz debe ser el mismo que el número de filas de la segunda matriz:
+
+``` r
+mat3<-matrix(1:12, nrow = 2)
+mat3
+mat
+```
+
++---+---+---+---+----+----+
+| 1 | 3 | 5 | 7 | 9  | 11 |
++---+---+---+---+----+----+
+| 2 | 4 | 6 | 8 | 10 | 12 |
++---+---+---+---+----+----+
+
+: A matrix: 2 × 6 of type int
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
+``` r
+#mat * mat3 # arreglos de dimensón no compatibles
+```
+
+Si intenta sumar un vector a un arreglo (o matriz) , se aplican las reglas habituales de reciclaje de vectores, pero la dimensión de los resultados se toma del arreglo (o la matriz).
+
+La función `t` transpone matrices
+
+``` r
+mat3
+t(mat3)
+```
+
++---+---+---+---+----+----+
+| 1 | 3 | 5 | 7 | 9  | 11 |
++---+---+---+---+----+----+
+| 2 | 4 | 6 | 8 | 10 | 12 |
++---+---+---+---+----+----+
+
+: A matrix: 2 × 6 of type int
+
++----+----+
+| 1  | 2  |
++----+----+
+| 3  | 4  |
++----+----+
+| 5  | 6  |
++----+----+
+| 7  | 8  |
++----+----+
+| 9  | 10 |
++----+----+
+| 11 | 12 |
++----+----+
+
+: A matrix: 6 × 2 of type int
+-->
+</section>
+<section id="producto-interno-y-externo" class="slide level2 center">
+<h2>Producto interno y externo</h2>
+<ul>
+<li><p>Para la multiplicación de matrices (producto interno y producto externo), tenemos los operadores especiales <code>%*%</code> y <code>%o%</code>.</p></li>
+<li><p>En cada caso, los nombres de las dimensiones se toman de la primera entrada, si existen:</p></li>
+</ul>
+</section>
+<section id="producto-interno-y-externo-ejemplos" class="slide level2 center">
+<h2>Producto interno y externo: ejemplos</h2>
+<ul>
+<li>Calcular <span class="math inline">\(X\times X^t\)</span></li>
+<li>Si <span class="math inline">\(A=(1,2,3)\)</span> y <span class="math inline">\(B=(4,5,6)\)</span>, calcular <span class="math inline">\(A \circ B\)</span></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href=""></a>mat<span class="sc">%*%</span><span class="fu">t</span>(mat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       uno dos tres cuatro
+uno    107 122  137    152
+dos    122 140  158    176
+tres   137 158  179    200
+cuatro 152 176  200    224</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href=""></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="sc">%o%</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    4    5    6
+[2,]    8   10   12
+[3,]   12   15   18</code></pre>
+</div>
+</div>
+</section>
+<section id="equivalente" class="slide level2 center">
+<h2>Equivalente</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href=""></a><span class="fu">outer</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    4    5    6
+[2,]    8   10   12
+[3,]   12   15   18</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-producto-usual-de-matrices" class="slide level2 center">
+<h2>Ejemplo producto usual de matrices</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href=""></a>A<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb129-2"><a href=""></a>B<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">3</span>),<span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb129-3"><a href=""></a>A<span class="sc">%*%</span>B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    3    2    7
+[2,]   10    6   16</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="matriz-inversa" class="title-slide slide level1 center">
+<h1>Matriz inversa</h1>
+
+</section>
+<section id="section" class="slide level2 center">
+<h2></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href=""></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb131-2"><a href=""></a>m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    5    2
+[2,]    0   -3    4
+[3,]    1    1    7</code></pre>
+</div>
+</div>
+<h3 id="cociente-componete-a-componente">Cociente componete a componente</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href=""></a>m<span class="sc">^-</span><span class="dv">1</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]       [,2]      [,3]
+[1,]    1  0.2000000 0.5000000
+[2,]  Inf -0.3333333 0.2500000
+[3,]    1  1.0000000 0.1428571</code></pre>
+</div>
+</div>
+<h3 id="cálculo-de-determinante">Cálculo de determinante</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href=""></a><span class="fu">det</span>(m)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+</section>
+<section id="inversa-de-una-matriz" class="slide level2 center">
+<h2>Inversa de una matriz</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Data una matriz cuadrada <span class="math inline">\(A_{n\times n}\)</span>, la inversa de <span class="math inline">\(A\)</span>, si existe, es una matriz de tamaño <span class="math inline">\(n\times n\)</span>, denotada por <span class="math inline">\(A^{-1}\)</span> tal que <span class="math display">\[A\times A^{-1}=A^{-1}\times A=I_n \]</span> donde <span class="math inline">\(I_n\)</span> es la identica de orden <span class="math inline">\(n\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Cálculo de la inversa de una matriz</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href=""></a><span class="fu">solve</span>(m)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]  -25  -33   26
+[2,]    4    5   -4
+[3,]    3    4   -3</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href=""></a>m<span class="sc">%*%</span><span class="fu">solve</span>(m)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1</code></pre>
+</div>
+</div>
+</section>
+<section id="determinante-de-una-matriz" class="slide level2 center">
+<h2>Determinante de una matriz</h2>
+<p>Una matriz cuadrada <span class="math inline">\(A_{n\times n}\)</span>, tiene inversa, si y solo si su determinante es distinto de cero.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href=""></a><span class="fu">det</span>(m)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+</section>
+<section id="aplicación-solución-de-sistemas-de-ecuaciones-lineales." class="slide level2 center">
+<h2>Aplicación: solución de sistemas de ecuaciones lineales.</h2>
+<p>Dado un sistema de ecuaciones lineales de la forma <span class="math display">\[Ax=b\]</span> donde <span class="math inline">\(A\)</span> es una matriz invertible, entonces la solución del sistema es <span class="math display">\[x=A^{-1}b\]</span> donde <span class="math inline">\(A^{-1}\)</span> es la inversa de <span class="math inline">\(A\)</span></p>
+</section>
+<section id="section-1" class="slide level2 center">
+<h2></h2>
+<p>Ejemplo: Halle la solución del siguiente sistema <span class="math inline">\(3\times 3\)</span> <span class="math display">\[\begin{array}{rl}
+2a+b-3c &amp;= 7\\
+5a-4b+c&amp;=-19\\
+a-b-4c&amp;=4
+\end{array}\]</span></p>
+</section>
+<section id="solución" class="slide level2 center">
+<h2>Solución</h2>
+<p>Solución: El sistema se puede escribir en forma matricial con <span class="math display">\[ A=\begin{bmatrix}
+2 &amp; 1  &amp; -3 \\
+5 &amp; -4 &amp; 1  \\
+1 &amp; -1 &amp; -4
+\end{bmatrix} \hbox{ ,  } b=\begin{bmatrix}
+7  \\
+-19   \\
+4
+\end{bmatrix} \hbox{ y   }x=\begin{bmatrix}
+a \\
+b  \\
+c
+\end{bmatrix} \]</span></p>
+</section>
+<section id="solución-ingresamos-las-matrices" class="slide level2 center">
+<h2>Solución, ingresamos las matrices</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span> , <span class="dv">1</span>  , <span class="sc">-</span><span class="dv">3</span>,</span>
+<span id="cb143-2"><a href=""></a><span class="dv">5</span> , <span class="sc">-</span><span class="dv">4</span> , <span class="dv">1</span>,</span>
+<span id="cb143-3"><a href=""></a><span class="dv">1</span> , <span class="sc">-</span><span class="dv">1</span> , <span class="sc">-</span><span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb143-4"><a href=""></a>b<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">7</span>,<span class="sc">-</span><span class="dv">19</span>,<span class="dv">4</span>),<span class="at">ncol=</span><span class="dv">1</span>) </span>
+<span id="cb143-5"><a href=""></a><span class="fu">solve</span>(A)<span class="sc">%*%</span>b</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   -1
+[2,]    3
+[3,]   -2</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href=""></a><span class="fu">solve</span>(A,b) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   -1
+[2,]    3
+[3,]   -2</code></pre>
+</div>
+</div>
+</section>
+<section id="solución-de-sistemas-de-ecuaciones-lineales" class="slide level2 center">
+<h2>Solución de sistemas de ecuaciones lineales</h2>
+<p>Un sistema de la forma <span class="math inline">\(Ax=b\)</span> tiene solución única si y solo si el determinante de la matriz de coeficientes es distinto de cero.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="sc">-</span><span class="dv">3</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>) </span>
+<span id="cb147-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    6
+[2,]    7   -3</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href=""></a>b<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">27</span>,<span class="dv">9</span>),<span class="at">nrow=</span><span class="dv">2</span>) </span>
+<span id="cb149-2"><a href=""></a>b</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   27
+[2,]    9</code></pre>
+</div>
+</div>
+</section>
+<section id="solución-1" class="slide level2 center">
+<h2>Solución</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href=""></a><span class="fu">det</span>(A) <span class="co">#distinto de cero luego el sistema tiene solucion unica </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -45</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href=""></a><span class="co"># varias formas de hallar la solución </span></span>
+<span id="cb153-2"><a href=""></a><span class="co"># calculamos la inversa de A </span></span>
+<span id="cb153-3"><a href=""></a>Ai<span class="ot">=</span><span class="fu">solve</span>(A) </span>
+<span id="cb153-4"><a href=""></a>Ai</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]        [,2]
+[1,] 0.06666667  0.13333333
+[2,] 0.15555556 -0.02222222</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href=""></a><span class="fu">round</span>(Ai<span class="sc">%*%</span>A,<span class="dv">10</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    0
+[2,]    0    1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href=""></a>Ai<span class="sc">%*%</span>b</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]    3
+[2,]    4</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href=""></a><span class="fu">solve</span>(A,b) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]    3
+[2,]    4</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-3" class="slide level2 center">
+<h2>Ejercicio</h2>
+<p>Solucionar el siguiente sistema de ecuaciones lineales <span class="math display">\[\begin{array}{c}
+2x+6y+z=7\\
+x+2y-z=-1\\
+5x+7y-4z=9
+\end{array}\]</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="sc">-</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb161-2"><a href=""></a>b<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>),<span class="at">ncol=</span><span class="dv">1</span>)</span>
+<span id="cb161-3"><a href=""></a><span class="co">#solve(A,b)</span></span>
+<span id="cb161-4"><a href=""></a><span class="fu">det</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<h3 id="aplicación-inversa-generalizada">Aplicación: Inversa generalizada</h3>
+<p>Calculo de una inversa generalizada de una matriz A. Una inversa generalizada de la matriz <span class="math inline">\(A\)</span> se define como una matriz <span class="math inline">\(G\)</span> tal que <span class="math inline">\(A\times G \times A=A\)</span></p>
+</section>
+<section id="ejemplo" class="slide level2 center">
+<h2>Ejemplo</h2>
+<p>Considere la matriz <span class="math display">\[ A=\begin{bmatrix}
+   2 &amp; 3 &amp; 1 &amp; -1 \\
+   5 &amp; 8 &amp; 0 &amp; 1 \\
+   1 &amp; 2 &amp; -2 &amp; 3 \\
+\end{bmatrix} \]</span> verifique que la matriz <span class="math display">\[ G=\begin{bmatrix}
+0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0\\
+1 &amp; 1 &amp; 0\\
+0 &amp; 1 &amp; 0
+\end{bmatrix} \]</span> es una inversa generalizada de <span class="math display">\[A\]</span></p>
+</section>
+<section id="solución-2" class="slide level2 center">
+<h2>Solución</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href=""></a><span class="fu">library</span>(MASS)</span>
+<span id="cb163-2"><a href=""></a>A<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>( <span class="dv">2</span> , <span class="dv">3</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span> ,</span>
+<span id="cb163-3"><a href=""></a>    <span class="dv">5</span>, <span class="dv">8</span> ,<span class="dv">0</span> ,<span class="dv">1</span> ,</span>
+<span id="cb163-4"><a href=""></a>    <span class="dv">1</span> , <span class="dv">2</span> ,<span class="sc">-</span><span class="dv">2</span> ,<span class="dv">3</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span> );A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href=""></a>G1<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span> ,</span>
+<span id="cb165-2"><a href=""></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span> ,</span>
+<span id="cb165-3"><a href=""></a>    <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span> ,</span>
+<span id="cb165-4"><a href=""></a>    <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>);G1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    1    1    0
+[4,]    0    1    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href=""></a>A<span class="sc">%*%</span>G1<span class="sc">%*%</span>A <span class="sc">-</span>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2 center">
+<h2></h2>
+<p>Verifique que la matriz <span class="math display">\[ G=\begin{bmatrix}
+0 &amp; 1 &amp; -4\\
+0 &amp; -1/2 &amp; 5/2\\
+0 &amp; 0  &amp; 0 \\
+0 &amp; 0  &amp; 0
+\end{bmatrix} \]</span> también es una inversa generalizada de <span class="math display">\[A\]</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href=""></a>G2<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">4</span> ,</span>
+<span id="cb169-2"><a href=""></a>    <span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>,<span class="dv">5</span><span class="sc">/</span><span class="dv">2</span> ,</span>
+<span id="cb169-3"><a href=""></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span> ,</span>
+<span id="cb169-4"><a href=""></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>) ,<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>);G2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0  1.0 -4.0
+[2,]    0 -0.5  2.5
+[3,]    0  0.0  0.0
+[4,]    0  0.0  0.0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href=""></a><span class="fu">print</span>( <span class="fu">fractions</span>(G2))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    1   -4
+[2,]    0 -1/2  5/2
+[3,]    0    0    0
+[4,]    0    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href=""></a><span class="co">#</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href=""></a>A<span class="sc">%*%</span>G1<span class="sc">%*%</span>A<span class="sc">-</span>A <span class="co"># el resuldato debe ser cero</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href=""></a>A<span class="sc">%*%</span>G2<span class="sc">%*%</span>A<span class="sc">-</span>A <span class="co"># el resuldato debe ser cero</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+</div>
+<h4 id="ejercicio.">Ejercicio.</h4>
+<p>Dadas las matrices <span class="math display">\[ P=\begin{bmatrix}
+0 &amp; 0 &amp; 1\\
+0 &amp; -1/2 &amp; 5/2\\
+1 &amp; -1/2 &amp; 1/2\\
+\end{bmatrix} \]</span> y <span class="math display">\[Q=\begin{bmatrix}
+1 &amp; -2 &amp; -8 &amp; 11\\
+0 &amp; 1 &amp; 5 &amp; -7\\
+0 &amp; 0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1\\\end{bmatrix}
+\]</span> * Verifique que <span class="math display">\[PAQ=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\\end{bmatrix}=\Delta\]</span> * Verifique que <span class="math inline">\(P^{-1} \Delta Q^{-1}=A\)</span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href=""></a>P<span class="ot">&lt;-</span><span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span> ,</span>
+<span id="cb178-2"><a href=""></a>    <span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>,<span class="dv">5</span><span class="sc">/</span><span class="dv">2</span> ,</span>
+<span id="cb178-3"><a href=""></a>    <span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span>T );</span>
+<span id="cb178-4"><a href=""></a>   </span>
+<span id="cb178-5"><a href=""></a><span class="fu">print</span>(<span class="fu">fractions</span>(P))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    1
+[2,]    0 -1/2  5/2
+[3,]    1 -1/2  1/2</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href=""></a>Q<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>( <span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">8</span> ,<span class="dv">11</span>,</span>
+<span id="cb180-2"><a href=""></a>    <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="sc">-</span><span class="dv">7</span> ,</span>
+<span id="cb180-3"><a href=""></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb180-4"><a href=""></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>) </span>
+<span id="cb180-5"><a href=""></a>     <span class="fu">print</span>( <span class="fu">fractions</span>(Q) )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]  1   -2   -8   11  
+[2,]  0    1    5   -7  
+[3,]  0    0    1    0  
+[4,]  0    0    0    1  </code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href=""></a>P<span class="sc">%*%</span>A<span class="sc">%*%</span>Q</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href=""></a>Delta<span class="ot">&lt;-</span>P<span class="sc">%*%</span>A<span class="sc">%*%</span>Q;Delta</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    0    0</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href=""></a><span class="fu">det</span>(P)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href=""></a>P<span class="sc">%*%</span><span class="fu">solve</span>(P) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href=""></a><span class="co">#diag(rep(1,4))  </span></span>
+<span id="cb190-2"><a href=""></a><span class="co"># diag(1:5)</span></span>
+<span id="cb190-3"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href=""></a><span class="fu">diag</span>(A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  8 -2</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href=""></a><span class="fu">solve</span>(P)<span class="sc">%*%</span>Delta<span class="sc">%*%</span><span class="fu">solve</span>(Q) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href=""></a><span class="co">#Delta[1:2,1:2]</span></span>
+<span id="cb196-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href=""></a>Dm<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb198-2"><a href=""></a><span class="fu">solve</span>(Delta[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    0
+[2,]    0    1</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href=""></a>Dm<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb200-2"><a href=""></a>Dm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+[4,]    0    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href=""></a>Dm[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]<span class="ot">&lt;-</span><span class="fu">solve</span>(Delta[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb202-2"><a href=""></a>Dm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    0
+[4,]    0    0    0</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href=""></a>Q<span class="sc">%*%</span>Dm<span class="sc">%*%</span>P</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0  1.0 -4.0
+[2,]    0 -0.5  2.5
+[3,]    0  0.0  0.0
+[4,]    0  0.0  0.0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href=""></a><span class="fu">print</span>(<span class="fu">fractions</span>(Q<span class="sc">%*%</span>Dm<span class="sc">%*%</span>P))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    1   -4
+[2,]    0 -1/2  5/2
+[3,]    0    0    0
+[4,]    0    0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="solución-de-sistemas-lineales-con-infinitas-soluciones" class="slide level2 center">
+<h2>Solución de sistemas lineales con infinitas soluciones</h2>
+<p>Una solución al sistema <span class="math inline">\(Ax=b\)</span> cuando el sistema tiene infinitas soluciones, es <span class="math display">\[x=GA\]</span> donde <span class="math inline">\(G\)</span> es una inversa generalizada de <span class="math inline">\(A\)</span>.</p>
+</section>
+<section id="algoritmo-para-cálculo-de-una-inversa-generalizada-de-a" class="slide level2 center">
+<h2>Algoritmo para cálculo de una inversa generalizada de A</h2>
+<p>Para hallar una inversa generalizada de una matriz <span class="math inline">\({A}\)</span> siga los siguientes pasos</p>
+<ul>
+<li>Determine el rango de <span class="math inline">\(A\)</span>, digamos que es <span class="math inline">\(r\)</span>.</li>
+<li>En <span class="math inline">\({A}\)</span> halle un menor no singular de orden <span class="math inline">\(r\)</span>, llame a éste <span class="math inline">\({M}\)</span>.</li>
+<li>Invierta <span class="math inline">\({M}\)</span> y transponga la inversa: <span class="math inline">\(\left( {M}^{-1}\right)'\)</span>.</li>
+<li>En <span class="math inline">\({A}\)</span> reemplace cada elemento de <span class="math inline">\({M}\)</span> por el correspondiente elemento de <span class="math inline">\(\left( {M}^{-1}\right)'\)</span>. Reemplace todos los otros elementos de <span class="math inline">\({A}\)</span> por cero. Transponga la matriz resultante. El resultado es <span class="math inline">\({A}^{-}\)</span>, una inversa generalizada de <span class="math inline">\({A}\)</span>.</li>
+</ul>
+<div class="sourceCode" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href=""></a>A</span>
+<span id="cb208-2"><a href=""></a><span class="co"># rango </span></span>
+<span id="cb208-3"><a href=""></a><span class="fu">qr</span>(A)<span class="sc">$</span>rank </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:25%;">
+<caption>A matrix: 3 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>2</td>
+<td>-2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>2</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href=""></a><span class="co"># Menor no singular</span></span>
+<span id="cb209-2"><a href=""></a>A</span>
+<span id="cb209-3"><a href=""></a>M<span class="ot">&lt;-</span>A[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb209-4"><a href=""></a>M</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:25%;">
+<caption>A matrix: 3 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>2</td>
+<td>-2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:12%;">
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href=""></a><span class="co"># inversa del menor </span></span>
+<span id="cb210-2"><a href=""></a><span class="fu">solve</span>(M)</span>
+<span id="cb210-3"><a href=""></a><span class="co"># transpuesta de la inversa del menor</span></span>
+<span id="cb210-4"><a href=""></a>Mi<span class="ot">&lt;-</span><span class="fu">t</span>(<span class="fu">solve</span>(M));Mi</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:11%;">
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:11%;">
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb211"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href=""></a><span class="co"># matriz de ceros del mismo tamano de A</span></span>
+<span id="cb211-2"><a href=""></a>A0<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="fu">nrow</span>(A),<span class="at">ncol=</span><span class="fu">ncol</span>(A)) </span>
+<span id="cb211-3"><a href=""></a>A0</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 3 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>En <span class="math inline">\({A}\)</span> reemplace cada elemento de <span class="math inline">\({M}\)</span> por el correspondiente elemento de <span class="math inline">\(\left( {M}^{-1}\right)'\)</span>.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href=""></a>A0[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]<span class="ot">&lt;-</span>Mi</span>
+<span id="cb212-2"><a href=""></a>A0</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 3 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb213"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href=""></a>G<span class="ot">&lt;-</span><span class="fu">t</span>(A0) <span class="co"># la inversa generalizada de A</span></span>
+<span id="cb213-2"><a href=""></a>G</span>
+<span id="cb213-3"><a href=""></a>A<span class="sc">%*%</span>G<span class="sc">%*%</span>A<span class="sc">-</span>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:17%;">
+<caption>A matrix: 4 × 3 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 3 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aplicación-de-las-inversas-generalizadas">Aplicación de las inversas generalizadas</h3>
+<p>Las ecuaciones consistentes <span class="math inline">\(Ax=y\)</span> tienen una solución <span class="math inline">\(x=Gy\)</span> si y sólo si <span class="math inline">\(AGA=A\)</span> (<span class="math inline">\(G\)</span> es una inversa generalizada de <span class="math inline">\(A\)</span>)</p>
+<h3 id="ejercicio-4">Ejercicio:</h3>
+<p>Considere el sistema de ecuaciones lineales<br>
+<span class="math display">\[\begin{equation}\label{eje_sol_ecuaciones}
+\begin{bmatrix}
+  7&amp;3&amp;2&amp;2\\
+  3&amp;3&amp;0&amp;0\\
+  2&amp;0&amp;2&amp;0\\
+  2&amp;0&amp;0&amp;2
+\end{bmatrix}\begin{bmatrix}
+  x_1 \\
+  x_2 \\
+  x_3 \\
+  x_4
+\end{bmatrix}=\begin{bmatrix}
+  553 \\
+  219 \\
+  156 \\
+  178
+\end{bmatrix}.
+\end{equation}\]</span> encuentre una solución</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href=""></a>A<span class="ot">&lt;-</span><span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>),<span class="at">nrow=</span><span class="dv">4</span>,<span class="at">byrow=</span><span class="cn">TRUE</span> ); A  </span>
+<span id="cb214-2"><a href=""></a>B<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">553</span>,<span class="dv">219</span>,<span class="dv">156</span>,<span class="dv">178</span>),<span class="at">ncol=</span><span class="dv">1</span>); B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 4 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:8%;">
+<caption>A matrix: 4 × 1 of type dbl</caption>
+<colgroup>
+<col style="width: 8%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>553</td>
+</tr>
+<tr class="even">
+<td>219</td>
+</tr>
+<tr class="odd">
+<td>156</td>
+</tr>
+<tr class="even">
+<td>178</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb215"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href=""></a><span class="fu">det</span>(A)</span>
+<span id="cb215-2"><a href=""></a><span class="fu">all.equal</span>(<span class="fu">det</span>(A),<span class="dv">0</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>7.99360577730114e-15</p>
+<p>TRUE</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href=""></a><span class="co">#solve(A)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Determine el rango de <span class="math inline">\(A\)</span>, digamos que es <span class="math inline">\(r\)</span>.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href=""></a><span class="fu">qr</span>(A)<span class="sc">$</span>rank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>3</p>
+<p>En <span class="math inline">\({A}\)</span> halle un menor no singular de orden <span class="math inline">\(r\)</span>, llame a éste <span class="math inline">\({M}\)</span>.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href=""></a>M<span class="ot">=</span>A[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>];M</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:17%;">
+<caption>A matrix: 3 × 3 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Invierta <span class="math inline">\(M\)</span> y transponga la inversa: <span class="math inline">\(\left( {M}^{-1}\right)'\)</span>.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href=""></a>Mit<span class="ot">&lt;-</span><span class="fu">t</span>(<span class="fu">solve</span>(M))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En <span class="math inline">\({A}\)</span> reemplace cada elemento de <span class="math inline">\({M}\)</span> por el correspondiente elemento de <span class="math inline">\(\left( {M}^{-1}\right)'\)</span>. Reemplace todos los otros elementos de <span class="math inline">\({A}\)</span> por cero.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href=""></a>A0<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="fu">nrow</span>(A),<span class="at">ncol=</span><span class="fu">ncol</span>(A));A0</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 4 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb221"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href=""></a>A0[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]<span class="ot">&lt;-</span>Mit</span>
+<span id="cb221-2"><a href=""></a>A0</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:39%;">
+<caption>A matrix: 4 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 16%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.0000000</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0.3333333</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0.0000000</td>
+<td>0.5</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0.0000000</td>
+<td>0.0</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+<p>Transponga la matriz resultante. El resultado es <span class="math inline">\({A}^{-}\)</span>, una inversa generalizada de <span class="math inline">\({A}\)</span>.</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href=""></a>G<span class="ot">=</span><span class="fu">t</span>(A0)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href=""></a>A<span class="sc">%*%</span>G<span class="sc">%*%</span>A<span class="sc">-</span>A</span>
+<span id="cb223-2"><a href=""></a>A<span class="sc">%*%</span>G<span class="sc">%*%</span>A<span class="sc">==</span>A</span>
+<span id="cb223-3"><a href=""></a><span class="fu">all</span>(A<span class="sc">%*%</span>G<span class="sc">%*%</span>A<span class="sc">==</span>A)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:22%;">
+<caption>A matrix: 4 × 4 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:39%;">
+<caption>A matrix: 4 × 4 of type lgl</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="even">
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="odd">
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="even">
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+</tbody>
+</table>
+<p>TRUE</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href=""></a>G<span class="sc">%*%</span>B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:7%;">
+<caption>A matrix: 4 × 1 of type dbl</caption>
+<colgroup>
+<col style="width: 6%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+</tr>
+<tr class="even">
+<td>73</td>
+</tr>
+<tr class="odd">
+<td>78</td>
+</tr>
+<tr class="even">
+<td>89</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb225"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href=""></a>A<span class="sc">%*%</span>G<span class="sc">%*%</span>B <span class="sc">-</span> B</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:6%;">
+<caption>A matrix: 4 × 1 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Cómo generar todas las soluciones de un sistema de ecuaciones lineales con infinitas soluciones</li>
+<li>Consultar sobre la inversa de More Penrose y como se calcula con R</li>
+</ul>
+<h3 id="raiz-cuadrada-de-una-matriz">Raiz cuadrada de una matriz</h3>
+<p>Una matriz <span class="math inline">\(B\)</span> se dice que es una raíz cuadrada de <span class="math inline">\(A\)</span> si el producto <span class="math inline">\(B\times B\)</span> es igual a A.</p>
+<p>Ejemplo: Considere la matriz</p>
+<p><span class="math display">\[A=\begin{bmatrix}
+33 &amp; 24 \\
+48 &amp; 57 \\
+\end{bmatrix}\]</span></p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href=""></a>A<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">33</span>,<span class="dv">24</span>,<span class="dv">48</span>,<span class="dv">57</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb226-2"><a href=""></a>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:14%;">
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>33</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td>48</td>
+<td>57</td>
+</tr>
+</tbody>
+</table>
+<p>La matriz <span class="math display">\[B=\begin{bmatrix}
+5 &amp; 2  \\
+4 &amp; 7 \\
+\end{bmatrix}\]</span> es una raiz cuadrada de <span class="math inline">\(A\)</span></p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href=""></a>B<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb227-2"><a href=""></a>B<span class="sc">%*%</span>B<span class="sc">-</span>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:11%;">
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb228"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href=""></a>R<span class="sc">%*%</span>R<span class="sc">-</span>A</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Error in eval(expr, envir, enclos): objeto 'R' no encontrado
+Traceback:</code></pre>
+<h3 id="descomposicion-en-valores-singulares">Descomposicion en valores singulares</h3>
+<div class="sourceCode" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href=""></a>B<span class="ot">=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">*</span>(A<span class="sc">+</span><span class="fu">t</span>(A)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href=""></a>B</span>
+<span id="cb231-2"><a href=""></a><span class="fu">svd</span>(B) <span class="co"># descopmposicion en valores singulares  </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;dd&gt;&lt;table class="dataframe"&gt;</code></pre>
+<pre><code>&lt;dd&gt;&lt;table class="dataframe"&gt;</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href=""></a>U12<span class="ot">=</span><span class="fu">diag</span>(<span class="fu">sqrt</span>(<span class="fu">svd</span>(B)<span class="sc">$</span>d))</span>
+<span id="cb234-2"><a href=""></a>U12</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href=""></a>R<span class="ot">=</span><span class="fu">svd</span>(B)<span class="sc">$</span>u<span class="sc">%*%</span>U12<span class="sc">%*%</span><span class="fu">t</span>(<span class="fu">svd</span>(B)<span class="sc">$</span>u)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href=""></a><span class="fu">round</span>(R<span class="sc">%*%</span>R<span class="sc">-</span>B,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Consultar como se calcula, en caso que exista, una raíz cuadrada de una matriz en forma general.</li>
+</ul>
+</section>
+<section id="creación-de-arreglos" class="slide level2 center">
+<h2>Creación de arreglos</h2>
+<p>Los <code>arrays</code> (arreglos) se pueden definir como vectores multidimensionales. Al igual que un vector, únicamente pueden contener datos de un sólo tipo, pero además de largo, tienen más dimensiones. Pueden tener un número arbitrario de dimensiones. Pueden ser cubos, hipercubos y otras formas. Su uso no es muy común en R, aunque a veces es deseable contar con objetos n-dimensionales para manipular datos. Como los arrays tienen la restricción de que todos sus datos deben ser del mismo tipo, no importando en cuántas dimensiones se encuentren, esto limita sus usos prácticos.</p>
+<p>Para crear un arreglo, se llama a la función <code>array()</code>, pasando un vector de valores y un vector de dimensiones. Opcionalmente, también puede proporcionar nombres para cada dimensión:</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href=""></a>arreglo3d<span class="ot">&lt;-</span><span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>,<span class="at">dim=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>),<span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">dim1=</span></span>
+<span id="cb237-2"><a href=""></a><span class="fu">c</span>(<span class="st">"uno"</span>, <span class="st">"dos"</span>, <span class="st">"tres"</span>, <span class="st">"cuatro"</span>),</span>
+<span id="cb237-3"><a href=""></a><span class="at">dim2=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
+<span id="cb237-4"><a href=""></a><span class="at">dim3=</span><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)</span>
+<span id="cb237-5"><a href=""></a>))</span>
+<span id="cb237-6"><a href=""></a><span class="fu">print</span>(arreglo3d)</span>
+<span id="cb237-7"><a href=""></a><span class="fu">class</span>(arreglo3d)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>, , dim3 = a
+
+        dim2
+dim1     A B  C
+  uno    1 5  9
+  dos    2 6 10
+  tres   3 7 11
+  cuatro 4 8 12
+
+, , dim3 = b
+
+        dim2
+dim1      A  B  C
+  uno    13 17 21
+  dos    14 18 22
+  tres   15 19 23
+  cuatro 16 20 24</code></pre>
+<p>‘array’</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href=""></a>arreglo3d[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>] </span>
+<span id="cb239-2"><a href=""></a>arreglo3d[<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>13</p>
+<p>6</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href=""></a>arreglo3d[,<span class="dv">1</span>,]</span>
+<span id="cb240-2"><a href=""></a>arreglo3d[,<span class="dv">2</span>,]</span>
+<span id="cb240-3"><a href=""></a>arreglo3d[,<span class="dv">3</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:25%;">
+<caption>A matrix: 4 × 2 of type int</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uno</td>
+<td>1</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>dos</td>
+<td>2</td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<td>tres</td>
+<td>3</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>cuatro</td>
+<td>4</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:25%;">
+<caption>A matrix: 4 × 2 of type int</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uno</td>
+<td>5</td>
+<td>17</td>
+</tr>
+<tr class="even">
+<td>dos</td>
+<td>6</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>tres</td>
+<td>7</td>
+<td>19</td>
+</tr>
+<tr class="even">
+<td>cuatro</td>
+<td>8</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:26%;">
+<caption>A matrix: 4 × 2 of type int</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uno</td>
+<td>9</td>
+<td>21</td>
+</tr>
+<tr class="even">
+<td>dos</td>
+<td>10</td>
+<td>22</td>
+</tr>
+<tr class="odd">
+<td>tres</td>
+<td>11</td>
+<td>23</td>
+</tr>
+<tr class="even">
+<td>cuatro</td>
+<td>12</td>
+<td>24</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb241"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href=""></a><span class="fu">print</span>(arreglo3d)</span>
+<span id="cb241-2"><a href=""></a>arreglo3d[<span class="dv">1</span>,,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>, , dim3 = a
+
+        dim2
+dim1     A B  C
+  uno    1 5  9
+  dos    2 6 10
+  tres   3 7 11
+  cuatro 4 8 12
+
+, , dim3 = b
+
+        dim2
+dim1      A  B  C
+  uno    13 17 21
+  dos    14 18 22
+  tres   15 19 23
+  cuatro 16 20 24</code></pre>
+<table class="caption-top" style="width:18%;">
+<caption>A matrix: 3 × 2 of type int</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>1</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>5</td>
+<td>17</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>9</td>
+<td>21</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb243"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb243-2"><a href=""></a>genero<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Hombre"</span>,<span class="st">"Mujer"</span>),<span class="dv">30</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb243-3"><a href=""></a>vive<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Rural"</span>,<span class="st">"Urbano"</span>),<span class="dv">30</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb243-4"><a href=""></a>estCiv<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Soltero"</span>,<span class="st">"Casado"</span>,<span class="st">"Unión Libre"</span>),<span class="dv">30</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb243-5"><a href=""></a>datos<span class="ot">=</span><span class="fu">data.frame</span>(genero,vive,estCiv)</span>
+<span id="cb243-6"><a href=""></a><span class="fu">head</span>(datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:53%;">
+<caption>A data.frame: 6 × 3</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>genero</th>
+<th>vive</th>
+<th>estCiv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>&lt;chr&gt;</td>
+<td>&lt;chr&gt;</td>
+<td>&lt;chr&gt;</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Mujer</td>
+<td>Rural</td>
+<td>Casado</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Mujer</td>
+<td>Urbano</td>
+<td>Unión Libre</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Mujer</td>
+<td>Rural</td>
+<td>Casado</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Mujer</td>
+<td>Rural</td>
+<td>Soltero</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Hombre</td>
+<td>Rural</td>
+<td>Soltero</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Mujer</td>
+<td>Urbano</td>
+<td>Soltero</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href=""></a>cruce<span class="ot">&lt;-</span><span class="fu">table</span>(genero,vive,estCiv) </span>
+<span id="cb244-2"><a href=""></a><span class="fu">print</span>(cruce)</span>
+<span id="cb244-3"><a href=""></a><span class="fu">mode</span>(cruce)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>, , estCiv = Casado
+
+        vive
+genero   Rural Urbano
+  Hombre     2      2
+  Mujer      3      3
+
+, , estCiv = Soltero
+
+        vive
+genero   Rural Urbano
+  Hombre     2      1
+  Mujer      4      3
+
+, , estCiv = Unión Libre
+
+        vive
+genero   Rural Urbano
+  Hombre     0      0
+  Mujer      4      6</code></pre>
+<p>‘numeric’</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href=""></a>cruce[,,<span class="dv">1</span>] <span class="co"># casados  </span></span>
+<span id="cb246-2"><a href=""></a>cruce[,,<span class="dv">2</span>] <span class="co"># Solteros  </span></span>
+<span id="cb246-3"><a href=""></a>cruce[,,<span class="dv">3</span>] <span class="co"># U  libre </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        vive
+genero   Rural Urbano
+  Hombre     2      2
+  Mujer      3      3
+
+
+
+        vive
+genero   Rural Urbano
+  Hombre     2      1
+  Mujer      4      3
+
+
+
+        vive
+genero   Rural Urbano
+  Hombre     0      0
+  Mujer      4      6</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href=""></a>cruce[,<span class="dv">1</span>,] <span class="co"># Rural </span></span>
+<span id="cb248-2"><a href=""></a>cruce[,<span class="dv">2</span>,] <span class="co"># Urbano </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        estCiv
+genero   Casado Soltero Unión Libre
+  Hombre      2       2           0
+  Mujer       3       4           4
+
+
+
+        estCiv
+genero   Casado Soltero Unión Libre
+  Hombre      2       1           0
+  Mujer       3       3           6</code></pre>
+<div class="sourceCode" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href=""></a>cruce[<span class="dv">1</span>,,] <span class="co">#Hombres </span></span>
+<span id="cb250-2"><a href=""></a>cruce[<span class="dv">2</span>,,] <span class="co"># Mujeres </span></span>
+<span id="cb250-3"><a href=""></a></span>
+<span id="cb250-4"><a href=""></a>cruce[<span class="st">"Hombre"</span>,,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       2       2           0
+  Urbano      2       1           0
+
+
+
+        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       3       4           4
+  Urbano      3       3           6
+
+
+
+        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       2       2           0
+  Urbano      2       1           0</code></pre>
+<div class="sourceCode" id="cb252"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb252-1"><a href=""></a><span class="fu">as.data.frame</span>(cruce)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top" style="width:61%;">
+<caption>A data.frame: 12 × 4</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>genero</th>
+<th>vive</th>
+<th>estCiv</th>
+<th>Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;fct&gt;</td>
+<td>&lt;fct&gt;</td>
+<td>&lt;fct&gt;</td>
+<td>&lt;int&gt;</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Rural</td>
+<td>Casado</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Rural</td>
+<td>Casado</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Urbano</td>
+<td>Casado</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Urbano</td>
+<td>Casado</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Rural</td>
+<td>Soltero</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Rural</td>
+<td>Soltero</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Urbano</td>
+<td>Soltero</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Urbano</td>
+<td>Soltero</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Rural</td>
+<td>Unión Libre</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Rural</td>
+<td>Unión Libre</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Hombre</td>
+<td>Urbano</td>
+<td>Unión Libre</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Mujer</td>
+<td>Urbano</td>
+<td>Unión Libre</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Clase3MatricesB_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Clase3MatricesB_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copiado");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copiado");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

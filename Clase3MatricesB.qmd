@@ -1,0 +1,1827 @@
+---
+title: "Matrices"
+subtitle: " "   
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  pdf: default
+toc: true
+toc-depth: 1
+---
+
+# Matrices
+
+## Objetivos
+
+Después de estudiar este capítulo, usted debería:
+
+- Ser capaz de crear y manipular matrices. 
+
+- Realizar operaciones con matrices. 
+
+## Matrices
+
+::: callout-note
+En un sentido estricto, las matrices son arreglos de dos dimensiones, un `largo` y un `alto`. Las matrices son, por lo tanto, una estructura con forma rectangular, con filas y columnas.
+:::
+
+## Creación de matrices
+
+-   Para crear una matriz se usa la función `matrix`,
+
+-   También puede crear matrices con la función `array`
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A=matrix(c(3,5,1,4),nrow=2) 
+A
+```
+
+```{r} 
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+A=matrix(c(3,5,1,4),nrow=2,byrow=TRUE) 
+A
+```
+
+## Usando `array()`
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+ 
+A=array(c(3,5,1,4),dim=c(2,2)) 
+A
+```
+
+## Nombres de filas y columnas
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+Ventas=matrix(c(5,4,9,7,6,3,3,2,5,2,1,8,0,4,3),ncol=5, 
+    dimnames=list(c("Mario","Juan","Miguel"),c("L","M","Mi","J","V") ))
+Ventas
+```
+
+
+## Nombres de filas y columnas (II)
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+Ventas2=matrix(c(5,4,9,7,6,3,3,2,5,2,1,8,0,4,3),ncol=5)
+Ventas2
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+rownames(Ventas2)=c("Mario","Juan","Miguel")
+colnames(Ventas2)=c("L","M","Mi","J","V") 
+Ventas2
+```
+
+
+
+## Recuperar nombres de filas y columnas 
+
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+rownames(Ventas2)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+colnames(Ventas2)
+```
+
+
+# Recuperación y Edición de valores
+
+## Indexación por número de fila y columna
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+Ventas[1,4]
+Ventas[1,5]=5
+```
+
+```{r}
+#| echo: false
+#| output-location: fragment
+#| column: screen-inset-shaded 
+library(knitr) 
+kable(Ventas, format = "html", table.attr = "class='striped'")
+```
+
+## Indexación por nombre de fila y columna
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+Ventas["Mario", ]
+Ventas[,"L"]
+Ventas["Juan","Mi"]
+```
+
+## Indexación por nombre de fila y columna
+
+```{r }
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+Ventas["Mario","J"] 
+Ventas["Mario","V"]=5 
+Ventas
+```
+
+## Ventas de mario y Juan lunes y viernes
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+Ventas[c(1,2),c(1,5)] 
+Ventas[c("Mario","Juan"),c("L","V")] 
+Ventas[c("Mario","Juan"),c("L","M","Mi","J","V")]
+Ventas[c("Mario","Juan"), ] 
+Ventas[,c("L","M")]
+```
+
+# Operaciones sobre las filas y las columnas de una matriz
+
+## Suma por filas y columnas
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+# SUMA POR FILAS 
+rowSums(Ventas)
+# SUMA POR COLUMNAS 
+colSums(Ventas)
+```
+
+## Media por filas y columnas
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+# Promedio POR FILAS 
+rowMeans(Ventas)
+# promedio por columna 
+colMeans(Ventas)
+```
+
+
+## Estadísticas de fila y columna con `apply` 
+
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+# varianza  POR FILAS 
+apply(Ventas,1,var)
+# máximo por columna 
+apply(Ventas,2,max) 
+```
+
+
+## Transpuesta de una matriz
+
+Operación que intercambia filas por columnas
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+t(Ventas)
+```
+
+## Operaciones componente a componente
+
+Las matrices deben tener la misma dimensión
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A=matrix(c(3,5,1,4),nrow=2) 
+B=matrix(c(5,8,7,3),nrow=2) 
+```
+
+### Suma
+
+Suma componente a componente
+
+```{r }
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A+B   
+```
+
+## Producto por un escalar
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+2*A
+```
+
+## Resta
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A-B
+```
+
+## Producto componente a componente
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A*B
+```
+
+## Cociente componente a componente
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A/B
+```
+
+## Producto usual de matrices
+
+::: callout-important
+Para que se pueda realizar este producto se requiere que el número de columnas de la primera matriz, sea igual al número de filas de la segunda. 
+:::
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A=matrix(c(1,3,2,5,4,0),nrow=2);A 
+B=matrix(c(0,1,2,-1,0,0,2,0,1),nrow=3);B
+```
+
+## Producto usual de matrices  
+
+```{r }
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A%*%B 
+```
+
+## Producto de $A$ por su transpuesta  
+
+```{r }
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+A%*%t(A)
+```
+
+
+
+```{r }
+#| echo: false
+#| eval: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+mat<-matrix(1:12, nrow=4 ,dimnames=list(c("uno","dos","tres","cuatro"),
+              c("A","B","C") ) )
+#mat 
+```
+
+
+## Matriz simétrica
+
+Si $A(i,j)=A(j,i)$ para todo $i$, $j$ la matriz $A$ es simétrica
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+S=Ventas%*%t(Ventas)
+```
+
+
+## Ejercicio 
+
+Escribir código `R` que permita averiguar su una matriz es simétrica o no 
+
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+S=matrix(c(3,2,4,2,1,0,4,0,5),nrow=3)
+S
+# averiguar si S es simétrica 
+```
+
+
+
+
+  
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+# igualamos a S con su transpuesta 
+S==t(S) 
+all( S==t(S) ) 
+S-t(S)  
+```
+
+
+## Ejercicio 
+
+Escribir una función en R código `R` que permita averiguar su una matriz es cuadrada
+
+
+```{r }
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+# como averiguar si una matriz es cuadrada 
+is.cuadrada=function(X){
+    if(nrow(X)==ncol(X)){"La matriz es cuadrada"
+    }else("La matriz no es cuadrada")
+        }
+is.cuadrada(B) 
+```
+
+
+## Ejercicio 
+
+Función que nos dice si una matriz cuadrada es simétrica o no
+
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+#  
+prueba.simetria=function(X){
+if(nrow(X)!=ncol(X)){stop("La matriz debe ser cuadrada")}
+if( all(X==t(X)) ){"La matriz es simetrica "
+}else{"La matriz no es simetrica"}     
+}
+prueba.simetria(B)
+prueba.simetria(A%*%t(A)) 
+```
+
+## Combinando matrices
+
+Podemos concatenar matrices por filas y columnas 
+
+### rbind 
+
+Una matriz debajo de la otra 
+
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+rbind(A,B)
+```
+
+## Combinando matrices (II)
+
+###  cbind
+
+Una matriz al lado de la otra
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded  
+cbind(B,Ventas)
+Ventas
+```
+
+
+
+## Filas, columnas y dimensiones
+
+Tanto para arreglos como para matrices, la función `dim` devuelve un vector de números enteros de las dimensiones de la variable:
+
+
+Para matrices, las funciones `nrow` y `ncol` devuelven el número de filas y columnas, respectivamente
+
+```{r}
+#| echo: true
+#| output-location: fragment
+#| column: screen-inset-shaded 
+nrow(A)
+ncol(A)
+```
+
+<!--
+
+## ¿Cómo saber si una matriz es cuadrada?
+
+```{r echo=TRUE}
+nrow(mat)==ncol(mat) ### no es cuadrada 
+A<-mat %*% t(mat)
+nrow(A)==ncol(A) ## Es cuadrada
+```
+
+
+```{r echo=TRUE}
+is.cuadrada<-function(x){
+if(ncol(x)==nrow(x)){cat("Es cuadrada","\n")
+                    }else{cat("No es cuadrada","\n")}    
+}
+is.cuadrada(mat)
+is.cuadrada(A) 
+#is.cuadrada(1:5) 
+nrow(1:5)==ncol(1:5)
+#is.cuadrada(cruce)
+```
+
+
+```{r echo=TRUE}
+is.cuadrada<-function(x){
+if(is.matrix(x)){
+    if(ncol(x)==nrow(x)){cat("Es cuadrada","\n")}else{cat("No es cuadrada","\n")}
+    }else{cat("Se requiere una matriz, tonto","\n")}
+}
+is.cuadrada(1:5) 
+#is.cuadrada(mat)
+#is.cuadrada(cruce)
+```
+
+
+
+## 
+
+
+`nrow`, `ncol` y `dim` devuelven `NULL` cuando se aplican a vectores. Las funciones `NROW` y `NCOL` son contrapartes de `nrow` y `ncol` que asumen que los vectores son matrices con una sola columna (es decir, vectores columna en el sentido matemático):
+
+## 
+
+De la misma manera que los vectores tienen nombres para los elementos, las matrices tienen nombres de filas y nombres de columnas. Por razones históricas, también hay una función `row.names`, que hace lo mismo que los `rownames` , pero no hay `col.names`, por lo que es mejor ignorarla y usar `rownames` en su lugar. Como en el caso de `nrow`, `ncol` y `dim`, la función equivalente para matrices es `dimnames`. Este último devuelve una lista de vectores de caracteres.
+
+```{r echo=TRUE}
+rownames(mat)
+colnames(mat)
+dimnames(mat) ### es una lista 
+class(dimnames(mat))
+dimnames(mat)[1]
+dimnames(mat)[2]
+```
+
+
+## 
+
+```{r echo=TRUE}
+A
+rownames(A)<-c("Fil 1","Fil 2","Fil 3","Fil 4") 
+colnames(A)<-c("Col 1","Col 2","Col 3","Col 4") 
+A
+dimnames(A)
+dimnames(A)<-list(Filas=c("F 1","F 2","F 3","F 4"), Columnas=c("C 1","C 2","C 3","C 4") )
+
+print(A)
+```
+
+--> 
+
+#   Matrices especiales
+
+## Matriz de puros unos 
+
+Matriz de puros unos $A=(a_{i,j})_{m\times n}$ con $a_{i,j}=1$ para todo $i$ y todo $j$
+
+```{r echo=TRUE}
+matrix(1,nrow=3,ncol=4)
+```
+
+
+## Matriz de puros unos (aplicación)
+
+
+```{r echo=TRUE}
+Z<-matrix(c(1,-1,2,-2),byrow=TRUE,nrow=2 )
+Z
+U<-matrix(1,nrow=2,ncol=2)
+U
+Z%*%U
+U%*%Z
+```
+
+## Matriz de puros ceros 
+
+```{r echo=TRUE}
+# Puros ceros 
+C<-matrix(0,ncol=4,nrow=3)
+C
+```
+
+## Matriz idéntica
+
+Matriz idéntica de orden 5
+
+```{r echo=TRUE}
+I5<-diag(5)
+I5
+```
+
+
+## Matriz diagonal
+
+
+
+```{r echo=TRUE}
+diag(c(2,3,5))
+```
+
+## Recuperar la diagonal de una matriz
+
+```{r echo=TRUE}
+A=t(mat)%*%mat 
+A
+diag(A)
+```
+
+
+
+
+## Traza de una matriz 
+
+Definicion: dada una matriz cuadrada, su traza se define como la suma de los elementos de la diagonal.
+
+Tarea, escribir codigo R que tome una matriz cuadrada y regrese la traza de ella.
+
+```{r echo=TRUE}
+sum(diag(A))
+```
+
+## Productos cruzados 
+
+Otra forma de calcular $B^t\times B$
+
+```{r echo=TRUE}
+crossprod(mat)
+```
+
+
+<!--
+
+## Aritmética de matrices
+
+Los operadores aritméticos estándar `(+, -, \ *, /)` funcionan elemento por elemento en arreglos y matrices, tal como lo hacen en vectores:
+
+``` r
+mat 
+mat2
+```
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
+``` r
+mat * mat2 
+mat/mat2
+```
+
++--------+----+----+-----+
+|        | A  | B  | C   |
++========+====+====+=====+
+| uno    | 1  | 25 | 81  |
++--------+----+----+-----+
+| dos    | 4  | 36 | 100 |
++--------+----+----+-----+
+| tres   | 9  | 49 | 121 |
++--------+----+----+-----+
+| cuatro | 16 | 64 | 144 |
++--------+----+----+-----+
+
+: A matrix: 4 × 3 of type int
+
++--------+---+---+---+
+|        | A | B | C |
++========+===+===+===+
+| uno    | 1 | 1 | 1 |
++--------+---+---+---+
+| dos    | 1 | 1 | 1 |
++--------+---+---+---+
+| tres   | 1 | 1 | 1 |
++--------+---+---+---+
+| cuatro | 1 | 1 | 1 |
++--------+---+---+---+
+
+: A matrix: 4 × 3 of type dbl
+
+Al realizar operaciones aritméticas en dos arreglos, debe asegurarse de que sean de un tamaño adecuado (deben ser "compatibles", en terminología de álgebra lineal). Por ejemplo, ambos arreglos deben tener el mismo tamaño al sumar. Para la multiplicación de matrices, el número de columnas de la primera matríz debe ser el mismo que el número de filas de la segunda matriz:
+
+``` r
+mat3<-matrix(1:12, nrow = 2)
+mat3
+mat
+```
+
++---+---+---+---+----+----+
+| 1 | 3 | 5 | 7 | 9  | 11 |
++---+---+---+---+----+----+
+| 2 | 4 | 6 | 8 | 10 | 12 |
++---+---+---+---+----+----+
+
+: A matrix: 2 × 6 of type int
+
++--------+---+---+----+
+|        | A | B | C  |
++========+===+===+====+
+| uno    | 1 | 5 | 9  |
++--------+---+---+----+
+| dos    | 2 | 6 | 10 |
++--------+---+---+----+
+| tres   | 3 | 7 | 11 |
++--------+---+---+----+
+| cuatro | 4 | 8 | 12 |
++--------+---+---+----+
+
+: A matrix: 4 × 3 of type int
+
+``` r
+#mat * mat3 # arreglos de dimensón no compatibles
+```
+
+Si intenta sumar un vector a un arreglo (o matriz) , se aplican las reglas habituales de reciclaje de vectores, pero la dimensión de los resultados se toma del arreglo (o la matriz).
+
+La función `t` transpone matrices
+
+``` r
+mat3
+t(mat3)
+```
+
++---+---+---+---+----+----+
+| 1 | 3 | 5 | 7 | 9  | 11 |
++---+---+---+---+----+----+
+| 2 | 4 | 6 | 8 | 10 | 12 |
++---+---+---+---+----+----+
+
+: A matrix: 2 × 6 of type int
+
++----+----+
+| 1  | 2  |
++----+----+
+| 3  | 4  |
++----+----+
+| 5  | 6  |
++----+----+
+| 7  | 8  |
++----+----+
+| 9  | 10 |
++----+----+
+| 11 | 12 |
++----+----+
+
+: A matrix: 6 × 2 of type int
+-->
+
+## Producto interno y externo 
+
+
+* Para la multiplicación de matrices (producto interno y producto externo), tenemos los operadores especiales `%*%` y `%o%`. 
+
+* En cada caso, los nombres de las dimensiones se toman de la primera entrada, si existen:
+
+
+
+## Producto interno y externo: ejemplos
+
+-   Calcular $X\times X^t$
+-   Si $A=(1,2,3)$ y $B=(4,5,6)$, calcular $A \circ B$
+
+```{r echo=TRUE}
+mat%*%t(mat)
+```
+
+```{r echo=TRUE}
+c(1,2,3) %o% c(4,5,6)
+```
+
+## Equivalente 
+
+```{r echo=TRUE}
+outer(1:3, 4:6)
+```
+
+
+
+## Ejemplo producto usual de matrices 
+
+```{r echo=TRUE}
+A<-matrix(c(1,3,2,4,0,1),nrow=2)
+B<-matrix(c(1,1,3,0,1,2,-1,4,3),nrow=3)
+A%*%B
+```
+
+
+
+# Matriz inversa 
+
+
+## 
+
+```{r echo=TRUE}
+m <- matrix(c(1, 0, 1, 5, -3, 1, 2, 4, 7), nrow = 3)
+m
+```
+
+
+### Cociente componete a componente 
+
+```{r echo=TRUE}
+m^-1
+```
+
+### Cálculo de determinante   
+
+```{r echo=TRUE}
+det(m)
+```
+
+
+
+
+## Inversa de una matriz 
+
+::: callout-note
+Data una matriz cuadrada $A_{n\times n}$, la inversa de $A$, si existe, es una matriz de tamaño $n\times n$, denotada por  $A^{-1}$ tal que $$A\times A^{-1}=A^{-1}\times A=I_n $$ donde $I_n$ es la identica de orden $n$.  
+::: 
+
+Cálculo de la inversa de una matriz
+
+```{r echo=TRUE}
+solve(m)
+```
+
+
+
+```{r echo=TRUE}
+m%*%solve(m)
+```
+
+
+
+
+## Determinante de una matriz
+
+Una matriz cuadrada $A_{n\times n}$, tiene inversa, si y solo si su determinante es distinto de cero.  
+
+
+```{r echo=TRUE}
+det(m)
+```
+
+
+## Aplicación: solución de sistemas de ecuaciones lineales.
+
+Dado un sistema de ecuaciones lineales de la forma $$Ax=b$$ donde $A$ es una matriz invertible, entonces la solución del sistema es $$x=A^{-1}b$$ donde $A^{-1}$ es la inversa de $A$
+
+## 
+
+Ejemplo: Halle la solución del siguiente sistema $3\times 3$ $$\begin{array}{rl}
+2a+b-3c &= 7\\
+5a-4b+c&=-19\\
+a-b-4c&=4
+\end{array}$$
+
+## Solución 
+
+Solución: El sistema se puede escribir en forma matricial con $$ A=\begin{bmatrix}
+2 & 1  & -3 \\
+5 & -4 & 1  \\
+1 & -1 & -4
+\end{bmatrix} \hbox{ ,  } b=\begin{bmatrix}
+7  \\
+-19   \\
+4 
+\end{bmatrix} \hbox{ y   }x=\begin{bmatrix}
+a \\
+b  \\
+c 
+\end{bmatrix} $$
+
+## Solución, ingresamos las matrices 
+
+```{r echo=TRUE}
+A=matrix(c(2 , 1  , -3,
+5 , -4 , 1,
+1 , -1 , -4),nrow=3,byrow=TRUE)
+b=matrix(c(7,-19,4),ncol=1) 
+solve(A)%*%b
+```
+
+
+
+
+```{r echo=TRUE}
+solve(A,b) 
+```
+
+
+
+## Solución de sistemas de ecuaciones lineales 
+
+Un sistema de la forma $Ax=b$ tiene solución única si y solo si el determinante de la matriz de coeficientes es distinto de cero.
+
+
+```{r echo=TRUE}
+A=matrix(c(1,6,7,-3),nrow=2,byrow=TRUE) 
+A
+b=matrix(c(27,9),nrow=2) 
+b
+```
+
+
+## Solución 
+
+
+```{r echo=TRUE}
+det(A) #distinto de cero luego el sistema tiene solucion unica 
+```
+
+
+```{r echo=TRUE}
+# varias formas de hallar la solución 
+# calculamos la inversa de A 
+Ai=solve(A) 
+Ai
+round(Ai%*%A,10) 
+Ai%*%b
+```
+
+
+```{r echo=TRUE}
+solve(A,b) 
+```
+
+
+## Ejercicio  
+
+Solucionar el siguiente sistema de ecuaciones lineales $$\begin{array}{c}
+2x+6y+z=7\\
+x+2y-z=-1\\
+5x+7y-4z=9
+\end{array}$$
+
+```{r echo=TRUE}
+A=matrix(c(3,-6,-2,4),nrow=2)
+b=matrix(c(1,-2),ncol=1)
+#solve(A,b)
+det(A)
+```
+
+
+
+### Aplicación: Inversa generalizada
+
+Calculo de una inversa generalizada de una matriz A. Una inversa generalizada de la matriz $A$ se define como una matriz $G$ tal que $A\times G \times A=A$
+
+## Ejemplo
+
+Considere la matriz $$ A=\begin{bmatrix}
+   2 & 3 & 1 & -1 \\ 
+   5 & 8 & 0 & 1 \\ 
+   1 & 2 & -2 & 3 \\ 
+\end{bmatrix} $$ verifique que la matriz $$ G=\begin{bmatrix}
+0 & 0 & 0\\
+0 & 0 & 0\\
+1 & 1 & 0\\
+0 & 1 & 0
+\end{bmatrix} $$ es una inversa generalizada de $$A$$
+
+## Solución 
+
+```{r echo=TRUE}
+library(MASS)
+A<-matrix(c( 2 , 3,1,-1 ,
+    5, 8 ,0 ,1 ,
+    1 , 2 ,-2 ,3),nrow=3,byrow=TRUE );A
+```
+
+
+```{r echo=TRUE}
+G1<-matrix(c(0,0,0 ,
+    0,0,0 ,
+    1,1,0 ,
+    0,1,0),nrow=4,byrow=TRUE);G1
+A%*%G1%*%A -A
+```
+
+## 
+
+Verifique que la matriz $$ G=\begin{bmatrix}
+0 & 1 & -4\\
+0 & -1/2 & 5/2\\
+0 & 0  & 0 \\
+0 & 0  & 0 
+\end{bmatrix} $$ también es una inversa generalizada de $$A$$
+
+```{r echo=TRUE}
+G2<-matrix(c(0,1,-4 ,
+    0,-1/2,5/2 ,
+    0,0,0 ,
+    0,0,0) ,nrow=4,byrow=TRUE);G2
+print( fractions(G2))
+
+#
+```
+
+
+```{r echo=TRUE}
+A%*%G1%*%A-A # el resuldato debe ser cero
+A%*%G2%*%A-A # el resuldato debe ser cero
+```
+
+
+#### Ejercicio.
+
+Dadas las matrices $$ P=\begin{bmatrix}
+0 & 0 & 1\\
+0 & -1/2 & 5/2\\
+1 & -1/2 & 1/2\\
+\end{bmatrix} $$ y $$Q=\begin{bmatrix}
+1 & -2 & -8 & 11\\
+0 & 1 & 5 & -7\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\\end{bmatrix} 
+$$ \* Verifique que $$PAQ=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0\\\end{bmatrix}=\Delta$$ \* Verifique que $P^{-1} \Delta Q^{-1}=A$
+
+```{r echo=TRUE}
+P<-matrix( c(0,0,1 ,
+    0,-1/2,5/2 ,
+    1,-1/2,1/2),nrow=3,byrow=T );
+   
+print(fractions(P))
+```
+
+
+```{r echo=TRUE}
+Q<-matrix(c( 1,-2,-8 ,11,
+    0,1,5,-7 ,
+    0,0,1,0,
+    0,0,0,1),nrow=4,byrow=TRUE) 
+     print( fractions(Q) )
+```
+
+
+```{r echo=TRUE}
+P%*%A%*%Q
+Delta<-P%*%A%*%Q;Delta
+```
+
+```{r echo=TRUE}
+det(P)
+P%*%solve(P) 
+```
+
+
+```{r echo=TRUE}
+#diag(rep(1,4))  
+# diag(1:5)
+A
+diag(A)
+```
+
+
+```{r echo=TRUE}
+solve(P)%*%Delta%*%solve(Q) 
+```
+
+```{r echo=TRUE}
+#Delta[1:2,1:2]
+A
+Dm<-matrix(0,nrow=4,ncol=3)
+solve(Delta[1:2,1:2])
+```
+
+
+```{r echo=TRUE}
+Dm<-matrix(0,nrow=4,ncol=3)
+Dm
+Dm[1:2,1:2]<-solve(Delta[1:2,1:2])
+Dm
+```
+
+
+```{r echo=TRUE}
+Q%*%Dm%*%P
+print(fractions(Q%*%Dm%*%P))
+```
+
+##  Solución de sistemas lineales con infinitas soluciones
+
+Una solución al sistema $Ax=b$ cuando el sistema tiene infinitas soluciones, es $$x=GA$$ donde $G$ es una inversa generalizada de $A$.
+
+## Algoritmo para cálculo de una inversa generalizada de A
+
+Para hallar una inversa generalizada de una matriz ${A}$ siga los siguientes pasos
+
+-   Determine el rango de $A$, digamos que es $r$.
+-   En ${A}$ halle un menor no singular de orden $r$, llame a éste ${M}$.
+-   Invierta ${M}$ y transponga la inversa: $\left( {M}^{-1}\right)'$.
+-   En ${A}$ reemplace cada elemento de ${M}$ por el correspondiente elemento de $\left( {M}^{-1}\right)'$. Reemplace todos los otros elementos de ${A}$ por cero. Transponga la matriz resultante. El resultado es ${A}^{-}$, una inversa generalizada de ${A}$.
+
+``` r
+A
+# rango 
+qr(A)$rank 
+```
+
++---+---+----+----+
+| 2 | 3 | 1  | -1 |
++---+---+----+----+
+| 5 | 8 | 0  | 1  |
++---+---+----+----+
+| 1 | 2 | -2 | 3  |
++---+---+----+----+
+
+: A matrix: 3 × 4 of type dbl
+
+2
+
+``` r
+# Menor no singular
+A
+M<-A[1:2,3:4]
+M
+```
+
++---+---+----+----+
+| 2 | 3 | 1  | -1 |
++---+---+----+----+
+| 5 | 8 | 0  | 1  |
++---+---+----+----+
+| 1 | 2 | -2 | 3  |
++---+---+----+----+
+
+: A matrix: 3 × 4 of type dbl
+
++---+----+
+| 1 | -1 |
++---+----+
+| 0 | 1  |
++---+----+
+
+: A matrix: 2 × 2 of type dbl
+
+``` r
+# inversa del menor 
+solve(M)
+# transpuesta de la inversa del menor
+Mi<-t(solve(M));Mi
+```
+
++---+---+
+| 1 | 1 |
++---+---+
+| 0 | 1 |
++---+---+
+
+: A matrix: 2 × 2 of type dbl
+
++---+---+
+| 1 | 0 |
++---+---+
+| 1 | 1 |
++---+---+
+
+: A matrix: 2 × 2 of type dbl
+
+``` r
+# matriz de ceros del mismo tamano de A
+A0<-matrix(0,nrow=nrow(A),ncol=ncol(A)) 
+A0
+```
+
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+
+: A matrix: 3 × 4 of type dbl
+
+En ${A}$ reemplace cada elemento de ${M}$ por el correspondiente elemento de $\left( {M}^{-1}\right)'$.
+
+``` r
+A0[1:2,3:4]<-Mi
+A0
+```
+
++---+---+---+---+
+| 0 | 0 | 1 | 0 |
++---+---+---+---+
+| 0 | 0 | 1 | 1 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+
+: A matrix: 3 × 4 of type dbl
+
+``` r
+G<-t(A0) # la inversa generalizada de A
+G
+A%*%G%*%A-A
+```
+
++---+---+---+
+| 0 | 0 | 0 |
++---+---+---+
+| 0 | 0 | 0 |
++---+---+---+
+| 1 | 1 | 0 |
++---+---+---+
+| 0 | 1 | 0 |
++---+---+---+
+
+: A matrix: 4 × 3 of type dbl
+
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+
+: A matrix: 3 × 4 of type dbl
+
+### Aplicación de las inversas generalizadas
+
+Las ecuaciones consistentes $Ax=y$ tienen una solución $x=Gy$ si y sólo si $AGA=A$ ($G$ es una inversa generalizada de $A$)
+
+### Ejercicio:
+
+Considere el sistema de ecuaciones lineales\
+\begin{equation}\label{eje_sol_ecuaciones}
+\begin{bmatrix}
+  7&3&2&2\\
+  3&3&0&0\\
+  2&0&2&0\\
+  2&0&0&2
+\end{bmatrix}\begin{bmatrix}
+  x_1 \\
+  x_2 \\
+  x_3 \\
+  x_4
+\end{bmatrix}=\begin{bmatrix}
+  553 \\
+  219 \\
+  156 \\
+  178
+\end{bmatrix}.
+\end{equation} encuentre una solución
+
+``` r
+A<-matrix( c(7,3,2,2,3,3,0,0,2,0,2,0,2,0,0,2),nrow=4,byrow=TRUE ); A  
+B<-matrix(c(553,219,156,178),ncol=1); B
+```
+
++---+---+---+---+
+| 7 | 3 | 2 | 2 |
++---+---+---+---+
+| 3 | 3 | 0 | 0 |
++---+---+---+---+
+| 2 | 0 | 2 | 0 |
++---+---+---+---+
+| 2 | 0 | 0 | 2 |
++---+---+---+---+
+
+: A matrix: 4 × 4 of type dbl
+
++-----+
+| 553 |
++-----+
+| 219 |
++-----+
+| 156 |
++-----+
+| 178 |
++-----+
+
+: A matrix: 4 × 1 of type dbl
+
+``` r
+det(A)
+all.equal(det(A),0) 
+```
+
+7.99360577730114e-15
+
+TRUE
+
+``` r
+#solve(A)
+```
+
+Determine el rango de $A$, digamos que es $r$.
+
+``` r
+qr(A)$rank
+```
+
+3
+
+En ${A}$ halle un menor no singular de orden $r$, llame a éste ${M}$.
+
+``` r
+M=A[2:4,2:4];M
+```
+
++---+---+---+
+| 3 | 0 | 0 |
++---+---+---+
+| 0 | 2 | 0 |
++---+---+---+
+| 0 | 0 | 2 |
++---+---+---+
+
+: A matrix: 3 × 3 of type dbl
+
+Invierta $M$ y transponga la inversa: $\left( {M}^{-1}\right)'$.
+
+``` r
+Mit<-t(solve(M))
+```
+
+En ${A}$ reemplace cada elemento de ${M}$ por el correspondiente elemento de $\left( {M}^{-1}\right)'$. Reemplace todos los otros elementos de ${A}$ por cero.
+
+``` r
+A0<-matrix(0,nrow=nrow(A),ncol=ncol(A));A0
+```
+
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+
+: A matrix: 4 × 4 of type dbl
+
+``` r
+A0[2:4,2:4]<-Mit
+A0
+```
+
++---+-----------+-----+-----+
+| 0 | 0.0000000 | 0.0 | 0.0 |
++---+-----------+-----+-----+
+| 0 | 0.3333333 | 0.0 | 0.0 |
++---+-----------+-----+-----+
+| 0 | 0.0000000 | 0.5 | 0.0 |
++---+-----------+-----+-----+
+| 0 | 0.0000000 | 0.0 | 0.5 |
++---+-----------+-----+-----+
+
+: A matrix: 4 × 4 of type dbl
+
+Transponga la matriz resultante. El resultado es ${A}^{-}$, una inversa generalizada de ${A}$.
+
+``` r
+G=t(A0)
+```
+
+``` r
+A%*%G%*%A-A
+A%*%G%*%A==A
+all(A%*%G%*%A==A)
+```
+
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+| 0 | 0 | 0 | 0 |
++---+---+---+---+
+
+: A matrix: 4 × 4 of type dbl
+
++------+------+------+------+
+| TRUE | TRUE | TRUE | TRUE |
++------+------+------+------+
+| TRUE | TRUE | TRUE | TRUE |
++------+------+------+------+
+| TRUE | TRUE | TRUE | TRUE |
++------+------+------+------+
+| TRUE | TRUE | TRUE | TRUE |
++------+------+------+------+
+
+: A matrix: 4 × 4 of type lgl
+
+TRUE
+
+``` r
+G%*%B
+```
+
++----+
+| 0  |
++----+
+| 73 |
++----+
+| 78 |
++----+
+| 89 |
++----+
+
+: A matrix: 4 × 1 of type dbl
+
+``` r
+A%*%G%*%B - B
+```
+
++---+
+| 0 |
++---+
+| 0 |
++---+
+| 0 |
++---+
+| 0 |
++---+
+
+: A matrix: 4 × 1 of type dbl
+
+-   Cómo generar todas las soluciones de un sistema de ecuaciones lineales con infinitas soluciones
+-   Consultar sobre la inversa de More Penrose y como se calcula con R
+
+### Raiz cuadrada de una matriz
+
+Una matriz $B$ se dice que es una raíz cuadrada de $A$ si el producto $B\times B$ es igual a A.
+
+Ejemplo: Considere la matriz
+
+$$A=\begin{bmatrix}
+33 & 24 \\ 
+48 & 57 \\
+\end{bmatrix}$$
+
+``` r
+A=matrix(c(33,24,48,57),nrow=2,byrow=TRUE)
+A
+```
+
++----+----+
+| 33 | 24 |
++----+----+
+| 48 | 57 |
++----+----+
+
+: A matrix: 2 × 2 of type dbl
+
+La matriz $$B=\begin{bmatrix}
+5 & 2  \\ 
+4 & 7 \\
+\end{bmatrix}$$ es una raiz cuadrada de $A$
+
+``` r
+B=matrix(c(5,2,4,7),nrow=2,byrow=TRUE)
+B%*%B-A
+```
+
++---+---+
+| 0 | 0 |
++---+---+
+| 0 | 0 |
++---+---+
+
+: A matrix: 2 × 2 of type dbl
+
+``` r
+R%*%R-A
+```
+
+```         
+Error in eval(expr, envir, enclos): objeto 'R' no encontrado
+Traceback:
+```
+
+### Descomposicion en valores singulares
+
+``` r
+B=1/2*(A+t(A)) 
+```
+
+``` r
+B
+svd(B) # descopmposicion en valores singulares  
+```
+
+
+```         
+<dd><table class="dataframe">
+```
+
+
+```         
+<dd><table class="dataframe">
+```
+
+
+``` r
+U12=diag(sqrt(svd(B)$d))
+U12
+```
+
+``` r
+R=svd(B)$u%*%U12%*%t(svd(B)$u)
+```
+
+``` r
+round(R%*%R-B,10)
+```
+
+
+-   Consultar como se calcula, en caso que exista, una raíz cuadrada de una matriz en forma general.
+
+## Creación de arreglos
+
+Los `arrays` (arreglos) se pueden definir como vectores multidimensionales. Al igual que un vector, únicamente pueden contener datos de un sólo tipo, pero además de largo, tienen más dimensiones. Pueden tener un número arbitrario de dimensiones. Pueden ser cubos, hipercubos y otras formas. Su uso no es muy común en R, aunque a veces es deseable contar con objetos n-dimensionales para manipular datos. Como los arrays tienen la restricción de que todos sus datos deben ser del mismo tipo, no importando en cuántas dimensiones se encuentren, esto limita sus usos prácticos.
+
+Para crear un arreglo, se llama a la función `array()`, pasando un vector de valores y un vector de dimensiones. Opcionalmente, también puede proporcionar nombres para cada dimensión:
+
+``` r
+arreglo3d<-array(1:24,dim=c(4,3,2),dimnames = list(dim1=
+c("uno", "dos", "tres", "cuatro"),
+dim2=c("A", "B", "C"),
+dim3=c("a", "b")
+))
+print(arreglo3d)
+class(arreglo3d)
+```
+
+```         
+, , dim3 = a
+
+        dim2
+dim1     A B  C
+  uno    1 5  9
+  dos    2 6 10
+  tres   3 7 11
+  cuatro 4 8 12
+
+, , dim3 = b
+
+        dim2
+dim1      A  B  C
+  uno    13 17 21
+  dos    14 18 22
+  tres   15 19 23
+  cuatro 16 20 24
+```
+
+'array'
+
+``` r
+arreglo3d[1,1,2] 
+arreglo3d[2,2,1]
+```
+
+13
+
+6
+
+``` r
+arreglo3d[,1,]
+arreglo3d[,2,]
+arreglo3d[,3,]
+```
+
++--------+---+----+
+|        | a | b  |
++========+===+====+
+| uno    | 1 | 13 |
++--------+---+----+
+| dos    | 2 | 14 |
++--------+---+----+
+| tres   | 3 | 15 |
++--------+---+----+
+| cuatro | 4 | 16 |
++--------+---+----+
+
+: A matrix: 4 × 2 of type int
+
++--------+---+----+
+|        | a | b  |
++========+===+====+
+| uno    | 5 | 17 |
++--------+---+----+
+| dos    | 6 | 18 |
++--------+---+----+
+| tres   | 7 | 19 |
++--------+---+----+
+| cuatro | 8 | 20 |
++--------+---+----+
+
+: A matrix: 4 × 2 of type int
+
++--------+----+----+
+|        | a  | b  |
++========+====+====+
+| uno    | 9  | 21 |
++--------+----+----+
+| dos    | 10 | 22 |
++--------+----+----+
+| tres   | 11 | 23 |
++--------+----+----+
+| cuatro | 12 | 24 |
++--------+----+----+
+
+: A matrix: 4 × 2 of type int
+
+``` r
+print(arreglo3d)
+arreglo3d[1,,]
+```
+
+```         
+, , dim3 = a
+
+        dim2
+dim1     A B  C
+  uno    1 5  9
+  dos    2 6 10
+  tres   3 7 11
+  cuatro 4 8 12
+
+, , dim3 = b
+
+        dim2
+dim1      A  B  C
+  uno    13 17 21
+  dos    14 18 22
+  tres   15 19 23
+  cuatro 16 20 24
+```
+
++---+---+----+
+|   | a | b  |
++===+===+====+
+| A | 1 | 13 |
++---+---+----+
+| B | 5 | 17 |
++---+---+----+
+| C | 9 | 21 |
++---+---+----+
+
+: A matrix: 3 × 2 of type int
+
+``` r
+set.seed(1234)
+genero<-sample(c("Hombre","Mujer"),30,replace=TRUE)
+vive<-sample(c("Rural","Urbano"),30,replace=TRUE)
+estCiv<-sample(c("Soltero","Casado","Unión Libre"),30,replace=TRUE)
+datos=data.frame(genero,vive,estCiv)
+head(datos)
+```
+
++---+---------+---------+-------------+
+|   | genero  | vive    | estCiv      |
++===+=========+=========+=============+
+|   | \<chr\> | \<chr\> | \<chr\>     |
++---+---------+---------+-------------+
+| 1 | Mujer   | Rural   | Casado      |
++---+---------+---------+-------------+
+| 2 | Mujer   | Urbano  | Unión Libre |
++---+---------+---------+-------------+
+| 3 | Mujer   | Rural   | Casado      |
++---+---------+---------+-------------+
+| 4 | Mujer   | Rural   | Soltero     |
++---+---------+---------+-------------+
+| 5 | Hombre  | Rural   | Soltero     |
++---+---------+---------+-------------+
+| 6 | Mujer   | Urbano  | Soltero     |
++---+---------+---------+-------------+
+
+: A data.frame: 6 × 3
+
+``` r
+cruce<-table(genero,vive,estCiv) 
+print(cruce)
+mode(cruce)
+```
+
+```         
+, , estCiv = Casado
+
+        vive
+genero   Rural Urbano
+  Hombre     2      2
+  Mujer      3      3
+
+, , estCiv = Soltero
+
+        vive
+genero   Rural Urbano
+  Hombre     2      1
+  Mujer      4      3
+
+, , estCiv = Unión Libre
+
+        vive
+genero   Rural Urbano
+  Hombre     0      0
+  Mujer      4      6
+```
+
+'numeric'
+
+``` r
+cruce[,,1] # casados  
+cruce[,,2] # Solteros  
+cruce[,,3] # U  libre 
+```
+
+```         
+        vive
+genero   Rural Urbano
+  Hombre     2      2
+  Mujer      3      3
+
+
+
+        vive
+genero   Rural Urbano
+  Hombre     2      1
+  Mujer      4      3
+
+
+
+        vive
+genero   Rural Urbano
+  Hombre     0      0
+  Mujer      4      6
+```
+
+``` r
+cruce[,1,] # Rural 
+cruce[,2,] # Urbano 
+```
+
+```         
+        estCiv
+genero   Casado Soltero Unión Libre
+  Hombre      2       2           0
+  Mujer       3       4           4
+
+
+
+        estCiv
+genero   Casado Soltero Unión Libre
+  Hombre      2       1           0
+  Mujer       3       3           6
+```
+
+``` r
+cruce[1,,] #Hombres 
+cruce[2,,] # Mujeres 
+
+cruce["Hombre",,]
+```
+
+```         
+        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       2       2           0
+  Urbano      2       1           0
+
+
+
+        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       3       4           4
+  Urbano      3       3           6
+
+
+
+        estCiv
+vive     Casado Soltero Unión Libre
+  Rural       2       2           0
+  Urbano      2       1           0
+```
+
+``` r
+as.data.frame(cruce)
+```
+
++---------+---------+-------------+---------+
+| genero  | vive    | estCiv      | Freq    |
++=========+=========+=============+=========+
+| \<fct\> | \<fct\> | \<fct\>     | \<int\> |
++---------+---------+-------------+---------+
+| Hombre  | Rural   | Casado      | 2       |
++---------+---------+-------------+---------+
+| Mujer   | Rural   | Casado      | 3       |
++---------+---------+-------------+---------+
+| Hombre  | Urbano  | Casado      | 2       |
++---------+---------+-------------+---------+
+| Mujer   | Urbano  | Casado      | 3       |
++---------+---------+-------------+---------+
+| Hombre  | Rural   | Soltero     | 2       |
++---------+---------+-------------+---------+
+| Mujer   | Rural   | Soltero     | 4       |
++---------+---------+-------------+---------+
+| Hombre  | Urbano  | Soltero     | 1       |
++---------+---------+-------------+---------+
+| Mujer   | Urbano  | Soltero     | 3       |
++---------+---------+-------------+---------+
+| Hombre  | Rural   | Unión Libre | 0       |
++---------+---------+-------------+---------+
+| Mujer   | Rural   | Unión Libre | 4       |
++---------+---------+-------------+---------+
+| Hombre  | Urbano  | Unión Libre | 0       |
++---------+---------+-------------+---------+
+| Mujer   | Urbano  | Unión Libre | 6       |
++---------+---------+-------------+---------+
+
+: A data.frame: 12 × 4

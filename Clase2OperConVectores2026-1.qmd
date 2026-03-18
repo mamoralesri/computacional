@@ -925,10 +925,12 @@ y
 x & y 
 ```
 
-### Operador `|`
+## Operador `|`
 
 ```{r echo=TRUE, eval=TRUE}
 # operador | 
+x
+y 
 x | y
 ```
 
