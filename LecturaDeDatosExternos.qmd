@@ -1,0 +1,637 @@
+---
+title: "Lectura de datos desde archivos" 
+subtitle: "Archivos de texto plano y Excel"   
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+editor: source
+---
+
+
+
+
+# Obteniendo datos 
+
+## Introducción 
+
+Los datos para el análisis estadístico pueden provenir de muchas fuentes. R viene con muchos conjuntos de datos integrados y hay más datos en muchos de los paquetes complementarios. R también puede leer datos de una amplia variedad de fuentes y en una amplia variedad de formatos. Este capítulo cubre la importación de datos de archivos de texto (incluidos datos similares a hojas de cálculo en formato delimitado por comas o tabulaciones, XML y JSON), archivos binarios (hojas de cálculo de Excel y datos de otro software de análisis), sitios web y bases de datos.
+
+## Objetivos del capítulo
+Después de estudiar este capítulo, el estudiante debería:
+
+* Poder acceder a los conjuntos de datos proporcionados con los paquetes de R.
+* Poder importar datos de archivos de texto. 
+* Poder descargar datos de sitios web.
+* Poder importar datos de una base de datos. 
+
+
+## Conjuntos de datos integrados
+
+* Uno de los paquetes de R se llama `datasets`, y tiene exclusivamente conjuntos de datos de ejemplo. 
+
+* Estos datos son ideales para probar código y para explorar nuevas técnicas de análisis de datos. 
+
+* Muchos otros paquetes también contienen conjuntos de datos. 
+
+* Puede ver todos los conjuntos de datos que están disponibles en los paquetes que ha cargado usando la función `data`:
+
+
+## Todos los datas disponibles  
+
+Para obtener una lista más completa, incluidos los datos de todos los paquetes que tenga instalados, utilice esta orden:
+
+
+```{r echo=TRUE}
+data(package = .packages(all.available=TRUE)) 
+```
+
+
+```{r echo=TRUE}
+data(package ="PASWR")
+#library(PASWR)
+```
+
+
+Cargar los datos 
+
+
+```{r echo=TRUE}
+library(PASWR)
+datos=ChickWeight
+head(datos)
+```
+
+
+
+## Otro ejemplo
+
+
+```{r echo=TRUE}
+library(learningr)
+data(package="learningr") 
+```
+
+```{r echo=FALSE}
+datasets_info <- as.data.frame(data(package = "learningr")$results)
+datasets_info[, c("Item", "Title")]
+``` 
+
+
+
+## Otro ejemplo  
+
+
+```{r echo=TRUE}
+data("crab_tag") 
+# Equivalente 
+data("crab_tag", package = "learningr")
+```
+
+* Qué tipo de objeto es `crab_tag` ?   
+
+```{r echo=TRUE}
+class(crab_tag)
+```
+
+* Qué hay por dentro de la lista `crab_tag` ?
+
+```{r echo=TRUE}
+names(crab_tag)
+```
+
+## 
+
+
+```{r echo=TRUE}
+DatosCrab=crab_tag[['daylog']]
+head(DatosCrab)
+```
+
+
+
+## Hacer cuentas con datos leidos 
+
+
+```{r echo=TRUE}
+library(PASWR)
+datos=ChickWeight
+head(datos)
+```
+
+* Cuántas dietas se ensayaron? 
+
+
+```{r echo=TRUE}
+table(datos$Diet)
+```
+
+## Calculo del peso promedio 
+
+* Cual es el promedio del peso dentro de cada dieta 
+
+```{r echo=TRUE}
+by(datos$weight,datos$Diet,mean) 
+```
+
+
+## Evolución del peso en el tiempo, por dieta 
+
+
+### Cálculos 
+
+Calculo del peso promedio para cadia dieta y día 
+
+```{r echo=TRUE}
+prom=with(datos,aggregate(weight,list(Time,Diet),mean))
+```
+
+
+### Cambiamos nombres de columnas 
+
+```{r echo=TRUE}
+colnames(prom)=c("Tiempo","Dieta","Promedio")
+```
+
+## Graficamos 
+
+```{r echo=TRUE}
+library(ggplot2)
+ggplot(data=prom,aes(x=Tiempo,y=Promedio,col=Dieta))+geom_line()
+```
+
+
+
+## 
+
+Para acceder a los datos en cualquiera de estos conjuntos de datos, llame a la función `data`, pasando el nombre del conjunto de datos y el paquete donde se encuentran los datos (si el paquete se ha cargado previamente, puede omitir el nombre del paquete):
+
+
+```{r echo=TRUE}
+library(survival)
+datos<-kidney
+head(datos)
+```
+
+Ahora el marco de datos `kidney` está disponible y se puede usar para análisis
+
+# Datos desde archivos externos 
+
+
+## Leer archivos de texto
+
+* Hay muchos formatos y estándares de documentos de texto para almacenar datos. 
+
+* Dos formatos bastante extendidos para almacenar datos el `csv` (valores separados por comas) y valores separados (o delimitados) por tabulaciones, `XML` (eXtensible Markup Language), `JSON` ( JavaScript Object Notation) 
+
+* Otras fuentes de datos de texto están menos estructuradas: un libro, por ejemplo, contiene datos de texto sin ninguna estructura formal. 
+
+## Ventaja de los archivos de texto 
+
+La principal ventaja de almacenar datos en archivos de texto es que pueden ser leídos por practicamente cualquier otro software de análisis de datos y por humanos. Esto hace que los datos sean reutilizables por otras personas.
+
+
+
+## Archivos CSV y delimitados por tabuladores
+
+* Los datos rectangulares (como una hoja de cálculo) se almacenan comúnmente en archivos de valores delimitados, particularmente archivos de valores separados por comas (CSV) y valores delimitados por tabulaciones. 
+
+* La función `read.table` lee estos archivos delimitados y almacena los resultados en un marco de datos (`data frame`). En su forma más simple, `read.table` toma la ruta a un archivo de texto e importa el contenido.
+
+<!--
+
+`RedDeerEndocranialVolume.dlm` es un archivo delimitado por espacios en blanco que contiene mediciones del volumen endocraneal de algunos ciervos, medidos mediante diferentes técnicas. 
+
+El archivo de datos se puede encontrar dentro de la carpeta `extdata` en el paquete `learningr`. 
+
+
+```R
+library(learningr)
+deer_file <- system.file(
+"extdata",
+"RedDeerEndocranialVolume.dlm",
+package = "learningr"
+)
+```
+
+Ahora, leemos el archivo 
+
+
+```R
+deer_data<-read.table(deer_file, header = TRUE, fill = TRUE)
+```
+
+
+```R
+#head(deer_data)
+```
+
+Observe que la clase de cada columna se ha determinado automáticamente al igual que la asignación de los nombres de fila y columna. Los nombres de las columnas son (por defecto)
+forzados a ser nombres de variable válidos, y si no se proporcionan los nombres de las filas, estas simplemente se numeran 1, 2, 3, etc.
+
+--> 
+
+## 
+
+* Hay muchos argumentos para especificar cómo se leerá el archivo; quizás el más importante sea `sep`, que determina el caractér a utilizar como separador entre campos (columnas). 
+
+* También puede especificar cuántas líneas de datos leer usando el argumento `nrow` y cuántas líneas al principio del archivo omitir. 
+
+* Las opciones más avanzadas incluyen la capacidad de anular los nombres de fila, los nombres de columna y las clases predeterminadas, especificar la codificación de caracteres del archivo de entrada y cómo deben declararse las columnas de caracteres.
+
+## 
+
+* Las funciones `read.csv`, `read.csv2`, `read.delim` y `read.delim2` corresponden a la misma función `read.table` solo que tienen los argumentos predeteminados de forma distinta
+
+* Son *wrapper functions*.
+
+* `read.csv` establece el separador predeterminado en una coma y asume que los datos tienen una fila de encabezado. 
+
+* `read.csv2` es su primo europeo, que utiliza una coma para los lugares decimales y un punto y coma como separador.
+
+* Asimismo, `read.delim` y `read.delim2` importan archivos delimitados por tabulaciones con puntos o comas para los lugares decimales, respectivamente. 
+
+
+## Directorio de trabajo 
+
+
+
+```{r echo=TRUE}
+getwd()
+```
+
+
+
+
+## Cambiar el directorio de trabajo 
+
+```{r echo=TRUE}
+### se usa setwd para fijar el directorio de trabajo 
+setwd("~/Documents/Cursos/Computacional") 
+```
+
+## Verificar
+
+Para verificar si el archivo a leer está en el directorio actual 
+
+* Pedimos un listado de los archivos en la carpeta de trabajo 
+
+```{r echo=TRUE}
+archivos=dir("datos") 
+```
+
+* Verificar si mi nombre de archivo está en la salida anterior 
+
+```{r echo=TRUE}
+"survival.txt" %in% archivos
+```
+
+
+
+## Leer los datos 
+
+* Leer el archivo de datos `survival.txt` 
+
+
+```{r echo=TRUE}
+surv <-read.table('datos/survival.txt')
+head(surv)
+```
+
+
+
+## Inspeccionar
+
+```{r echo=TRUE}
+head(surv)
+```
+
+*  Estructura del data frame 
+
+```{r echo=TRUE}
+str(surv)
+```
+
+## Inspeccionar
+
+* Resumen de las columnas 
+
+```{r echo=TRUE}
+summary(surv)
+```
+
+## Ponerle nombres a las columnas 
+
+
+```{r echo=TRUE}
+nombres<-c("case","clot","prog","enz","liv","time","ltime")
+colnames(surv)<-nombres
+head(surv)
+```
+
+## Nombres de columna al leer 
+
+Colocar los nombres de columna al momento de la lectura 
+
+
+```{r echo=TRUE}
+surv <- read.table("datos/survival.txt",col.names=nombres)
+head(surv)
+```
+
+## Nombres de fila  
+
+Se indica que los nombres de filas están en la columna 1 
+
+
+```{r echo=TRUE}
+surv<-read.table("datos/survival.txt",col.names=nombres,row.names=1)
+head(surv)
+```
+
+
+## Nombres de fila 
+
+
+Colocar nombre de fila al momento de la lectura
+
+
+```{r echo=TRUE}
+### vector con el nombre de las filas 
+### survival tiene 54 filas 
+nombresfilas<-paste("Fila",1:54,sep=" ")#;nombresfilas
+surv<-read.table("datos/survival.txt",col.names=nombres,row.names=nombresfilas)
+head(surv) 
+```
+
+## Borrado de columna 
+
+
+```{r echo=TRUE}
+# se borra la columna cases 
+surv$case<-NULL
+head(surv)
+```
+
+
+## Lectura, otro ejemplo 
+
+Cambiemos de archivo. El archivo `EX7-4.txt` a diferencia del anterior tiene los nombres de columna en la primera fila.  
+
+
+```{r echo=TRUE}
+eje74 <- read.table("datos/EX7-4.txt");
+head(eje74)
+```
+
+## Cuidado !!!
+
+Calcular la media de `MATH` por cada nivel de `SEX` 
+
+```{r echo=TRUE, eval=FALSE}
+ with( eje74, by(MATH,SEX,mean) )
+```
+
+
+No se esta leyendo bien porque hay que indicarle que la primera fila  contiene los nombres de columna.
+
+
+## 
+
+```{r echo=TRUE}
+ str(eje74) 
+```
+
+
+
+## 
+
+
+```R
+#summary(eje74)
+#str(eje74)
+mean(eje74$MATH)
+```
+
+    Warning message in mean.default(eje74$MATH):
+    “argument is not numeric or logical: returning NA”
+
+
+## 
+
+```{r echo=TRUE}
+eje74<-read.table("datos/EX7-4.txt",header=TRUE)
+head(eje74)
+```
+
+
+
+## 
+
+```{r echo=TRUE}
+mean(eje74$MATH)
+with( eje74, by(MATH,SEX,mean) )
+```
+
+
+## Lectura de un archivo csv
+
+
+
+```{r echo=TRUE}
+ejer4<-read.csv("datos/ejer4.csv") 
+head(ejer4)
+```
+
+
+```{r echo=TRUE}
+summary(ejer4)
+```
+
+## Lectura de un archivo csv opcion `sep`
+
+```{r echo=TRUE}
+ejer4<-read.csv("datos/ejer4.csv",sep=";")
+head(ejer4)
+```
+
+## Lectura de un archivo csv `read.csv2` 
+
+
+```{r echo=TRUE}
+### equivalente a 
+ejer4<-read.csv2("datos/ejer4.csv")
+head(ejer4)
+```
+
+
+## Ejercicio
+
+Calcular el promedio de la columna `resp` para cada nivel de `momento`
+
+```{r echo=TRUE}
+with(ejer4,by(resp,momento,mean) )
+```
+
+
+##  Leer el archivo `survival2.csv` 
+
+
+```{r echo=TRUE}
+surv<-read.csv2("datos/survival2.csv")
+head(surv)
+```
+
+##  Leer `SustanciaDensidad.csv` 
+
+
+```{r echo=TRUE}
+sus<-read.csv("datos/SustanciaDensidad.csv")
+head(sus)
+```
+
+## Leer `SustanciaDensidad.csv`  
+
+```{r echo=TRUE}
+sus<-read.csv("datos/SustanciaDensidad.csv", sep=";")
+head(sus)
+```
+
+```{r echo=TRUE}
+str(sus)
+```
+
+## Leer `SustanciaDensidad.csv` 
+
+```{r echo=TRUE}
+sus<-read.csv("datos/SustanciaDensidad.csv",sep=";",dec=",")
+head(sus)
+```
+
+```{r echo=TRUE}
+str(sus)
+```
+
+
+##   Leer `SustanciaDensidad.csv` con `read.csv2` 
+
+```{r echo=TRUE}
+# Equivalente 
+sus<-read.csv2("datos/SustanciaDensidad.csv")
+head(sus)
+```
+
+
+## Lectura de datos que estan en una carpeta en la web. 
+
+
+
+```{r echo=TRUE,eval=FALSE}
+acuic=read.csv2('https://mariomorales.xyz/python/datafiles/acuicultura.csv')   
+head(acuic)
+```
+
+
+##  Leer archivo de excel 
+
+Microsoft Excel es el paquete de hojas de cálculo más popular del mundo y, muy posiblemente, la herramienta de análisis de datos más popular del mundo. Desafortunadamente, sus formatos de documento, XLS y XLSX, no son muy compatibles (no trabajan bien) en otros programas, especialmente fuera del entorno Windows. Esto significa que puede ser necesario experimentar un poco para encontrar una configuración que funcione para su sistema operativo y el tipo particular de archivo de Excel.
+
+##  Leer archivo de excel
+
+
+En R contamos con el paquete `xlsx` que está basado en Java y es multiplataforma; por lo que,  al menos en teoría, puede leer cualquier archivo de Excel en cualquier sistema. La librería `xlsx` proporciona una variedad de funciones para leer archivos Excel: las hojas de cálculo se pueden importar con `read.xlsx` y `read.xlsx2` 
+
+
+```{r echo=TRUE}
+library(xlsx)
+data <- read.xlsx2("datos/datos.xls",sheetIndex = 1)
+head(data)
+```
+
+
+## Leer archivo de excel
+
+```{r echo=TRUE}
+data <- read.xlsx2("datos/datos.xls",sheetIndex = 1,colClasses = c(
+"integer", "integer", "integer", "numeric",
+"numeric", "numeric", "numeric") )
+head(data)
+```
+
+
+## 
+
+```R
+data <- read.xlsx2("datos.xls",sheetIndex = 1,colClasses = c(
+"character", "integer", "integer", "numeric",
+"numeric", "numeric", "numeric") )
+head(data)
+```
+
+
+<table class="dataframe">
+<caption>A data.frame: 6 × 6</caption>
+<thead>
+	<tr><th></th><th scope=col>TRATA</th><th scope=col>REPLICA.</th><th scope=col>MUESTRA</th><th scope=col>LONGITUD</th><th scope=col>PESO</th><th scope=col>ABm</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>1</td><td>1</td><td>1</td><td>9.84</td><td>7.4</td><td>1018</td></tr>
+	<tr><th scope=row>2</th><td>1</td><td>1</td><td>2</td><td>9.07</td><td>7.2</td><td> 947</td></tr>
+	<tr><th scope=row>3</th><td>1</td><td>1</td><td>3</td><td>9.61</td><td>8.5</td><td> 975</td></tr>
+	<tr><th scope=row>4</th><td>1</td><td>1</td><td>4</td><td>8.92</td><td>6.4</td><td> 862</td></tr>
+	<tr><th scope=row>5</th><td>1</td><td>1</td><td>5</td><td>9.33</td><td>7.4</td><td> 890</td></tr>
+	<tr><th scope=row>6</th><td>1</td><td>1</td><td>6</td><td>9.15</td><td>6.4</td><td> 791</td></tr>
+</tbody>
+</table>
+
+
+
+
+```R
+data2<-read.xlsx2("datos.xls",sheetIndex = 2)
+#head(data2)
+#
+data2 <- read.xlsx2("datos.xls",sheetIndex = 2,colClasses = c(
+"integer","numeric"))
+#head(data2)
+```
+
+
+```R
+#?read.xlsx
+```
+
+
+```R
+#notas<-read.csv2("ComputacionalCorte2.csv",skip=5)
+#head(notas)
+#notas$X<-NULL
+#head(notas)
+```
+
+
+```R
+
+```

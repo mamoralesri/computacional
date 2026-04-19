@@ -1,0 +1,236 @@
+---
+title: "DataFrames"
+author: "Mario Morales"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# DataFrames (marcos de datos) 
+
+## Creación de DataFrames 
+
+Una forma de crear `DataFrames` en R es mediante la función `data.frame`, como se muestra a continuación 
+```{r}
+set.seed(1234)
+# 10 datos simulados de una variable aleatoria binmial con n=20 y p=0.4
+x<-rbinom(10,20,0.4)  
+# vector de caracteres aleatorios  
+y<-sample(c("F","M"),10,replace=TRUE)
+# vector logico 
+z<-runif(10)>0.5
+x
+y
+z
+```
+
+A continuación creamos un `DataFrame` con estos tres vectores 
+```{r}
+datos=data.frame(x,y,z)
+datos
+```
+
+Para saber si efectivamente un objeto en R es un `DataFrame` podemos ejecutar los siguientes comandos 
+
+```{r}
+class(datos) 
+is.data.frame(datos) 
+mode(datos) 
+```
+
+Observe que los nombres de columna se toman de los nombres de los vectores usados para crear el data, si queremos otros nombres de columnas procedemos de la siguiente forma
+```{r}
+datos=data.frame(Cx=x,Cy=y,Cz=z) 
+datos
+```
+
+También podemos colocar nombres de filas al data al momento de crearla, de la siguiente forma
+```{r}
+datos=data.frame(Cx=x,Cy=y,Cz=z,row.names=month.abb[1:10])
+datos  
+```
+
+Cuando uno de los vectores con que creamos el data tiene nombres para sus elementos, la función `data.frame` toma como estos nombres como como nombres de fila del data creado.
+
+```{r}
+names(y)=LETTERS[1:10] 
+datos=data.frame(Cx=x,Cy=y,Cz=z) 
+datos
+```
+
+¿Qué pasa si mas de un vector tiene nombres? Veamos 
+
+```{r}
+names(y)=LETTERS[1:10] 
+names(x)=month.abb[1:10]
+datos=data.frame(Cy=y,Cx=x,Cz=z,row.names=names(x)) 
+datos
+```
+
+Si no quiero nombres de fila se lo indico de la siguiente forma 
+```{r}
+datos=data.frame(Cy=y,Cx=x,Cz=z,row.names=NULL) 
+datos
+```
+
+Los nombres de filas se pueden usar para recuperar filas del data  (indexamos el data con un vector de caracteres que contiene los nombres de las filas que quiere recuperar) 
+```{r}
+datos=data.frame(Cx=x,Cy=y,Cz=z)  
+datos[c('Jan','Mar','May'),] 
+```
+
+### Recuperacón y cambio de nombres de filas y columnas 
+
+Para recuperar los nombres de filas de un data usamos la función `row.names` o `rownames` y para las columnas usamos `colnames`, de la siguiente forma
+```{r}
+# filas 
+row.names(datos) 
+rownames(datos)
+# columnas 
+colnames(datos) 
+```
+
+Para cambiar los nombres de columnas procedemos de la siguiente forma 
+```{r}
+colnames(datos)=c('Colx','Coly','Colz') 
+datos
+```
+
+```{r}
+colnames(datos)[2]='Col2' 
+datos
+```
+
+## Creación de nuevas columnas 
+
+Podemos crear nuevas columnas en un data frame, a partir de las columnas existentes, de la siguiente forma 
+```{r}
+datos$Cx2=datos$Colx^2 
+datos
+```
+
+Crearemos una columna que contiene la columna `Col2` codificada de la siguiente forma: Si `Col2` es `M` asignamos 1 (uno), si es `F` asignamos 0 (cero). 
+```{r}
+datos["Sex"]=ifelse(datos$Col2=="M",1,0)
+datos
+```
+
+### Borrado de columna 
+
+Para borrar una columna usamos `NULL` de la siguiente forma 
+
+```{r}
+datos$Cx2=NULL
+datos 
+```
+
+## Indexando Data Frames 
+
+Como con los vectores y matrices, podemos indexar un data frame usando como indices  
+
+* Enteros positivos 
+* Enteros negativos 
+* Valores lógicos 
+* Caracteres 
+
+Esto es válido tanto para filas como para columnas
+
+Veamos algunos ejemplos 
+
+```{r}
+datos[c(1,5,7,9,10),c(2,3)]
+```
+
+Indexado con numero negativos 
+
+```{r}
+datos[-c(1,5,7,9,10),-c(2,3)]
+```
+
+Ejemplo de indexado con caracteres 
+
+```{r}
+datos[c('Feb','Apr','Jun','Aug'),-1]  
+```
+
+### Indexación lógica 
+
+En este tipo de indexación se extraen las filas o columnas que coincidan con un valor `TRUE` , veamos ejemplos 
+
+```{r}
+datos[c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE), ]  
+```
+
+```{r}
+datos[!c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE), ]  
+```
+
+Ejercicio: Calcular la media de `Colx` pero para aquellas filas conde `Col2` es igual a "M"  y separadamente para donde `Col2` es igual a "F"
+
+```{r}
+datosM=datos[datos$Col2=="M",] 
+mean(datosM$Colx) 
+```
+
+Para los femeninos, es decir, donde `Col2` es igual a "F"
+
+```{r}
+datosF=datos[datos$Col2=="F",]  
+mean(datosF$Colx) 
+```
+
+Otra forma, usando la negación 
+
+```{r}
+datosF=datos[!datos$Col2=="M",]  
+mean(datosF$Colx) 
+```
+
+Ejercicio: Calcular la varianza de `Colx` para aquellas filas donde `Colz` es TRUE
+
+```{r}
+var(datos[datos$Colz,][["Colx"]]) 
+```
+
+Ejercicio: Calcular la varianza de `Colx` para aquellas filas donde `Colz` es FALSE
+
+```{r}
+var(datos[!datos$Colz,][["Colx"]])  
+```
+
+Calcular la media de `Colx` para equellas filas donde `Col2` es 'M' y `Colz` es FALSE 
+
+
+
+```{r}
+mean(datos[datos$Col2=='M' & !datos$Colz, ][['Colx']])
+```
+
+Cuántos hombres, es decir Col2=='M' tienen un valor de `Colx` por encima de la media de `Colx` 
+
+
+```{r}
+nrow(datos[datos$Colx>mean(datos$Colx) & datos$Col2=="M" ,]  ) 
+```
+
+otra forma 
+
+```{r}
+sum(datos$Colx>mean(datos$Colx) & datos$Col2=="M")
+```
+
+otra forma 
+
+```{r}
+sum(datos[datos$Colx>mean(datos$Colx),][['Col2']]=="M"  )
+```
+
+
+
+
+
+
+

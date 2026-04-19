@@ -1,0 +1,363 @@
+---
+title: "Listas"
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Listas 
+
+## ¿Qué aprenderemos?   
+
+Estudiaremos como crear listas con la función `list`, como acceder a los elementos de una lista veremos un ejemplo de aplicación. 
+
+## Definicón 
+
+Una lista es, en términos generales, es un vector donde cada elemento puede ser de un tipo diferente.
+
+Esta clase  trata sobre cómo crear, indexar y manipular listas.
+
+## Creación de listas 
+
+Crearemos una lista usando la función `list` 
+
+```{r}
+l<-list(
+c(1, 1, 2, 5, 14, 42),
+month.abb,
+matrix(c(3, -8, 1, -3), nrow = 2),
+asin
+)
+print(l)
+```
+
+## Nota 
+
+Nota: La función `asin` es la inversa de la función `sin` (seno), dado el seno de un angulo la función `asin` regresa en angulo, veamos 
+
+```{r}
+sin(pi/4) 
+```
+
+```{r}
+asin(0.7071068) 
+# observe que es lo mismo que pi/4
+pi/4
+```
+
+## Nombres de elementos  
+
+Después de creada la lista se le pueden asignar nombres a sus elementos con la función `names`, de la siguiente forma 
+```{r}
+names(l)=c("vec1","meses","mat1","fun")
+print(l)
+```
+
+**Nota**: La función `names` también sirve para recuperar los nombres de los elementos de una lista, de la siguiente manera 
+```{r}
+names(l) 
+```
+
+## Nombres de elementos
+
+También podemos asignar los nombres de los elementos de la lista al momento de crearla, de la siguiente forma 
+```{r}
+li<-list(
+vec1=c(1, 1, 2, 5, 14, 42),
+meses=month.abb,
+mat1=matrix(c(3, -8, 1, -3), nrow = 2),
+fun=asin
+) 
+print(li)  
+```
+
+## Agregaer elemento 
+
+```{r}
+#| eval: false 
+df=data.frame(x=rbinom(6,10,0.3),g=c(1,2))
+l[['data']]=df
+```
+
+
+
+# Indexado de listas 
+
+## Formas de indexado 
+
+Como en el caso de los vectores, matrices, y `data frames` las listas se pueden indexar de varias formas 
+
+* Enteros positivos 
+* Caracteres 
+* Valores lógicos 
+* Enteros negativos 
+  
+
+
+## Indexado con indice numérico 
+
+Recuperamos el segundo elemento de la lista `l` 
+```{r}
+l[2]  
+```
+
+Recuperamos los elementos segundo y tercero  de la lista `l`
+
+```{r}
+l[c(2,3)]  
+```
+
+## Ejercicio
+
+Se da la lista `l` cuyo primer elemento es un vector numérico, hallar la media de los valores en el vector. 
+
+```{r}
+l[1]
+mean(l[1])
+class(l[1]) 
+```
+
+## La razón del `NA` 
+
+
+La función `mean` regresa un `NA` debido a que la forma de recuperar mediante  `l[1]` regresa una lista y no un vector numérico como lo exige `mean`. 
+
+```{r}
+l[[1]]
+mean(l[[1]])
+class(l[[1]]) 
+```
+
+
+## Indexado con un vector de nombres 
+
+Cuando la lista tiene asignados nombres a sus elementos, se puede acceder a ellos mediante 
+```{r}
+l[c('vec1')] 
+class(l[c('vec1')] ) 
+```
+note que en este caso también recuperamos una lista con el vector numérico por dentro. 
+
+```{r}
+l[c('vec1','fun')]  
+```
+
+## Uso de  `[[]]` 
+
+Para recuperar directamente el elemento use los nombres de la siguiente forma 
+
+```{r}
+l[['vec1']]  
+```
+
+## Uso de `$` 
+
+Otra forma de recuperar los elementos de la lista por los nombre es mediante el signo `$` de la siguiente  
+
+```{r}
+l$mat1
+```
+
+## Indexado con numeros negativos 
+
+Se trae todos los elementos excepto el que corresponde a la posición del negativo. 
+
+```{r}
+l[-c(2,4)] # trae todos excepto es 2 y el 4 
+```
+
+
+## Ejemplo 
+
+
+```{r}
+l[-1] # todos menos el primero 
+```
+
+
+
+
+## Ejemplo 
+
+Recuperar el vector 1 y calcular su media.  
+
+```{r}
+l$vec1
+mean(l$vec1) 
+```
+
+## Indexado  con un vector lógico 
+
+Si indexamos la lista con un vector lógico, obtenemos aquellos elementos de la lista que corresponden a `TRUE` como se muestra a continuación 
+
+```{r}
+# recuperamos el elemento 1 y 3 
+l[c(TRUE,FALSE,TRUE,FALSE)]
+```
+
+## Aplicación 
+
+
+```{r, echo=FALSE} 
+t1.1<-c(105,221,183,186,121,181,180,143,
+97,154,153,174,120,168,167,141,
+245,228,174,199,181,158,176,110,
+163,131,154,115,160,208,158,133,
+207,180,190,193,194,133,156,123,
+134,178,76,167,184,135,229,146,
+218,157,101,171,165,172,158,169,
+199,151,142,163,145,171,148,158,
+160,175,149,87,160,237,150,135,
+196,201,200,176,150,170,118,149)
+```
+
+Consideremos los siguientes datos
+
+```{r,echo=FALSE}
+library(knitr)
+kable(matrix(t1.1,nrow = 8))  
+```
+
+
+## Ejercicio 
+
+* Elabore el histograma de los datos 
+* Imprima la tabla de frecuencias con que se elaboró el histograma
+* Calcule la media a partir de los datos agrupados en la tabla anterior. 
+
+
+## El histograma 
+
+```{r}
+hist(t1.1,breaks=seq(70,250,by=20),right = FALSE,labels=TRUE,ylim=c(0,25))
+```
+
+
+
+## Solución 
+
+```{r}
+histo=hist(t1.1,breaks=seq(70,250,by=20),right = FALSE,labels=TRUE,ylim=c(0,25),plot=FALSE)   
+```
+
+Es `histo` una lista ? 
+
+```{r}
+mode(histo)
+is.list(histo) 
+```
+
+
+## Contenido de la lista 
+
+Qué cosas tengo dentro de esa lista? 
+```{r}
+names(histo)
+```
+
+## Los límites de los intervalos 
+
+```{r}
+histo$breaks
+Li=histo$breaks[-length(histo$breaks)] 
+Li
+Ls=histo$breaks[-1] 
+Ls
+```
+
+## Limites de los intervalos  
+
+```{r}
+cbind(Li,Ls)
+```
+
+
+
+
+## Las marcas de clase 
+
+```{r}
+MC=histo$mids
+cbind(Li,Ls,MC)
+```
+
+## Las frecuencias absolutas y relativas 
+
+```{r}
+fi=histo$counts
+n=sum(fi)
+fir=fi/n
+cbind(Li,Ls,MC,fi,fir)
+```
+
+## Las frecuencias acumuladas y acumuladas relativas  
+
+```{r}
+Fi=cumsum(fi)
+Fir=Fi/n
+cbind(Li,Ls,MC,fi,fir,Fi,Fir) 
+```
+ 
+## La tabla en formato latex
+
+```{r,echo=FALSE}
+kable(cbind(Li,Ls,MC,fi,fir,Fi,Fir))
+```
+
+
+## Aplicación 
+
+La media calculada a partir de datos agrupados en un histograma se calcula con la siguiente formula 
+$$\bar{X}_a=\frac{\sum_{i=1}^k M_i\times f_i}{n}$$
+Donde $M_i$ es la marca de la clase $i$, $f_i$ es la frecuencia, $n$ es el numero de datos y $k$ es el numero de intervalos. Recordemos que $n=\sum f_i$.
+
+
+## Implementación 
+
+A continuación se implementa la formula en R
+
+```{r}
+sum( histo$counts*histo$mids )/sum(histo$counts) 
+```
+
+## 
+
+La media de los datos sin agrupar es `r mean(t1.1)`, se observa que no hay mucha diferencia entre las dos medias, por lo tanto la media calculada a partir de los datos agrupados en el histograma es una buena aproximación de la media real de los datos.  
+
+## Ejercicio
+
+
+Calcular la varianza a partir de los datos agrupados y compararla con la varianza de los datos sin agrupar. 
+
+Nota: La varianza con datos agrupados se obtiene con la siguiente formula 
+$$S^2_a=\frac{\sum(M_i-\bar X_a)^2\times f_i }{n-1}=\frac{\sum M^2_if_i-n\bar X_a^2}{n-1}$$  
+
+
+

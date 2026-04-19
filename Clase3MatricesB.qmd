@@ -18,9 +18,14 @@ format:
     code-fold: true
     slide-level: 2
     scrollable: true
-  pdf: default
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
 toc: true
-toc-depth: 1
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
 ---
 
 # Matrices
@@ -48,7 +53,7 @@ En un sentido estricto, las matrices son arreglos de dos dimensiones, un `largo`
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A=matrix(c(3,5,1,4),nrow=2) 
 A
 ```
@@ -56,7 +61,7 @@ A
 ```{r} 
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 
 A=matrix(c(3,5,1,4),nrow=2,byrow=TRUE) 
 A
@@ -67,7 +72,7 @@ A
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
  
 A=array(c(3,5,1,4),dim=c(2,2)) 
 A
@@ -78,7 +83,7 @@ A
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 
 Ventas=matrix(c(5,4,9,7,6,3,3,2,5,2,1,8,0,4,3),ncol=5, 
     dimnames=list(c("Mario","Juan","Miguel"),c("L","M","Mi","J","V") ))
@@ -91,7 +96,7 @@ Ventas
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 Ventas2=matrix(c(5,4,9,7,6,3,3,2,5,2,1,8,0,4,3),ncol=5)
 Ventas2
 ```
@@ -99,7 +104,7 @@ Ventas2
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 rownames(Ventas2)=c("Mario","Juan","Miguel")
 colnames(Ventas2)=c("L","M","Mi","J","V") 
 Ventas2
@@ -113,14 +118,14 @@ Ventas2
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 rownames(Ventas2)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 colnames(Ventas2)
 ```
 
@@ -132,7 +137,7 @@ colnames(Ventas2)
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 Ventas[1,4]
 Ventas[1,5]=5
 ```
@@ -140,7 +145,7 @@ Ventas[1,5]=5
 ```{r}
 #| echo: false
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 library(knitr) 
 kable(Ventas, format = "html", table.attr = "class='striped'")
 ```
@@ -150,7 +155,7 @@ kable(Ventas, format = "html", table.attr = "class='striped'")
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 Ventas["Mario", ]
 Ventas[,"L"]
 Ventas["Juan","Mi"]
@@ -161,7 +166,7 @@ Ventas["Juan","Mi"]
 ```{r }
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 Ventas["Mario","J"] 
 Ventas["Mario","V"]=5 
 Ventas
@@ -172,7 +177,7 @@ Ventas
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 Ventas[c(1,2),c(1,5)] 
 Ventas[c("Mario","Juan"),c("L","V")] 
 Ventas[c("Mario","Juan"),c("L","M","Mi","J","V")]
@@ -187,7 +192,7 @@ Ventas[,c("L","M")]
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 # SUMA POR FILAS 
 rowSums(Ventas)
 # SUMA POR COLUMNAS 
@@ -199,7 +204,7 @@ colSums(Ventas)
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 # Promedio POR FILAS 
 rowMeans(Ventas)
 # promedio por columna 
@@ -213,7 +218,7 @@ colMeans(Ventas)
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 # varianza  POR FILAS 
 apply(Ventas,1,var)
 # máximo por columna 
@@ -228,7 +233,7 @@ Operación que intercambia filas por columnas
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 t(Ventas)
 ```
 
@@ -239,7 +244,7 @@ Las matrices deben tener la misma dimensión
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A=matrix(c(3,5,1,4),nrow=2) 
 B=matrix(c(5,8,7,3),nrow=2) 
 ```
@@ -251,7 +256,7 @@ Suma componente a componente
 ```{r }
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A+B   
 ```
 
@@ -260,7 +265,7 @@ A+B
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 2*A
 ```
 
@@ -269,7 +274,7 @@ A+B
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A-B
 ```
 
@@ -278,7 +283,7 @@ A-B
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A*B
 ```
 
@@ -287,7 +292,7 @@ A*B
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A/B
 ```
 
@@ -300,7 +305,7 @@ Para que se pueda realizar este producto se requiere que el número de columnas 
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A=matrix(c(1,3,2,5,4,0),nrow=2);A 
 B=matrix(c(0,1,2,-1,0,0,2,0,1),nrow=3);B
 ```
@@ -310,7 +315,7 @@ B=matrix(c(0,1,2,-1,0,0,2,0,1),nrow=3);B
 ```{r }
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A%*%B 
 ```
 
@@ -319,7 +324,7 @@ A%*%B
 ```{r }
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 A%*%t(A)
 ```
 
@@ -329,7 +334,7 @@ A%*%t(A)
 #| echo: false
 #| eval: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 mat<-matrix(1:12, nrow=4 ,dimnames=list(c("uno","dos","tres","cuatro"),
               c("A","B","C") ) )
 #mat 
@@ -343,7 +348,7 @@ Si $A(i,j)=A(j,i)$ para todo $i$, $j$ la matriz $A$ es simétrica
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 S=Ventas%*%t(Ventas)
 ```
 
@@ -356,7 +361,7 @@ Escribir código `R` que permita averiguar su una matriz es simétrica o no
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 S=matrix(c(3,2,4,2,1,0,4,0,5),nrow=3)
 S
 # averiguar si S es simétrica 
@@ -370,7 +375,7 @@ S
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 # igualamos a S con su transpuesta 
 S==t(S) 
 all( S==t(S) ) 
@@ -386,7 +391,7 @@ Escribir una función en R código `R` que permita averiguar su una matriz es cu
 ```{r }
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 # como averiguar si una matriz es cuadrada 
 is.cuadrada=function(X){
     if(nrow(X)==ncol(X)){"La matriz es cuadrada"
@@ -404,7 +409,7 @@ Función que nos dice si una matriz cuadrada es simétrica o no
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 #  
 prueba.simetria=function(X){
 if(nrow(X)!=ncol(X)){stop("La matriz debe ser cuadrada")}
@@ -427,7 +432,7 @@ Una matriz debajo de la otra
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 rbind(A,B)
 ```
 
@@ -440,7 +445,7 @@ Una matriz al lado de la otra
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded  
+   
 cbind(B,Ventas)
 Ventas
 ```
@@ -457,7 +462,7 @@ Para matrices, las funciones `nrow` y `ncol` devuelven el número de filas y col
 ```{r}
 #| echo: true
 #| output-location: fragment
-#| column: screen-inset-shaded 
+  
 nrow(A)
 ncol(A)
 ```
@@ -1108,6 +1113,9 @@ A
 qr(A)$rank 
 ```
 
+## 
+
+
 +---+---+----+----+
 | 2 | 3 | 1  | -1 |
 +---+---+----+----+
@@ -1145,6 +1153,8 @@ M
 
 : A matrix: 2 × 2 of type dbl
 
+## 
+
 ``` r
 # inversa del menor 
 solve(M)
@@ -1167,6 +1177,8 @@ Mi<-t(solve(M));Mi
 +---+---+
 
 : A matrix: 2 × 2 of type dbl
+
+## 
 
 ``` r
 # matriz de ceros del mismo tamano de A
@@ -1191,6 +1203,8 @@ A0[1:2,3:4]<-Mi
 A0
 ```
 
+## 
+
 +---+---+---+---+
 | 0 | 0 | 1 | 0 |
 +---+---+---+---+
@@ -1206,6 +1220,8 @@ G<-t(A0) # la inversa generalizada de A
 G
 A%*%G%*%A-A
 ```
+
+## 
 
 +---+---+---+
 | 0 | 0 | 0 |
@@ -1229,7 +1245,7 @@ A%*%G%*%A-A
 
 : A matrix: 3 × 4 of type dbl
 
-### Aplicación de las inversas generalizadas
+## Aplicación de las inversas generalizadas
 
 Las ecuaciones consistentes $Ax=y$ tienen una solución $x=Gy$ si y sólo si $AGA=A$ ($G$ es una inversa generalizada de $A$)
 
@@ -1260,6 +1276,8 @@ A<-matrix( c(7,3,2,2,3,3,0,0,2,0,2,0,2,0,0,2),nrow=4,byrow=TRUE ); A
 B<-matrix(c(553,219,156,178),ncol=1); B
 ```
 
+## 
+
 +---+---+---+---+
 | 7 | 3 | 2 | 2 |
 +---+---+---+---+
@@ -1283,6 +1301,8 @@ B<-matrix(c(553,219,156,178),ncol=1); B
 +-----+
 
 : A matrix: 4 × 1 of type dbl
+
+## 
 
 ``` r
 det(A)
@@ -1311,6 +1331,8 @@ En ${A}$ halle un menor no singular de orden $r$, llame a éste ${M}$.
 M=A[2:4,2:4];M
 ```
 
+## 
+
 +---+---+---+
 | 3 | 0 | 0 |
 +---+---+---+
@@ -1326,6 +1348,8 @@ Invierta $M$ y transponga la inversa: $\left( {M}^{-1}\right)'$.
 ``` r
 Mit<-t(solve(M))
 ```
+
+## 
 
 En ${A}$ reemplace cada elemento de ${M}$ por el correspondiente elemento de $\left( {M}^{-1}\right)'$. Reemplace todos los otros elementos de ${A}$ por cero.
 
@@ -1345,6 +1369,11 @@ A0<-matrix(0,nrow=nrow(A),ncol=ncol(A));A0
 
 : A matrix: 4 × 4 of type dbl
 
+
+## 
+
+
+
 ``` r
 A0[2:4,2:4]<-Mit
 A0
@@ -1362,11 +1391,14 @@ A0
 
 : A matrix: 4 × 4 of type dbl
 
-Transponga la matriz resultante. El resultado es ${A}^{-}$, una inversa generalizada de ${A}$.
+##  Transponga la matriz resultante.
+
+El resultado es ${A}^{-}$, una inversa generalizada de ${A}$.
 
 ``` r
 G=t(A0)
 ```
+
 
 ``` r
 A%*%G%*%A-A
@@ -1385,6 +1417,8 @@ all(A%*%G%*%A==A)
 +---+---+---+---+
 
 : A matrix: 4 × 4 of type dbl
+
+## 
 
 +------+------+------+------+
 | TRUE | TRUE | TRUE | TRUE |
@@ -1416,6 +1450,9 @@ G%*%B
 
 : A matrix: 4 × 1 of type dbl
 
+
+## 
+
 ``` r
 A%*%G%*%B - B
 ```
@@ -1432,10 +1469,13 @@ A%*%G%*%B - B
 
 : A matrix: 4 × 1 of type dbl
 
+
+## Ejercicios 
+
 -   Cómo generar todas las soluciones de un sistema de ecuaciones lineales con infinitas soluciones
 -   Consultar sobre la inversa de More Penrose y como se calcula con R
 
-### Raiz cuadrada de una matriz
+##  Raiz cuadrada de una matriz
 
 Una matriz $B$ se dice que es una raíz cuadrada de $A$ si el producto $B\times B$ es igual a A.
 
@@ -1458,6 +1498,8 @@ A
 +----+----+
 
 : A matrix: 2 × 2 of type dbl
+
+## 
 
 La matriz $$B=\begin{bmatrix}
 5 & 2  \\ 
@@ -1486,7 +1528,7 @@ Error in eval(expr, envir, enclos): objeto 'R' no encontrado
 Traceback:
 ```
 
-### Descomposicion en valores singulares
+##  Descomposicion en valores singulares
 
 ``` r
 B=1/2*(A+t(A)) 
@@ -1497,15 +1539,6 @@ B
 svd(B) # descopmposicion en valores singulares  
 ```
 
-
-```         
-<dd><table class="dataframe">
-```
-
-
-```         
-<dd><table class="dataframe">
-```
 
 
 ``` r
@@ -1521,8 +1554,11 @@ R=svd(B)$u%*%U12%*%t(svd(B)$u)
 round(R%*%R-B,10)
 ```
 
+## Ejercicio 
 
 -   Consultar como se calcula, en caso que exista, una raíz cuadrada de una matriz en forma general.
+
+<!--
 
 ## Creación de arreglos
 
@@ -1825,3 +1861,5 @@ as.data.frame(cruce)
 +---------+---------+-------------+---------+
 
 : A data.frame: 12 × 4
+
+-->
