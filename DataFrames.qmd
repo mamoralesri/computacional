@@ -1,30 +1,106 @@
 ---
 title: "Data Frames"
-author: 
-  - name: Mario Morales
-    orcid: 0000-0001-8814-0179
-    email: mamorales@correo.unicordoba.edu.co
-    url: https://mariomorales.xyz/
-    affiliations:
-      - name: Universidad de Córdoba, Montería
 format: 
   revealjs:
-    theme: "moon"
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
     highlight: "tango"
     center: true
-    #transition: fade
+    transition: fade
     lang: es
     code-fold: true
-    slide-level: 2
+    #slide-level: 3
     scrollable: true
   beamer:
-    theme: "CambridgeUS"
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
     slide-level: 2
-    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
-    fonttheme: "professionalfonts"
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
 toc: true
-toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
-toc-title: "Contenido"
+editor: source 
 ---
 
 
@@ -32,7 +108,27 @@ toc-title: "Contenido"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# DataFrames (marcos de datos) 
+
+# Data Frames conceptos básicos 
+
+## Data Frames en R
+
+
+::: callout-note
+Un **Data Frame** en R es una estructura de datos bidimensional y tabular, diseñada específicamente para el análisis estadístico. Técnicamente, es una lista de vectores (o factores) que comparten exactamente la misma longitud.
+:::
+
+## Data frames: características 
+
+- Cada **columna** representa una variable y cada **fila** representa una observación o caso.
+
+- A diferencia de las matrices en R (que admiten un solo tipo de dato), los data frames son heterogéneos: permiten almacenar diferentes tipos de datos (numéricos, caracteres, lógicos, factores) en distintas columnas.
+
+- Es el objeto estándar para la manipulación de datos y el ajuste de modelos estadísticos en R.
+
+
+
+# DataFrames: creación  
 
 ## Creación de DataFrames 
 
@@ -56,7 +152,62 @@ datos=data.frame(x,y,z)
 datos
 ```
 
-## 
+# Inspección rápida y estructura 
+
+## Estructura del data  
+
+Para verificar la estructura interna, los tipos de datos de cada columna y la longitud del data frame, usamos `str(datos)` 
+
+```{r}
+#| echo: true
+str(datos)
+```
+
+## Resumen básico  
+
+Para obtener un resumen estadístico básico (mínimo, máximo, cuartiles, media) para variables numéricas, y conteos para factores/caracteres.
+
+```{r}
+#| echo: true
+
+
+summary(datos) 
+```
+
+
+## Dimensiones del data 
+
+Para saber rápidamente las dimensiones (filas y columnas) del data frame usamos `dim(datos)` 
+
+```{r}
+#| echo: true
+
+dim(datos)
+```
+
+
+## Las funciones `head()` y `tail()`
+
+Para explorar las primeras o últimas filas de un data  frame grande sin saturar la consola.
+
+```{r}
+#| echo: true
+
+head(datos)
+
+```
+
+
+```{r}
+#| echo: true
+
+tail(datos)
+
+```
+
+
+
+## ¿Es un data? 
 
 Para saber si efectivamente un objeto en R es un `DataFrame` podemos ejecutar los siguientes comandos 
 
@@ -65,6 +216,8 @@ class(datos)
 is.data.frame(datos) 
 mode(datos) 
 ```
+
+# Nombres de filas y columnas 
 
 ## Nombres de columnas 
 
@@ -85,7 +238,7 @@ datos
 
 ## Nombres de filas II 
 
-Cuando uno de los vectores con que creamos el data tiene nombres para sus elementos, la función `data.frame` toma como estos nombres como como nombres de fila del data creado.
+Cuando uno de los vectores con que creamos el data tiene nombres para sus elementos, la función `data.frame` toma estos nombres como nombres de fila del data creado.
 
 ```{r}
 names(y)=LETTERS[1:10] 
@@ -93,9 +246,9 @@ datos=data.frame(Cx=x,Cy=y,Cz=z)
 datos
 ```
 
-## 
+##  Nombres de filas II  
 
-¿Qué pasa si mas de un vector tiene nombres? Veamos 
+¿Qué pasa si más de un vector tiene nombres? Veamos 
 
 ```{r}
 names(y)=LETTERS[1:10] 
@@ -104,7 +257,7 @@ datos=data.frame(Cy=y,Cx=x,Cz=z,row.names=names(x))
 datos
 ```
 
-## 
+## Nombres de filas IV
 
 Si no quiero nombres de fila se lo indico de la siguiente forma 
 ```{r}
@@ -120,9 +273,12 @@ datos=data.frame(Cx=x,Cy=y,Cz=z)
 datos[c('Jan','Mar','May'),] 
 ```
 
-## Recuperacón y cambio de nombres de filas y columnas 
 
-Para recuperar los nombres de filas de un data usamos la función `row.names` o `rownames` y para las columnas usamos `colnames`, de la siguiente forma
+
+## Recuperación de nombres de filas 
+
+Para recuperar los nombres de filas de un data usamos la función `row.names` o `rownames` 
+
 ```{r}
 # filas 
 row.names(datos) 
@@ -133,6 +289,7 @@ colnames(datos)
 
 ## Recuperar nombres de columnas 
 
+Para recuperar los dombres de las columnas usamos `colnames`, de la siguiente forma
 
 ```{r}
 # columnas 
@@ -141,9 +298,10 @@ colnames(datos)
 
 
 
-## 
+## Cambio de nombre  
 
-Para cambiar los nombres de columnas procedemos de la siguiente forma 
+Para cambiar los nombres de columnas procedemos de la siguiente forma
+
 ```{r}
 colnames(datos)=c('Colx','Coly','Colz') 
 datos
@@ -157,7 +315,9 @@ colnames(datos)[2]='Col2'
 datos
 ```
 
-## Creación de nuevas columnas 
+# Adición de columnas 
+
+## Creación de nuevas columnas, uso de `$` 
 
 Podemos crear nuevas columnas en un data frame, a partir de las columnas existentes, de la siguiente forma 
 ```{r}
@@ -165,7 +325,7 @@ datos$Cx2=datos$Colx^2
 datos
 ```
 
-## 
+## Uso de `['nombre']` 
 
 Crearemos una columna que contiene la columna `Col2` codificada de la siguiente forma: Si `Col2` es `M` asignamos 1 (uno), si es `F` asignamos 0 (cero). 
 ```{r}
@@ -182,6 +342,8 @@ datos$Cx2=NULL
 datos 
 ```
 
+# Indexado 
+
 ## Indexando Data Frames 
 
 Como con los vectores y matrices, podemos indexar un data frame usando como indices  
@@ -195,17 +357,23 @@ Esto es válido tanto para filas como para columnas
 
 ## Veamos algunos ejemplos 
 
+Seleccionamos las filas con índice 1, 5, 7, 9, 10 y las columnas con índice 2 y 3  
+
 ```{r}
-datos[c(1,5,7,9,10),c(2,3)]
+datos[c(1,5,7,9,10),c(2,3)] 
 ```
 
-## Indexado con numeros negativos 
+## Indexado con números negativos 
+
+Seleccionamos las filas con índice `distintos` a 1, 5, 7, 9, 10 y las columnas con índice `distintos` a 2 y 3 
 
 ```{r}
 datos[-c(1,5,7,9,10),-c(2,3)]
 ```
 
 ## Ejemplo de indexado con caracteres 
+
+Válido cuando las filas tienen nombres 
 
 ```{r}
 datos[c('Feb','Apr','Jun','Aug'),-1]  
@@ -224,7 +392,7 @@ datos[!c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE), ]
 ```
 
 
-## Ejercicio 
+## Ejercicio  
 
 Ejercicio: Calcular la media de `Colx` pero para aquellas filas conde `Col2` es igual a "M"  y separadamente para donde `Col2` es igual a "F"
 

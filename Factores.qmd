@@ -1,0 +1,487 @@
+---
+title: "Estadística computacional"
+subtitle: "Factores"
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+editor: source
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(out.width="90%",out.height="90%") 
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/cursos/estadisticacomputacional")
+library(ggridges) 
+library(reshape)
+library(ggplot2)
+library(tidyverse) 
+library(patchwork)
+```
+
+# Factores: creación y manipulación
+
+## Introducción
+
+Los factores son un tipo de variable especial para almacenar variables categóricas (cualitativas). A veces se comportan como cadenas y, a veces, como números enteros.
+
+En esta clase aprenderemos a crear y a manipular factores.
+
+
+
+# Motivación 
+
+
+## Ejemplo de motivación {.fragile}
+
+-   Ingresemos los siguientes datos
+
+    ```{r echo=TRUE,eval=TRUE}
+    sexo<-c(0,1,0,0,0,0,0,0,0,1,1,0,1,1,0,1,0,0,0,0,1,1,1) 
+    class(sexo)
+    ```
+
+-   Observe que sexo es un vector numérico, ahora pidamos un `summary` de `sexo`
+
+    ```{r echo=TRUE,eval=TRUE}
+    summary(sexo)
+    ```
+
+
+## Ejemplo de motivación II {.fragile} 
+
+
+-   Lo anterior no es útil porque el sexo es una característica nominal.
+
+-   Debemos indicarle a `R` que `sexo` es un factor
+
+
+# Creación de factores
+
+
+## Usando la función `factor`.
+
+Se pueden crear factores utilizando la función `factor`. El primer argumento (y único obligatorio) es un vector.
+
+```{r echo=TRUE,eval=TRUE}
+sexof<-factor(sexo)
+sexof
+summary(sexof)
+```
+
+## Etiquetas para los niveles del factor
+
+Al momento de crear un factor, podemos asignar etiquetas para sus niveles, por ejemplo, si en el vector `sexo` 0 corresponde a femenino (`Fem`) y 1 a masculino (`Mas`), queremos indicarlo en la creación del factor.
+
+```{r echo=TRUE,eval=TRUE}
+sexof<-factor(sexo,labels=c("Fem","Mas"))
+sexof
+summary(sexof) 
+```
+
+## `is.factor`
+
+¿ Qué clase de objeto es `sexof` ?
+
+```{r echo=TRUE,eval=TRUE}
+class(sexof)
+```
+
+Para comprobar si un objeto es factor, usamos la función `is.factor`, en caso afirmativo obtenemos `TRUE`
+
+```{r echo=TRUE,eval=TRUE}
+is.factor(sexof)
+```
+
+## Recuperar los niveles de un factor
+
+Las opciones "Fem" y "Mas" se denominan **niveles del factor** y se pueden recuperar con la función `levels`
+
+```{r echo=TRUE,eval=TRUE}
+levels(sexof)
+```
+
+El número de niveles de un factor (equivalente a la longitud del vector que regresa `levels`) se puede recuperar con la función `nlevels`
+
+```{r echo=TRUE,eval=TRUE}
+nlevels(sexof)
+```
+
+## Cambio de las etiquetas de un factor
+
+Podemos cambiar las etiquetas (los `labels`) de un factor, con la función `levels`. Por ejemplo, si en lugar de "Fem" y "Mas" queremos "Femenino" y "Masculino".
+
+```{r echo=TRUE,eval=TRUE}
+levels(sexof)=c("Femenino","Masculino") 
+table(sexof)
+```
+
+## Al momento de crear un data frame
+
+Siempre que cree un marco de datos con una columna de datos de texto, es posible indicarle a `R`, que asuma esta columna como de datos categóricos, es decir, que realice la conversión a factor con el argumento `stringsAsFactors=TRUE`. El siguiente conjunto de datos de ejemplo contiene las edades de 10 adultos:
+
+```{r echo=TRUE,eval=TRUE}
+edad=c(18,20,19,18,21,20)
+sexo=c("M","F","M","M","F","F")
+datos=data.frame(edad=edad,sexo=sexo,stringsAsFactors=TRUE) 
+str(datos)
+```
+
+-   Ejercicio: calcule la edad promedio para cada nivel de `sexo`
+
+## Solución
+
+-   Usamos la función `tapply`
+
+```{r echo=TRUE,eval=TRUE}
+with( datos, tapply(edad,sexo, mean) ) 
+```
+
+# Recodificación 
+
+## Recodificación
+
+Hay aplicaciones donde se requiere recodificar los niveles de un factor, por ejemplo
+
+```{r echo=TRUE,eval=TRUE}
+sexo2=c('F','f','M','m','M','m','F','f','M','m','M','m','S')
+sexo2=factor(sexo2)
+summary(sexo2)
+```
+
+-   Queremos que los niveles 'F' y 'f' se recodifiquen como `femenino`; 'M','m' como masculino y 'S' como dato faltante.
+
+-   Eso lo podemos hacer mediante la función `recode`, de la librería `car`.
+
+## Uso de `recode` de la librería `car`
+
+```{r echo=TRUE,eval=TRUE}
+library(car)
+sexo2=recode(sexo2,"c('F','f')='Femenino';
+             c('M','m') = 'Masculino';
+             else=NA")
+summary(sexo2)
+```
+
+
+## Otro ejemplo de recodificación 
+
+```{r}
+set.seed(1234)
+satis=sample(1:10,size = 500,replace = TRUE)
+satis=factor(satis)
+table(satis)
+```
+
+Colapsar 1,2,3 como satisfacción baja, 4, 5, 6 y 7 como media y 8, 9, 10, como satisfacción alta.   
+
+
+## Solución 
+
+
+
+```{r}
+#| echo: true
+library(car)
+satis_r=recode(satis,"c(1,2,3)='Baja';c(4,5,6,7)='Media';else='Alta'")
+```
+
+
+# Borrar niveles sin datos
+
+
+
+## Borrar niveles de un factor
+
+En el proceso de limpieza de conjuntos de datos, o de extraer subconjuntos, es posible que se eliminen todos los datos correspondientes a uno o más niveles de un factor, veamos el siguiente ejemplo.
+
+```{r echo=TRUE,eval=TRUE}
+set.seed(1234)
+peso=rpois(25,lambda = 40)
+trat=factor(sample(c("A","B","C"),25,replace = TRUE) )
+dataT=data.frame(peso,trat)
+head(dataT)
+```
+
+## 
+
+```{r echo=TRUE,eval=TRUE}
+barplot(table(dataT$trat)) 
+```
+
+## Seleccionamos solo dos niveles de trat
+
+Vamos a filtrar los datos para quedarnos solo con los niveles `A` y `B` de `trat`
+
+```{r echo=TRUE,eval=TRUE}
+dataTb=subset(dataT,subset=trat!='C')
+table(dataTb$trat) 
+```
+
+\alert{note el nivel 'C' en cero}
+
+```{r echo=TRUE,eval=TRUE}
+levels(dataTb$trat)
+```
+
+## 
+
+```{r echo=TRUE,eval=TRUE}
+barplot(table(dataTb$trat)) 
+```
+
+## Borrar los niveles que estén en cero
+
+```{r echo=TRUE,eval=TRUE}
+dataTb$trat=droplevels(dataTb$trat)
+```
+
+## 
+
+```{r echo=TRUE,eval=TRUE}
+barplot(table(dataTb$trat)) 
+```
+
+# Categorización de variables continuas
+
+## Categorizando variables continuas
+
+-   Una forma útil de resumir una variable numérica es contar cuántos valores **caen** en diferentes *categorías* o intervalos de *clase*.
+
+-   La función `cut` 'corta' una variable numérica en pedazos, devolviendo un factor.
+
+-   Esta se usa comúnmente con la función `table` para obtener el número de datos que quedan en los diferentes grupos (frecuencias).
+
+## Categorizando variables continuas
+
+El siguiente código genera aleatoriamente las edades de diez mil trabajadores (de 16 a 66, usando una distribución beta)
+
+```{r echo=TRUE,eval=TRUE}
+set.seed(1234) 
+edades<-round(16 + 50 * rbeta(10000, 2, 3))
+head(edades)
+cat('Edad minima', min(edades),"años \n") 
+cat('Edad maxima', max(edades),"años\n") 
+cat('Numero de datos:', length(edades),"\n") 
+```
+
+La tarea consiste en agruparlos en grupos de edades de 10 años.
+
+```{r echo=TRUE,eval=TRUE}
+seq.int(16, 66, 10)
+```
+
+## Categorizando variables continuas
+
+La tarea consiste en agruparlos en grupos de edades de 10 años.
+
+```{r echo=TRUE,eval=TRUE}
+seq.int(16, 66, 10)
+edades_agrup<-cut(edades, seq.int(16, 66, 10))
+head(edades)
+head(edades_agrup)
+class(edades_agrup)
+```
+
+## Categorizando variables continuas
+
+El resultado
+
+```{r echo=TRUE,eval=TRUE}
+summary(edades_agrup)
+table(edades_agrup)
+sum(table(edades_agrup))
+```
+
+## Categorizando variables continuas
+
+Los 4 datos que faltan son los de las 4 personas que tienen edad igual a 16.
+
+```{r echo=TRUE,eval=TRUE}
+sum(edades==16) 
+which(edades==16)
+edades_agrup[which(edades==16)]
+```
+
+## Solución
+
+Configuramos la opción `include.lowest = TRUE`
+
+```{r echo=TRUE,eval=TRUE}
+edades_agrup<-cut(edades, seq.int(16, 66, 10),
+                  include.lowest = TRUE) 
+table(edades_agrup)
+sum(table(edades_agrup))
+```
+
+## Como cambiar (a,b\] a \[a,b)
+
+Configuramos la opción `right = TRUE`
+
+```{r echo=TRUE,eval=TRUE}
+edades_agrup<-cut(edades, seq.int(16, 66, 10),
+                  include.lowest = TRUE,
+                  right = FALSE) 
+table(edades_agrup)
+sum(table(edades_agrup))
+```
+
+## Cambiamos las etiquetas
+
+```{r echo=TRUE,eval=TRUE}
+levels(edades_agrup)<-c('Jovenes' , 'Adultos Jovenes' , 
+                        'Adultos','Mayores',
+                        'Adulto Mayor') 
+table(edades_agrup)
+```
+
+
+## Cambiar etiquetas al momento de llamar a `cut`
+
+```{r echo=TRUE,eval=TRUE}
+edades_agrup<-cut(edades, seq.int(16, 66, 10),labels=c('Jovenes' , 'Ad Jovenes' , 
+                        'Adultos','Mayores',
+                        'Ad Mayor'),include.lowest=TRUE,right = FALSE )
+head( data.frame(edades,edades_agrup) ) 
+```
+
+
+
+
+# Creación de factores con `gl`
+
+## Creación de un factor mediante la función `gl`
+
+-   Para datos balanceados, donde hay un número igual de puntos de datos para cada nivel, la función `gl` se puede usar para generar un factor.
+
+-   En su forma más simple, la función toma un número entero para el número de niveles en el factor resultante y otro número entero para cuántas veces se debe repetir cada nivel.
+
+-   Si quiere establecer los nombres de los niveles, deberá pasar un vector de caracteres al argumento `labels`.
+
+## Ejemplo  
+
+Creamos un factor con tres niveles y cuatro observaciones en cada nivel
+
+```{r echo=TRUE,eval=TRUE}
+gl(3, 4)
+```
+
+## Ejemplo con `labels`   
+
+Creamos un factor con tres niveles y cuatro observaciones en cada nivel
+
+```{r echo=TRUE,eval=TRUE}
+gl(3, 4,labels = c("A","B","C")) 
+```
+
+
+## Ejemplo con `length`   
+
+Creamos un factor con tres niveles y cuatro observaciones en cada nivel, con longitud 24. 
+
+```{r echo=TRUE,eval=TRUE}
+gl(3, 4,length=24,labels = c("A","B","C")) 
+```
+
+
+
+
+# Nivel de referencia de un factor 
+
+
+
+## El data para los ejemplos 
+
+```{r echo=TRUE,eval=TRUE}
+set.seed(1234)
+peso=rpois(25,lambda = 40)
+trat=factor(sample(c("A","B","C"),25,replace = TRUE) )
+dataT=data.frame(peso,trat)
+head(dataT)
+```
+
+
+
+
+## Cálculo de la media por niveles 
+
+```{r}
+#| echo: true
+with(dataT, tapply(peso, trat, mean) ) 
+```
+
+
+Observe que la salida pone de primero la media del nivel `A`, este se conoce como **nivel de referencia**, el cual es muy importante al momento de hacer cálculos con factores.
+
+
+
+
+## Medias de `peso` para cada nivel de `trat` 
+
+
+```{r}
+#| echo: false
+medias=with(dataT, tapply(peso, trat, mean) ) 
+dmed=diff(medias)
+```
+
+## Nivel de referencia
+
+```{r echo=TRUE,eval=TRUE}
+mod=lm(peso~trat,data=dataT) 
+summary(mod)[["coefficients"]]
+```
+
+-   Observe en la salida anterior, no aparece `tratA` .
+
+    -   Qué pasó con `tratA`?
+    -   A qué corresponde el valor `r dmed[1]`? 
+
+`tratA` no aparece porque es el nivel de referencia y el valor que aparece debajo de `Estimate`, como `tratB`, corresponde a la diferencia de los promedios: $$\bar{X}_{B}-\bar{X}_{A}$$ (B-A) 
+
+## Verificación
+
+```{r echo=TRUE,eval=TRUE}
+medias=with(dataT, tapply(peso, trat, mean) ) 
+medias["B"]-medias["A"]
+```
+
+## Cambio del nivel de referencia
+
+Cambiemos el nivel de referencia al nivel `C`
+
+```{r echo=TRUE,eval=TRUE}
+dataT$trat=relevel(dataT$trat,ref='C')
+with( dataT, tapply(peso,trat, mean) ) 
+```
+
+Observe que ahora 'C' aparece de primero
+
+## 
+
+```{r echo=TRUE,eval=TRUE}
+mod=lm(peso~trat,data=dataT) 
+summary(mod)[["coefficients"]]
+```
+
+Ahora aparece `tratA` y `tratC` no aparece porque es el nivel de referencia, note también que se tiene `r medias["A"]-medias["C"]`  que corresponde a $$\bar{X}_{A}-\bar{X}_{C}$$

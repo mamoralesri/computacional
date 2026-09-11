@@ -1,0 +1,2689 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+  spanish,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolshorizontal
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+
+\usetheme[]{default}
+\usefonttheme[]{default}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+\setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+\logo{%
+  \begin{tabular}{c}
+    \includegraphics[height=1.2cm]{EscudoU.png}
+  \end{tabular}%
+}
+% --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+\definecolor{UnicorGreen}{HTML}{024426}
+\definecolor{UnicorText}{HTML}{F9F9F9}
+\definecolor{UnicorWhite}{HTML}{FFFFFF}
+\definecolor{UnicorGold}{HTML}{D1B061}
+
+% Aplicación al fondo y texto general
+\setbeamercolor{background canvas}{bg=UnicorGreen}
+\setbeamercolor{normal text}{fg=UnicorText}
+
+% Aplicación a títulos y cabeceras
+%\setbeamercolor{title}{fg=UnicorWhite}
+\setbeamercolor{frametitle}{fg=UnicorWhite}
+\setbeamercolor{framesubtitle}{fg=UnicorWhite}
+
+% Aplicación a viñetas y estructura
+\setbeamercolor{structure}{fg=UnicorWhite}
+\setbeamercolor{itemize item}{fg=UnicorWhite}
+\setbeamercolor{itemize subitem}{fg=UnicorWhite}
+\setbeamercolor{enumerate item}{fg=UnicorWhite}
+
+% Forzar a LaTeX a repintar el texto general al iniciar el documento
+\AtBeginDocument{\usebeamercolor[fg]{normal text}}
+
+% Aplicación a hipervínculos
+\hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite}
+
+% --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+\useinnertheme[shadow=true]{rounded}
+
+% --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+% Fondo dorado con texto verde
+\setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+\setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+\setbeamercolor{framesubtitle}{fg=UnicorWhite}
+
+% --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+% Título del bloque (Fondo dorado, texto verde)
+\setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+% Cuerpo del bloque (Fondo blanco, texto verde)
+\setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+
+\AtBeginDocument{
+  \author{%
+    \begin{tabular}{c}
+      Mario A. Morales Rivera \\
+      \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+      \footnotesize Universidad de Córdoba
+    \end{tabular}
+  }
+  \institute{}
+}
+% --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+\setbeamertemplate{section page}{
+  \begin{center}
+    \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+      \usebeamerfont{title}\insertsection\par
+    \end{beamercolorbox}
+  \end{center}
+}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Tabla de contenidos}
+\else
+  \newcommand\contentsname{Tabla de contenidos}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Listado de Figuras}
+\else
+  \newcommand\listfigurename{Listado de Figuras}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Listado de Tablas}
+\else
+  \newcommand\listtablename{Listado de Tablas}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figura}
+\else
+  \newcommand\figurename{Figura}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabla}
+\else
+  \newcommand\tablename{Tabla}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listado}
+\newcommand*\listoflistings{\listof{codelisting}{Listado de Listados}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Matrices},
+  pdfauthor={Mario Morales},
+  pdflang={es},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Matrices}
+\subtitle{Acceso, edición, operaciones y aplicaciones en algebra lineal}
+\author{Mario Morales}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+\renewcommand*\contentsname{Contenido}
+\begin{frame}[allowframebreaks]
+  \frametitle{Contenido}
+  \setcounter{tocdepth}{3}
+  \tableofcontents
+\end{frame}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+
+\section{Matrices}\label{matrices}
+
+\begin{frame}{Objetivos}
+\phantomsection\label{objetivos}
+Después de estudiar este capítulo, usted debería:
+
+\begin{itemize}
+\item
+  Ser capaz de crear y manipular matrices.
+\item
+  Realizar operaciones con matrices.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Matrices}
+\phantomsection\label{matrices-1}
+\begin{tcolorbox}[enhanced jigsaw, breakable, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Nota}, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, leftrule=.75mm, left=2mm, titlerule=0mm, colback=white, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+
+En un sentido estricto, las matrices son arreglos de dos dimensiones, un
+\texttt{largo} y un \texttt{alto}. Las matrices son, por lo tanto, una
+estructura con forma rectangular, con filas y columnas.
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile]{Creación de matrices}
+\phantomsection\label{creaciuxf3n-de-matrices}
+\begin{itemize}
+\item
+  Para crear una matriz se usa la función \texttt{matrix},
+\item
+  También puede crear matrices con la función \texttt{array}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    3    1
+[2,]    5    4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{) }
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    3    5
+[2,]    1    4
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Usando \texttt{array()}}
+\phantomsection\label{usando-array}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{array}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{dim=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)) }
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    3    1
+[2,]    5    4
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Nombres de filas y columnas}
+\phantomsection\label{nombres-de-filas-y-columnas}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{ncol=}\DecValTok{5}\NormalTok{, }
+    \AttributeTok{dimnames=}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Mario"}\NormalTok{,}\StringTok{"Juan"}\NormalTok{,}\StringTok{"Miguel"}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\StringTok{"L"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"Mi"}\NormalTok{,}\StringTok{"J"}\NormalTok{,}\StringTok{"V"}\NormalTok{) ))}
+\NormalTok{Ventas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L M Mi J V
+Mario  5 7  3 2 0
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Nombres de filas y columnas (II)}
+\phantomsection\label{nombres-de-filas-y-columnas-ii}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas2}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{ncol=}\DecValTok{5}\NormalTok{)}
+\NormalTok{Ventas2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    5    7    3    2    0
+[2,]    4    6    2    1    4
+[3,]    9    3    5    8    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rownames}\NormalTok{(Ventas2)}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Mario"}\NormalTok{,}\StringTok{"Juan"}\NormalTok{,}\StringTok{"Miguel"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(Ventas2)}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"L"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"Mi"}\NormalTok{,}\StringTok{"J"}\NormalTok{,}\StringTok{"V"}\NormalTok{) }
+\NormalTok{Ventas2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L M Mi J V
+Mario  5 7  3 2 0
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Recuperar nombres de filas y columnas}
+\phantomsection\label{recuperar-nombres-de-filas-y-columnas}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rownames}\NormalTok{(Ventas2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Mario"  "Juan"   "Miguel"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(Ventas2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "L"  "M"  "Mi" "J"  "V" 
+\end{verbatim}
+\end{frame}
+
+\section{Recuperación y Edición de
+valores}\label{recuperaciuxf3n-y-ediciuxf3n-de-valores}
+
+\begin{frame}[fragile]{Indexación por número de fila y columna}
+\phantomsection\label{indexaciuxf3n-por-nuxfamero-de-fila-y-columna}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{]}\OtherTok{=}\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule\noalign{}
+& L & M & Mi & J & V \\
+\midrule\noalign{}
+\endhead
+Mario & 5 & 7 & 3 & 2 & 5 \\
+Juan & 4 & 6 & 2 & 1 & 4 \\
+Miguel & 9 & 3 & 5 & 8 & 3 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{Indexación por nombre de fila y columna}
+\phantomsection\label{indexaciuxf3n-por-nombre-de-fila-y-columna}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\StringTok{"Mario"}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ L  M Mi  J  V 
+ 5  7  3  2  5 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[,}\StringTok{"L"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Mario   Juan Miguel 
+     5      4      9 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\StringTok{"Juan"}\NormalTok{,}\StringTok{"Mi"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Indexación por nombre de fila y columna}
+\phantomsection\label{indexaciuxf3n-por-nombre-de-fila-y-columna-1}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\StringTok{"Mario"}\NormalTok{,}\StringTok{"J"}\NormalTok{] }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\StringTok{"Mario"}\NormalTok{,}\StringTok{"V"}\NormalTok{]}\OtherTok{=}\DecValTok{5} 
+\NormalTok{Ventas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L M Mi J V
+Mario  5 7  3 2 5
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Ventas de mario y Juan lunes y viernes}
+\phantomsection\label{ventas-de-mario-y-juan-lunes-y-viernes}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)] }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      L V
+Mario 5 5
+Juan  4 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\FunctionTok{c}\NormalTok{(}\StringTok{"Mario"}\NormalTok{,}\StringTok{"Juan"}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\StringTok{"L"}\NormalTok{,}\StringTok{"V"}\NormalTok{)] }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      L V
+Mario 5 5
+Juan  4 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\FunctionTok{c}\NormalTok{(}\StringTok{"Mario"}\NormalTok{,}\StringTok{"Juan"}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\StringTok{"L"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"Mi"}\NormalTok{,}\StringTok{"J"}\NormalTok{,}\StringTok{"V"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      L M Mi J V
+Mario 5 7  3 2 5
+Juan  4 6  2 1 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[}\FunctionTok{c}\NormalTok{(}\StringTok{"Mario"}\NormalTok{,}\StringTok{"Juan"}\NormalTok{), ] }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      L M Mi J V
+Mario 5 7  3 2 5
+Juan  4 6  2 1 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas[,}\FunctionTok{c}\NormalTok{(}\StringTok{"L"}\NormalTok{,}\StringTok{"M"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L M
+Mario  5 7
+Juan   4 6
+Miguel 9 3
+\end{verbatim}
+\end{frame}
+
+\section{Operaciones sobre las filas y las columnas de una
+matriz}\label{operaciones-sobre-las-filas-y-las-columnas-de-una-matriz}
+
+\begin{frame}[fragile]{Suma por filas y columnas}
+\phantomsection\label{suma-por-filas-y-columnas}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# SUMA POR FILAS }
+\FunctionTok{rowSums}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Mario   Juan Miguel 
+    22     17     28 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# SUMA POR COLUMNAS }
+\FunctionTok{colSums}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ L  M Mi  J  V 
+18 16 10 11 12 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Media por filas y columnas}
+\phantomsection\label{media-por-filas-y-columnas}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Promedio POR FILAS }
+\FunctionTok{rowMeans}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Mario   Juan Miguel 
+   4.4    3.4    5.6 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# promedio por columna }
+\FunctionTok{colMeans}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L        M       Mi        J        V 
+6.000000 5.333333 3.333333 3.666667 4.000000 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Estadísticas de fila y columna con
+\texttt{apply}}
+\phantomsection\label{estaduxedsticas-de-fila-y-columna-con-apply}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# varianza  POR FILAS }
+\FunctionTok{apply}\NormalTok{(Ventas,}\DecValTok{1}\NormalTok{,var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Mario   Juan Miguel 
+   3.8    3.8    7.8 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# máximo por columna }
+\FunctionTok{apply}\NormalTok{(Ventas,}\DecValTok{2}\NormalTok{,max) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ L  M Mi  J  V 
+ 9  7  5  8  5 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Transpuesta de una matriz}
+\phantomsection\label{transpuesta-de-una-matriz}
+Operación que intercambia filas por columnas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   Mario Juan Miguel
+L      5    4      9
+M      7    6      3
+Mi     3    2      5
+J      2    1      8
+V      5    4      3
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones componente a componente}
+\phantomsection\label{operaciones-componente-a-componente}
+Las matrices deben tener la misma dimensión
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }
+\NormalTok{B}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{block}{Suma}
+\phantomsection\label{suma}
+Suma componente a componente
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{+}\NormalTok{B   }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    8    8
+[2,]   13    7
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Producto por un escalar}
+\phantomsection\label{producto-por-un-escalar}
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\SpecialCharTok{*}\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    6    2
+[2,]   10    8
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Resta}
+\phantomsection\label{resta}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{{-}}\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]   -2   -6
+[2,]   -3    1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Producto componente a componente}
+\phantomsection\label{producto-componente-a-componente}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{*}\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]   15    7
+[2,]   40   12
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Cociente componente a componente}
+\phantomsection\label{cociente-componente-a-componente}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{/}\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      [,1]      [,2]
+[1,] 0.600 0.1428571
+[2,] 0.625 1.3333333
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Producto usual de matrices}
+\phantomsection\label{producto-usual-de-matrices}
+\begin{tcolorbox}[enhanced jigsaw, breakable, arc=.35mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Importante}, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, leftrule=.75mm, left=2mm, titlerule=0mm, colback=white, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+
+Para que se pueda realizar este producto se requiere que el número de
+columnas de la primera matriz, sea igual al número de filas de la
+segunda.
+
+\end{tcolorbox}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{);A }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    2    4
+[2,]    3    5    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{);B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0   -1    2
+[2,]    1    0    0
+[3,]    2    0    1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Producto usual de matrices}
+\phantomsection\label{producto-usual-de-matrices-1}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{B }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]   10   -1    6
+[2,]    5   -3    6
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Producto de \(A\) por su transpuesta}
+\phantomsection\label{producto-de-a-por-su-transpuesta}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]   21   13
+[2,]   13   34
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matriz simétrica}
+\phantomsection\label{matriz-simuxe9trica}
+Si \(A(i,j)=A(j,i)\) para todo \(i\), \(j\) la matriz \(A\) es simétrica
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S}\OtherTok{=}\NormalTok{Ventas}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(Ventas)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+\phantomsection\label{ejercicio}
+Escribir código \texttt{R} que permita averiguar su una matriz es
+simétrica o no
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\NormalTok{S}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    3    2    4
+[2,]    2    1    0
+[3,]    4    0    5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# averiguar si S es simétrica }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# igualamos a S con su transpuesta }
+\NormalTok{S}\SpecialCharTok{==}\FunctionTok{t}\NormalTok{(S) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,] TRUE TRUE TRUE
+[2,] TRUE TRUE TRUE
+[3,] TRUE TRUE TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{all}\NormalTok{( S}\SpecialCharTok{==}\FunctionTok{t}\NormalTok{(S) ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S}\SpecialCharTok{{-}}\FunctionTok{t}\NormalTok{(S)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+\phantomsection\label{ejercicio-1}
+Escribir una función en R código \texttt{R} que permita averiguar su una
+matriz es cuadrada
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# como averiguar si una matriz es cuadrada }
+\NormalTok{is.cuadrada}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(X)\{}
+    \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(X)}\SpecialCharTok{==}\FunctionTok{ncol}\NormalTok{(X))\{}\StringTok{"La matriz es cuadrada"}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{(}\StringTok{"La matriz no es cuadrada"}\NormalTok{)}
+\NormalTok{        \}}
+\FunctionTok{is.cuadrada}\NormalTok{(B) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "La matriz es cuadrada"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+\phantomsection\label{ejercicio-2}
+Función que nos dice si una matriz cuadrada es simétrica o no
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#  }
+\NormalTok{prueba.simetria}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(X)\{}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(X)}\SpecialCharTok{!=}\FunctionTok{ncol}\NormalTok{(X))\{}\FunctionTok{stop}\NormalTok{(}\StringTok{"La matriz debe ser cuadrada"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{( }\FunctionTok{all}\NormalTok{(X}\SpecialCharTok{==}\FunctionTok{t}\NormalTok{(X)) )\{}\StringTok{"La matriz es simetrica "}
+\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}\StringTok{"La matriz no es simetrica"}\NormalTok{\}     }
+\NormalTok{\}}
+\FunctionTok{prueba.simetria}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "La matriz no es simetrica"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prueba.simetria}\NormalTok{(A}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(A)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "La matriz es simetrica "
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando matrices}
+\phantomsection\label{combinando-matrices}
+Podemos concatenar matrices por filas y columnas
+
+\begin{block}{rbind}
+\phantomsection\label{rbind}
+Una matriz debajo de la otra
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rbind}\NormalTok{(A,B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    2    4
+[2,]    3    5    0
+[3,]    0   -1    2
+[4,]    1    0    0
+[5,]    2    0    1
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando matrices (II)}
+\phantomsection\label{combinando-matrices-ii}
+\begin{block}{cbind}
+\phantomsection\label{cbind}
+Una matriz al lado de la otra
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cbind}\NormalTok{(B,Ventas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              L M Mi J V
+Mario  0 -1 2 5 7  3 2 5
+Juan   1  0 0 4 6  2 1 4
+Miguel 2  0 1 9 3  5 8 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ventas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       L M Mi J V
+Mario  5 7  3 2 5
+Juan   4 6  2 1 4
+Miguel 9 3  5 8 3
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Filas, columnas y dimensiones}
+\phantomsection\label{filas-columnas-y-dimensiones}
+Tanto para arreglos como para matrices, la función \texttt{dim} devuelve
+un vector de números enteros de las dimensiones de la variable:
+
+Para matrices, las funciones \texttt{nrow} y \texttt{ncol} devuelven el
+número de filas y columnas, respectivamente
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ncol}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3
+\end{verbatim}
+\end{frame}
+
+\section{Matrices especiales}\label{matrices-especiales}
+
+\begin{frame}[fragile]{Matriz de puros unos}
+\phantomsection\label{matriz-de-puros-unos}
+Matriz de puros unos \(A=(a_{i,j})_{m\times n}\) con \(a_{i,j}=1\) para
+todo \(i\) y todo \(j\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matriz de puros unos (aplicación)}
+\phantomsection\label{matriz-de-puros-unos-aplicaciuxf3n}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{),}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{ )}
+\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    1   -1
+[2,]    2   -2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{U}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\NormalTok{U}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    1    1
+[2,]    1    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z}\SpecialCharTok{\%*\%}\NormalTok{U}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    0    0
+[2,]    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{U}\SpecialCharTok{\%*\%}\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    3   -3
+[2,]    3   -3
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matriz de puros ceros}
+\phantomsection\label{matriz-de-puros-ceros}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Puros ceros }
+\NormalTok{C}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{4}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\NormalTok{C}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matriz idéntica}
+\phantomsection\label{matriz-iduxe9ntica}
+Matriz idéntica de orden 5
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I5}\OtherTok{\textless{}{-}}\FunctionTok{diag}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\NormalTok{I5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matriz diagonal}
+\phantomsection\label{matriz-diagonal}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{diag}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    2    0    0
+[2,]    0    3    0
+[3,]    0    0    5
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Recuperar la diagonal de una matriz}
+\phantomsection\label{recuperar-la-diagonal-de-una-matriz}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{t}\NormalTok{(mat)}\SpecialCharTok{\%*\%}\NormalTok{mat }
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    A   B   C
+A  30  70 110
+B  70 174 278
+C 110 278 446
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{diag}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  A   B   C 
+ 30 174 446 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Traza de una matriz}
+\phantomsection\label{traza-de-una-matriz}
+Definicion: dada una matriz cuadrada, su traza se define como la suma de
+los elementos de la diagonal.
+
+Tarea, escribir codigo R que tome una matriz cuadrada y regrese la traza
+de ella.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(A))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 650
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Productos cruzados}
+\phantomsection\label{productos-cruzados}
+Otra forma de calcular \(B^t\times B\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{crossprod}\NormalTok{(mat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    A   B   C
+A  30  70 110
+B  70 174 278
+C 110 278 446
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Producto interno y externo}
+\phantomsection\label{producto-interno-y-externo}
+\begin{itemize}
+\item
+  Para la multiplicación de matrices (producto interno y producto
+  externo), tenemos los operadores especiales \texttt{\%*\%} y
+  \texttt{\%o\%}.
+\item
+  En cada caso, los nombres de las dimensiones se toman de la primera
+  entrada, si existen:
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Producto interno y externo: ejemplos}
+\phantomsection\label{producto-interno-y-externo-ejemplos}
+\begin{itemize}
+\tightlist
+\item
+  Calcular \(X\times X^t\)
+\item
+  Si \(A=(1,2,3)\) y \(B=(4,5,6)\), calcular \(A \circ B\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(mat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       uno dos tres cuatro
+uno    107 122  137    152
+dos    122 140  158    176
+tres   137 158  179    200
+cuatro 152 176  200    224
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{) }\SpecialCharTok{\%o\%} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    4    5    6
+[2,]    8   10   12
+[3,]   12   15   18
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Equivalente}
+\phantomsection\label{equivalente}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{outer}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    4    5    6
+[2,]    8   10   12
+[3,]   12   15   18
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo producto usual de matrices}
+\phantomsection\label{ejemplo-producto-usual-de-matrices}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\NormalTok{B}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    3    2    7
+[2,]   10    6   16
+\end{verbatim}
+\end{frame}
+
+\section{Matriz inversa}\label{matriz-inversa}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{7}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{)}
+\NormalTok{m}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    5    2
+[2,]    0   -3    4
+[3,]    1    1    7
+\end{verbatim}
+
+\begin{block}{Cociente componete a componente}
+\phantomsection\label{cociente-componete-a-componente}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m}\SpecialCharTok{\^{}{-}}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]       [,2]      [,3]
+[1,]    1  0.2000000 0.5000000
+[2,]  Inf -0.3333333 0.2500000
+[3,]    1  1.0000000 0.1428571
+\end{verbatim}
+\end{block}
+
+\begin{block}{Cálculo de determinante}
+\phantomsection\label{cuxe1lculo-de-determinante}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{det}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Inversa de una matriz}
+\phantomsection\label{inversa-de-una-matriz}
+\begin{tcolorbox}[enhanced jigsaw, breakable, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Nota}, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, leftrule=.75mm, left=2mm, titlerule=0mm, colback=white, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+
+Data una matriz cuadrada \(A_{n\times n}\), la inversa de \(A\), si
+existe, es una matriz de tamaño \(n\times n\), denotada por \(A^{-1}\)
+tal que \[A\times A^{-1}=A^{-1}\times A=I_n \] donde \(I_n\) es la
+identica de orden \(n\).
+
+\end{tcolorbox}
+
+Cálculo de la inversa de una matriz
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{solve}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]  -25  -33   26
+[2,]    4    5   -4
+[3,]    3    4   -3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m}\SpecialCharTok{\%*\%}\FunctionTok{solve}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Determinante de una matriz}
+\phantomsection\label{determinante-de-una-matriz}
+Una matriz cuadrada \(A_{n\times n}\), tiene inversa, si y solo si su
+determinante es distinto de cero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{det}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Aplicación: solución de sistemas de ecuaciones lineales.}
+\phantomsection\label{aplicaciuxf3n-soluciuxf3n-de-sistemas-de-ecuaciones-lineales.}
+Dado un sistema de ecuaciones lineales de la forma \[Ax=b\] donde \(A\)
+es una matriz invertible, entonces la solución del sistema es
+\[x=A^{-1}b\] donde \(A^{-1}\) es la inversa de \(A\)
+\end{frame}
+
+\begin{frame}{}
+\phantomsection\label{section-1}
+Ejemplo: Halle la solución del siguiente sistema \(3\times 3\)
+\[\begin{array}{rl}
+2a+b-3c &= 7\\
+5a-4b+c&=-19\\
+a-b-4c&=4
+\end{array}\]
+\end{frame}
+
+\begin{frame}{Solución}
+\phantomsection\label{soluciuxf3n}
+Solución: El sistema se puede escribir en forma matricial con
+\[ A=\begin{bmatrix}
+2 & 1  & -3 \\
+5 & -4 & 1  \\
+1 & -1 & -4
+\end{bmatrix} \hbox{ ,  } b=\begin{bmatrix}
+7  \\
+-19   \\
+4 
+\end{bmatrix} \hbox{ y   }x=\begin{bmatrix}
+a \\
+b  \\
+c 
+\end{bmatrix} \]
+\end{frame}
+
+\begin{frame}[fragile]{Solución, ingresamos las matrices}
+\phantomsection\label{soluciuxf3n-ingresamos-las-matrices}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{ , }\DecValTok{1}\NormalTok{  , }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{,}
+\DecValTok{5}\NormalTok{ , }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{ , }\DecValTok{1}\NormalTok{,}
+\DecValTok{1}\NormalTok{ , }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ , }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{b}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{19}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{) }
+\FunctionTok{solve}\NormalTok{(A)}\SpecialCharTok{\%*\%}\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]
+[1,]   -1
+[2,]    3
+[3,]   -2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{solve}\NormalTok{(A,b) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]
+[1,]   -1
+[2,]    3
+[3,]   -2
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Solución de sistemas de ecuaciones lineales}
+\phantomsection\label{soluciuxf3n-de-sistemas-de-ecuaciones-lineales}
+Un sistema de la forma \(Ax=b\) tiene solución única si y solo si el
+determinante de la matriz de coeficientes es distinto de cero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{) }
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    1    6
+[2,]    7   -3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{27}\NormalTok{,}\DecValTok{9}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{) }
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]
+[1,]   27
+[2,]    9
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Solución}
+\phantomsection\label{soluciuxf3n-1}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{det}\NormalTok{(A) }\CommentTok{\#distinto de cero luego el sistema tiene solucion unica }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] -45
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# varias formas de hallar la solución }
+\CommentTok{\# calculamos la inversa de A }
+\NormalTok{Ai}\OtherTok{=}\FunctionTok{solve}\NormalTok{(A) }
+\NormalTok{Ai}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           [,1]        [,2]
+[1,] 0.06666667  0.13333333
+[2,] 0.15555556 -0.02222222
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(Ai}\SpecialCharTok{\%*\%}\NormalTok{A,}\DecValTok{10}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ai}\SpecialCharTok{\%*\%}\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]
+[1,]    3
+[2,]    4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{solve}\NormalTok{(A,b) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1]
+[1,]    3
+[2,]    4
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+\phantomsection\label{ejercicio-3}
+Solucionar el siguiente sistema de ecuaciones lineales
+\[\begin{array}{c}
+2x+6y+z=7\\
+x+2y-z=-1\\
+5x+7y-4z=9
+\end{array}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\NormalTok{b}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{),}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\CommentTok{\#solve(A,b)}
+\FunctionTok{det}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0
+\end{verbatim}
+
+\begin{block}{Aplicación: Inversa generalizada}
+\phantomsection\label{aplicaciuxf3n-inversa-generalizada}
+Calculo de una inversa generalizada de una matriz A. Una inversa
+generalizada de la matriz \(A\) se define como una matriz \(G\) tal que
+\(A\times G \times A=A\)
+\end{block}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+\phantomsection\label{ejemplo}
+Considere la matriz \[ A=\begin{bmatrix}
+   2 & 3 & 1 & -1 \\ 
+   5 & 8 & 0 & 1 \\ 
+   1 & 2 & -2 & 3 \\ 
+\end{bmatrix} \] verifique que la matriz \[ G=\begin{bmatrix}
+0 & 0 & 0\\
+0 & 0 & 0\\
+1 & 1 & 0\\
+0 & 1 & 0
+\end{bmatrix} \] es una inversa generalizada de \[A\]
+\end{frame}
+
+\begin{frame}[fragile]{Solución}
+\phantomsection\label{soluciuxf3n-2}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(MASS)}
+\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{( }\DecValTok{2}\NormalTok{ , }\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+    \DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{ ,}\DecValTok{0}\NormalTok{ ,}\DecValTok{1}\NormalTok{ ,}
+    \DecValTok{1}\NormalTok{ , }\DecValTok{2}\NormalTok{ ,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{ ,}\DecValTok{3}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{ );A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G1}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{ ,}
+    \DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{);G1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    1    1    0
+[4,]    0    1    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G1}\SpecialCharTok{\%*\%}\NormalTok{A }\SpecialCharTok{{-}}\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-2}
+Verifique que la matriz \[ G=\begin{bmatrix}
+0 & 1 & -4\\
+0 & -1/2 & 5/2\\
+0 & 0  & 0 \\
+0 & 0  & 0 
+\end{bmatrix} \] también es una inversa generalizada de \[A\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G2}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{,}\DecValTok{5}\SpecialCharTok{/}\DecValTok{2}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{) ,}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{);G2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0  1.0 -4.0
+[2,]    0 -0.5  2.5
+[3,]    0  0.0  0.0
+[4,]    0  0.0  0.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{( }\FunctionTok{fractions}\NormalTok{(G2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    1   -4
+[2,]    0 -1/2  5/2
+[3,]    0    0    0
+[4,]    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G1}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{{-}}\NormalTok{A }\CommentTok{\# el resuldato debe ser cero}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G2}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{{-}}\NormalTok{A }\CommentTok{\# el resuldato debe ser cero}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+
+\begin{block}{Ejercicio.}
+\phantomsection\label{ejercicio.}
+Dadas las matrices \[ P=\begin{bmatrix}
+0 & 0 & 1\\
+0 & -1/2 & 5/2\\
+1 & -1/2 & 1/2\\
+\end{bmatrix} \] y \[Q=\begin{bmatrix}
+1 & -2 & -8 & 11\\
+0 & 1 & 5 & -7\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\\end{bmatrix} 
+\] * Verifique que \[PAQ=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0\\\end{bmatrix}=\Delta\] * Verifique que
+\(P^{-1} \Delta Q^{-1}=A\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{,}\DecValTok{5}\SpecialCharTok{/}\DecValTok{2}\NormalTok{ ,}
+    \DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{,}\AttributeTok{byrow=}\NormalTok{T );}
+   
+\FunctionTok{print}\NormalTok{(}\FunctionTok{fractions}\NormalTok{(P))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    0    1
+[2,]    0 -1/2  5/2
+[3,]    1 -1/2  1/2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Q}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{( }\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{8}\NormalTok{ ,}\DecValTok{11}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{ ,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{) }
+     \FunctionTok{print}\NormalTok{( }\FunctionTok{fractions}\NormalTok{(Q) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]  1   -2   -8   11  
+[2,]  0    1    5   -7  
+[3,]  0    0    1    0  
+[4,]  0    0    0    1  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{Q}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Delta}\OtherTok{\textless{}{-}}\NormalTok{P}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{Q;Delta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{det}\NormalTok{(P)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P}\SpecialCharTok{\%*\%}\FunctionTok{solve}\NormalTok{(P) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#diag(rep(1,4))  }
+\CommentTok{\# diag(1:5)}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{diag}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]  2  8 -2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{solve}\NormalTok{(P)}\SpecialCharTok{\%*\%}\NormalTok{Delta}\SpecialCharTok{\%*\%}\FunctionTok{solve}\NormalTok{(Q) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Delta[1:2,1:2]}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3] [,4]
+[1,]    2    3    1   -1
+[2,]    5    8    0    1
+[3,]    1    2   -2    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dm}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{solve}\NormalTok{(Delta[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dm}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\NormalTok{Dm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+[4,]    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dm[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{solve}\NormalTok{(Delta[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
+\NormalTok{Dm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    0
+[4,]    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Q}\SpecialCharTok{\%*\%}\NormalTok{Dm}\SpecialCharTok{\%*\%}\NormalTok{P}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0  1.0 -4.0
+[2,]    0 -0.5  2.5
+[3,]    0  0.0  0.0
+[4,]    0  0.0  0.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{fractions}\NormalTok{(Q}\SpecialCharTok{\%*\%}\NormalTok{Dm}\SpecialCharTok{\%*\%}\NormalTok{P))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     [,1] [,2] [,3]
+[1,]    0    1   -4
+[2,]    0 -1/2  5/2
+[3,]    0    0    0
+[4,]    0    0    0
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\begin{frame}{Solución de sistemas lineales con infinitas soluciones}
+\phantomsection\label{soluciuxf3n-de-sistemas-lineales-con-infinitas-soluciones}
+Una solución al sistema \(Ax=b\) cuando el sistema tiene infinitas
+soluciones, es \[x=GA\] donde \(G\) es una inversa generalizada de
+\(A\).
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo para cálculo de una inversa
+generalizada de A}
+\phantomsection\label{algoritmo-para-cuxe1lculo-de-una-inversa-generalizada-de-a}
+Para hallar una inversa generalizada de una matriz \({A}\) siga los
+siguientes pasos
+
+\begin{itemize}
+\tightlist
+\item
+  Determine el rango de \(A\), digamos que es \(r\).
+\item
+  En \({A}\) halle un menor no singular de orden \(r\), llame a éste
+  \({M}\).
+\item
+  Invierta \({M}\) y transponga la inversa: \(\left( {M}^{-1}\right)'\).
+\item
+  En \({A}\) reemplace cada elemento de \({M}\) por el correspondiente
+  elemento de \(\left( {M}^{-1}\right)'\). Reemplace todos los otros
+  elementos de \({A}\) por cero. Transponga la matriz resultante. El
+  resultado es \({A}^{-}\), una inversa generalizada de \({A}\).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\CommentTok{\# rango }
+\FunctionTok{qr}\NormalTok{(A)}\SpecialCharTok{$}\NormalTok{rank }
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-3}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0694}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0694}}@{}}
+\caption{A matrix: 3 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+2 & 3 & 1 & -1 \\
+5 & 8 & 0 & 1 \\
+1 & 2 & -2 & 3 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Menor no singular}
+\NormalTok{A}
+\NormalTok{M}\OtherTok{\textless{}{-}}\NormalTok{A[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0694}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0694}}@{}}
+\caption{A matrix: 3 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+2 & 3 & 1 & -1 \\
+5 & 8 & 0 & 1 \\
+1 & 2 & -2 & 3 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0694}}@{}}
+\caption{A matrix: 2 × 2 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+1 & -1 \\
+0 & 1 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-4}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# inversa del menor }
+\FunctionTok{solve}\NormalTok{(M)}
+\CommentTok{\# transpuesta de la inversa del menor}
+\NormalTok{Mi}\OtherTok{\textless{}{-}}\FunctionTok{t}\NormalTok{(}\FunctionTok{solve}\NormalTok{(M));Mi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 2 × 2 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+1 & 1 \\
+0 & 1 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 2 × 2 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+1 & 0 \\
+1 & 1 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-5}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# matriz de ceros del mismo tamano de A}
+\NormalTok{A0}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow=}\FunctionTok{nrow}\NormalTok{(A),}\AttributeTok{ncol=}\FunctionTok{ncol}\NormalTok{(A)) }
+\NormalTok{A0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 3 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+En \({A}\) reemplace cada elemento de \({M}\) por el correspondiente
+elemento de \(\left( {M}^{-1}\right)'\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A0[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{Mi}
+\NormalTok{A0}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-6}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 3 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G}\OtherTok{\textless{}{-}}\FunctionTok{t}\NormalTok{(A0) }\CommentTok{\# la inversa generalizada de A}
+\NormalTok{G}
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{{-}}\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{}
+\phantomsection\label{section-7}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 4 × 3 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+1 & 1 & 0 \\
+0 & 1 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 3 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{Aplicación de las inversas generalizadas}
+\phantomsection\label{aplicaciuxf3n-de-las-inversas-generalizadas}
+Las ecuaciones consistentes \(Ax=y\) tienen una solución \(x=Gy\) si y
+sólo si \(AGA=A\) (\(G\) es una inversa generalizada de \(A\))
+
+\begin{block}{Ejercicio:}
+\phantomsection\label{ejercicio-4}
+Considere el sistema de ecuaciones lineales\\
+\begin{equation}\label{eje_sol_ecuaciones}
+\begin{bmatrix}
+  7&3&2&2\\
+  3&3&0&0\\
+  2&0&2&0\\
+  2&0&0&2
+\end{bmatrix}\begin{bmatrix}
+  x_1 \\
+  x_2 \\
+  x_3 \\
+  x_4
+\end{bmatrix}=\begin{bmatrix}
+  553 \\
+  219 \\
+  156 \\
+  178
+\end{bmatrix}.
+\end{equation} encuentre una solución
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{4}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{ ); A  }
+\NormalTok{B}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{553}\NormalTok{,}\DecValTok{219}\NormalTok{,}\DecValTok{156}\NormalTok{,}\DecValTok{178}\NormalTok{),}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{); B}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\phantomsection\label{section-8}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 4 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+7 & 3 & 2 & 2 \\
+3 & 3 & 0 & 0 \\
+2 & 0 & 2 & 0 \\
+2 & 0 & 0 & 2 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 0\tabcolsep) * \real{0.0833}}@{}}
+\caption{A matrix: 4 × 1 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+553 \\
+219 \\
+156 \\
+178 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-9}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{det}\NormalTok{(A)}
+\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{det}\NormalTok{(A),}\DecValTok{0}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+7.99360577730114e-15
+
+TRUE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#solve(A)}
+\end{Highlighting}
+\end{Shaded}
+
+Determine el rango de \(A\), digamos que es \(r\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qr}\NormalTok{(A)}\SpecialCharTok{$}\NormalTok{rank}
+\end{Highlighting}
+\end{Shaded}
+
+3
+
+En \({A}\) halle un menor no singular de orden \(r\), llame a éste
+\({M}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M}\OtherTok{=}\NormalTok{A[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{];M}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-10}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 3 × 3 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+3 & 0 & 0 \\
+0 & 2 & 0 \\
+0 & 0 & 2 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+Invierta \(M\) y transponga la inversa: \(\left( {M}^{-1}\right)'\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mit}\OtherTok{\textless{}{-}}\FunctionTok{t}\NormalTok{(}\FunctionTok{solve}\NormalTok{(M))}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-11}
+En \({A}\) reemplace cada elemento de \({M}\) por el correspondiente
+elemento de \(\left( {M}^{-1}\right)'\). Reemplace todos los otros
+elementos de \({A}\) por cero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A0}\OtherTok{\textless{}{-}}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow=}\FunctionTok{nrow}\NormalTok{(A),}\AttributeTok{ncol=}\FunctionTok{ncol}\NormalTok{(A));A0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 4 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-12}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A0[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}\OtherTok{\textless{}{-}}\NormalTok{Mit}
+\NormalTok{A0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0833}}@{}}
+\caption{A matrix: 4 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0.0000000 & 0.0 & 0.0 \\
+0 & 0.3333333 & 0.0 & 0.0 \\
+0 & 0.0000000 & 0.5 & 0.0 \\
+0 & 0.0000000 & 0.0 & 0.5 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{Transponga la matriz resultante.}
+\phantomsection\label{transponga-la-matriz-resultante.}
+El resultado es \({A}^{-}\), una inversa generalizada de \({A}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G}\OtherTok{=}\FunctionTok{t}\NormalTok{(A0)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{{-}}\NormalTok{A}
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{==}\NormalTok{A}
+\FunctionTok{all}\NormalTok{(A}\SpecialCharTok{\%*\%}\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{A}\SpecialCharTok{==}\NormalTok{A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 4 × 4 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-13}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0972}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0972}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0972}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0972}}@{}}
+\caption{A matrix: 4 × 4 of type lgl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+TRUE & TRUE & TRUE & TRUE \\
+TRUE & TRUE & TRUE & TRUE \\
+TRUE & TRUE & TRUE & TRUE \\
+TRUE & TRUE & TRUE & TRUE \\
+\bottomrule\noalign{}
+\end{longtable}
+
+TRUE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 0\tabcolsep) * \real{0.0694}}@{}}
+\caption{A matrix: 4 × 1 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 \\
+73 \\
+78 \\
+89 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-14}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{G}\SpecialCharTok{\%*\%}\NormalTok{B }\SpecialCharTok{{-}}\NormalTok{ B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 0\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 4 × 1 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 \\
+0 \\
+0 \\
+0 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}{Ejercicios}
+\phantomsection\label{ejercicios}
+\begin{itemize}
+\tightlist
+\item
+  Cómo generar todas las soluciones de un sistema de ecuaciones lineales
+  con infinitas soluciones
+\item
+  Consultar sobre la inversa de More Penrose y como se calcula con R
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Raiz cuadrada de una matriz}
+\phantomsection\label{raiz-cuadrada-de-una-matriz}
+Una matriz \(B\) se dice que es una raíz cuadrada de \(A\) si el
+producto \(B\times B\) es igual a A.
+
+Ejemplo: Considere la matriz
+
+\[A=\begin{bmatrix}
+33 & 24 \\ 
+48 & 57 \\
+\end{bmatrix}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{33}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{57}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0694}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0694}}@{}}
+\caption{A matrix: 2 × 2 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+33 & 24 \\
+48 & 57 \\
+\bottomrule\noalign{}
+\end{longtable}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\phantomsection\label{section-15}
+La matriz \[B=\begin{bmatrix}
+5 & 2  \\ 
+4 & 7 \\
+\end{bmatrix}\] es una raiz cuadrada de \(A\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{byrow=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{B}\SpecialCharTok{\%*\%}\NormalTok{B}\SpecialCharTok{{-}}\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.0556}}@{}}
+\caption{A matrix: 2 × 2 of type dbl}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+0 & 0 \\
+0 & 0 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R}\SpecialCharTok{\%*\%}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in eval(expr, envir, enclos): objeto 'R' no encontrado
+Traceback:
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Descomposicion en valores singulares}
+\phantomsection\label{descomposicion-en-valores-singulares}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B}\OtherTok{=}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\SpecialCharTok{*}\NormalTok{(A}\SpecialCharTok{+}\FunctionTok{t}\NormalTok{(A)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B}
+\FunctionTok{svd}\NormalTok{(B) }\CommentTok{\# descopmposicion en valores singulares  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{U12}\OtherTok{=}\FunctionTok{diag}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{svd}\NormalTok{(B)}\SpecialCharTok{$}\NormalTok{d))}
+\NormalTok{U12}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R}\OtherTok{=}\FunctionTok{svd}\NormalTok{(B)}\SpecialCharTok{$}\NormalTok{u}\SpecialCharTok{\%*\%}\NormalTok{U12}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(}\FunctionTok{svd}\NormalTok{(B)}\SpecialCharTok{$}\NormalTok{u)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(R}\SpecialCharTok{\%*\%}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{B,}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{Ejercicio}
+\phantomsection\label{ejercicio-5}
+\begin{itemize}
+\tightlist
+\item
+  Consultar como se calcula, en caso que exista, una raíz cuadrada de
+  una matriz en forma general.
+\end{itemize}
+\end{frame}
+
+
+
+
+\end{document}

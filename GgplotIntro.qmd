@@ -1,0 +1,447 @@
+---
+title: "Sistemas gráficos en R"
+subtitle: "_Introducción a ggplot2_"   
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+--- 
+
+
+```{css, echo=FALSE}
+.column pre code {
+  max-height: 400px !important; /* Limita la altura de la caja de código en la columna */
+  overflow-y: auto !important;  /* Activa la barra de desplazamiento vertical */
+  overflow-x: auto !important;  /* Activa la barra horizontal si las líneas son muy largas */
+} 
+```
+
+
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(out.width="90%",out.height="90%") 
+
+library(plotly)
+library(ggridges) 
+library(reshape)
+library(ggplot2)
+library(tidyverse) 
+library(patchwork)
+require(magrittr)
+require(janitor)
+require(dplyr)
+require(gganimate)
+```
+
+# Introducción
+
+
+
+## Sistemas gráficos de R 
+
+
+A lo largo de su vida, R ha acumulado tres sistemas diferentes para gráficos.
+
+* Sistema `base` 
+* Sistema `lattice`
+* Sistema `ggplot2`
+
+
+
+
+
+## Sistema base 
+
+
+* También conocido como sistema gráfico tradicional. 
+* El sistema base es el más antiguo, habiendo  existido tanto  tiempo como R. 
+* Es fácil comenzar con los gráficos del sistema base, pero requieren muchos retoques, además son muy difíciles de extender a nuevos tipos de gráficos.
+
+## Grid 
+
+* Para remediar algunas de las limitaciones del sistema base, se desarrolló el sistema gráficos `Grid` (cuadrícula) para permitir un trazado más flexible.
+
+* Este sistema permite dibujar cosas a un nivel muy bajo, especificando dónde dibujar cada punto, línea o rectángulo. 
+* Si bien esto es maravilloso, se requiere mucho tiempo para escribir muchas líneas de código cada vez que queremos hacer un gráfico.
+
+
+## Sistema lattice.
+
+* `lattice`, está construido sobre el sistema `grid`, proporcionando funciones de alto nivel para todos los tipos de gráficos comunes. 
+
+* Tiene dos funciones destacadas que no están disponibles en el sistema gráfico tradicional.
+    + Primero, los resultados de cada gráfico se guardan en una variable, en lugar de simplemente dibujarse en la pantalla. 
+    + Esto significa que puede dibujar algo, editarlo y volver a dibujarlo
+
+## Sistema `lattice` (cont) 
+
+* La segunda gran característica es que los gráficos pueden contener varios paneles en una `celosía`, o enrejado, por lo que puede dividir sus datos en categorías y comparar las diferencias entre grupos.
+    
+    
+## El sistema `ggplot2` 
+
+* También construido sobre el sistema `grid`, es el más moderno de los sistemas  gráficos.
+
+* La "gg" significa *gramática de gráficos*,  que tiene como objetivo dividir los gráficos en partes de componentes.
+
+* El resultado es que el código para un `ggplot` se parece un poco a la forma inglesa de articular lo que quieres en el gráfico.  
+
+
+## ¿Debo aprender los tres ? 
+
+* Lamentablemente, los tres sistemas son en su mayoría incompatibles
+
+* La buena noticia es que puedes hacer casi todo lo que quieras en `ggplot2`, por lo que aprender los tres sistemas es en su mayoría excesivo.
+
+* Hay un par de casos de uso poco comunes en los que `ggplot2` no es apropiado:
+
+## ¿Debo aprender los tres? 
+
+* Realiza más cálculos que otros sistemas gráficos, por lo que para gráficos rápidos de conjuntos de datos muy grandes, puede ser más conveniente usar otro sistema.
+* Además, muchos paquetes de gráficos se basan en uno de los otros dos sistemas, por lo que el uso de esos paquetes requiere un poco de conocimiento del sistema `base` o `lattice`.
+
+
+# Ejemplos comparativos
+
+## Lectura de los datos 
+
+```{r}
+#| echo: true
+
+setwd("~/Documents/Cursos/Computacional")
+acuic<-read.csv2('acuicultura.csv')
+head(acuic)
+```
+
+
+## Piscina como factor 
+
+```{r}
+#| echo: true 
+
+acuic$PISCINA<-factor(acuic$PISCINA)
+levels(acuic$PISCINA) 
+```
+
+# Gráficos de dispersión 
+
+## Gráficos de dispersión
+
+* Quizás el más común de todos los gráficos es el de dispersión, que se utiliza para explorar las relaciones entre dos variables continuas.
+
+* Exploraremos la relación entre el oxigeno disuelto en la superficie `OXIGESUP` y el disuelto en el fondo `OXIGEFON` de las piscinas 
+
+## Gráficos de dispersión (ST) 
+
+```{r}
+#| echo: true
+with(acuic,plot(OXIGESUP,OXIGEFON))
+```
+
+
+## Gráficos de dispersión (ST)  
+
+
+Adicionamos la línea de mejor ajuste o de mínimos cuadrados en rojo, calculamos el coeficiente de correlación y lo imprimimos.
+
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+with(acuic,
+     plot(OXIGESUP, OXIGEFON)
+     )
+
+abline(
+  lm(OXIGEFON ~ OXIGESUP,
+     data = acuic),
+    col = "red", lwd = 3,
+  lty = 2
+)
+
+r <- with(acuic,
+          cor(OXIGESUP, OXIGEFON)
+          )
+text(4, 10, 
+     paste("r =",
+           round(r, 2))
+     )
+```
+
+
+## Con `ggplot2`
+
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+library(ggplot2)
+ggplot(data=acuic,
+       aes(x=OXIGESUP,y=OXIGEFON)
+       ) + geom_point()
+```
+
+
+
+## Con `ggplot2` agregar linea 
+
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+library(ggplot2)
+ggplot(data=acuic,
+       aes(x=OXIGESUP,y=OXIGEFON)
+       )+geom_point() +
+         geom_smooth(method="lm")
+```
+
+## Un color para cada piscina 
+
+```{r}
+#| echo: false 
+
+piscinas<-levels(acuic$PISCINA) 
+limx<-range(acuic$OXIGESUP)
+limy<-range(acuic$OXIGEFON)
+col=rainbow(4)
+for(pis in piscinas)
+{
+datos<-subset(acuic, PISCINA==pis)
+    if(pis=="2"){
+        with(datos,plot(OXIGESUP,OXIGEFON,pch=as.numeric(pis),col=col[which(piscinas==pis)] ))
+        }else{
+        with(datos,points(OXIGESUP,OXIGEFON,pch=as.numeric(pis),col=col[which(piscinas==pis)]))
+    }
+}
+legend("top",legend=paste("piscina ",piscinas),
+       pch=as.numeric(piscinas),col=col,horiz=TRUE) 
+```
+
+
+## Un color para cada piscina (código)  
+
+```{r}
+#| echo: true 
+#| eval: false
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+piscinas<-levels(acuic$PISCINA) 
+limx<-range(acuic$OXIGESUP)
+limy<-range(acuic$OXIGEFON)
+col=rainbow(4)
+for(pis in piscinas)
+{
+datos<-subset(acuic, PISCINA==pis)
+    if(pis=="2"){
+        with(datos,plot(OXIGESUP,OXIGEFON,pch=as.numeric(pis),col=col[which(piscinas==pis)] ))
+        }else{
+        with(datos,points(OXIGESUP,OXIGEFON,pch=as.numeric(pis),col=col[which(piscinas==pis)]))
+    }
+}
+legend("top",legend=paste("piscina ",piscinas),
+       pch=as.numeric(piscinas),col=col,horiz=TRUE) 
+```
+
+
+## Con `ggplot2`
+ 
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+library(ggplot2)
+ggplot(data=acuic,
+       aes(x=OXIGESUP,y=OXIGEFON,
+           color=PISCINA) 
+       ) + geom_point() 
+```
+
+
+## Con `ggplot2`
+ 
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+library(ggplot2)
+ggplot(data=acuic,
+       aes(x=OXIGESUP,y=OXIGEFON,
+           color=PISCINA) 
+       ) + geom_point(
+         aes(shape = PISCINA)
+         ) 
+```
+
+# Gráficos de línea  
+
+## Gráficos de línea  
+
+Para explorar cómo cambia una variable continua a lo largo del tiempo, un diagrama de líneas a menudo proporciona más información que un diagrama de dispersión, ya que muestra las conexiones entre valores secuenciales.
+
+Para explorar la tendencia del contenido de oxígeno a lo largo del tiempo (los días) realizaremos el gráfico de líneas de la variable `OXIGESUP` en función de `dia`   
+
+## Gráficos de línea  (ST)
+
+
+
+```{r}
+#| echo: true 
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+with(acuic, plot(dia,OXIGESUP,type="l"))
+```
+
+
+## Gráficos de línea  (ST)
+
+
+
+```{r}
+#| echo: true 
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+piscinas<-levels(acuic$PISCINA) 
+limy<-range(acuic$OXIGESUP)
+color<-rainbow(length(piscinas))
+for(pis in 1:length(piscinas))
+{
+datos<-subset(acuic, PISCINA==piscinas[pis])
+    if(pis==1){
+        with(datos,plot(dia,OXIGESUP,type="l",lty=pis,col=color[pis]))
+        }else{
+        with(datos,lines(dia,OXIGESUP,type="l",lty=pis,col=color[pis]))
+    }
+}
+legend("topleft",legend=paste("piscina ",piscinas),
+       lty=1:length(piscinas),col=color) 
+
+```
+
+
+
+
+
+## Con `ggplot2`
+ 
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+ggplot(data=acuic,
+       aes(x=dia,y=OXIGESUP, 
+           col=PISCINA) 
+       ) + geom_line() 
+ 
+```
+
+# Boxplots 
+
+##  Boxplot (ST)
+
+```{r}
+#| echo: true 
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+boxplot(OXIGESUP~PISCINA,data=acuic) 
+```
+
+
+##  Boxplot (ST)
+
+```{r}
+#| echo: true 
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+boxplot(OXIGESUP~PISCINA,data=acuic,col=terrain.colors(4)) 
+```
+
+
+
+##  Boxplot (ST)
+
+```{r}
+#| echo: true 
+#| output-location: fragment
+#| column: screen-inset-shaded 
+
+boxplot(OXIGESUP~PISCINA,data=acuic,col=terrain.colors(4)) 
+legend(x=2.5,y=15,legend = levels(acuic$PISCINA),fill =terrain.colors(4), bty="n", horiz = TRUE )
+```
+
+
+## Boxplot con `ggplot2`
+ 
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+ggplot(data=acuic,
+       aes(x=PISCINA,y=OXIGESUP) 
+       ) + geom_boxplot()  
+ 
+```
+
+
+## Boxplot con `ggplot2`
+ 
+```{r}
+#| echo: true
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 5
+#| column: screen-inset-shaded
+
+ggplot(data=acuic,
+       aes(x=PISCINA,y=OXIGESUP,
+           color=PISCINA) 
+       ) + geom_boxplot()  
+ 
+```

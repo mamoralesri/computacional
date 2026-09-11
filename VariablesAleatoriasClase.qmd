@@ -1,0 +1,238 @@
+---
+title: "Variables aleatorias, cálculos con R"
+author: "Mario Morales"
+date: today
+date-format: "DD/MM/YYYY"
+format:
+  pdf:
+    code-line-numbers: true
+number-sections: true
+---
+
+# Variables discretas y continuas   
+
+**Objetivo**: Llevar a cabo cálculos de probabilidades puntuales y acumuladas, percentiles y simulaciones con variables aleatorias discretas (sección -@sec-variablesdiscretas) y continuas usando `R`. 
+
+## Variables aleatorias discretas {#sec-variablesdiscretas}   
+
+En esta sección estudiaremos los principales modelos probabilísticos para variables discretas: Bernoulli, binomial, geométrica, binomial negativas, hipergeométrica y poisson.
+
+### Experimentos de Bernoulli 
+
+Un ensayo o experimento de Bernoulli es aquel que solo puede ocurrir de dos formas posibles, una de las cuales denominaremos como éxito `E`, con probabilidad $\pi$, y la otra, fracaso `F` con probabilidad $1-\pi$, con $0\leq \pi \leq 1$. Si a éxito le asociamos el valor 1 y a fracaso le asociamos el cero, entonces obtenemos una variable aleatoria conocida como variable aleatoria de Bernoulli, cuya función de probabilidad está dada por: 
+$$
+P(X=x)=\pi^x(1-\pi)^{1-x}, \text{ para } x=0,1 
+$$
+$$
+P(X=x)=\pi^x(1-\pi)^{1-x}, \hbox{ para } x=0,1 
+$$
+A continuación simularemos un experimento de Bernoulli, usando `R` 
+```{r}
+#| echo: true
+p=0.3 # probabilidad de éxito
+res=sample(c("E","F"),1,prob = c(p,1-p))  
+res
+```
+
+En esta oportunidad salio `r res` (`r ifelse(res=="E","Exito","Fracaso")`) y por lo tanto la variable aleatoria toma el valor de `r ifelse(res=="E",1,0)`, es decir, $x=`r ifelse(res=="E",1,0)`$. Una probabilidad de éxito igual a `r p` significa que si repetimos el experimento muchas veces, entonces el `r p*100`% resultará `E` y el restante `r 100-p*100`% de las veces resultará `F`, veamos esto mediante una simulación en `R`. 
+
+```{r}
+#| echo: true
+
+N=10000 # repeticiones del experimento de Bernoulli 
+x=character() # Para guardar resultados 
+p=0.3 # probabilidad de éxito
+for(i in 1:N){ 
+res=sample(c("E","F"),1,prob = c(p,1-p))  
+x[i]=res
+} 
+cat(sum(x=="E")," Exitos y ",length(x)-sum(x=="E"), "Fracasos \n")  
+ex=table(x)[1]
+fr=table(x)[2] 
+```
+
+Como resultado tenemos `r ex` éxitos y `r fr` fracasos, que corresponde a `r ex/N*100`% de éxitos y `r fr/N*100`% de fracasos.      
+
+
+### Experimento binomial 
+
+Un experimento que consta de: 
+
+* $n$ experimentos de Bernoulli
+* Independientes
+* con probabilidad de éxito constante $p$ 
+
+Se dice que es un experimento binomial. 
+
+La variable aleatoria $X$ que cuenta el número de éxitos obtenidos en los $n$ ensayos, se dice que tiene distribución binomial y su función de probabilidad está dada por: 
+$$
+f_X(x)=P(X=x)=\binom{n}{x}p^x(1-p)^{n-x} \text{ para } x=0, 1, 2, \ldots, n   
+$${#eq-fdpBinomial} 
+El valor esperado y la varianza de una variable aleatoria $X$ binomial de parámetros $n$ y $p$ estan dados por:
+$$
+\begin{aligned}
+E(X)&=np\\ 
+V(X)&=np(1-p) 
+\end{aligned}
+$$
+La función de distribución de una variable aleatoria binomial está dada por: 
+$$
+\begin{aligned}
+F_X(x)&=P(X\leq x )=\sum_{k=0}^xf_X(k)\\
+&=\sum_{k=0}^x\binom{n}{x}p^k(1-p)^{n-k}
+\end{aligned}
+$${#eq-fdaBinomial}
+
+#### Cálculo de probabilidades usando `R` 
+
+En `R` contamos, para lo relacionados con variables aleatorias discretas, con 4 funciones, a saber: 
+
+1. Funciones cuyos nombres inician con `d`, por ejemplo: `dbinom`, las cuales evalúan la función de probabilidad. Es decir, en el caso binomial, la función `dbinom` evalúa la expresión -@eq-fdpBinomial. 
+
+Ejemplo: Si $X$ es una variable aleatoria binomial con $n=10$ y $p=0.3$, hallar $P(X=4)$. 
+
+```{r}
+dbinom(4,10,0.3) 
+```
+
+Graficar la función de probabilidad de la variable $X$ para distintos valores de $p$, por ejemplo, $p=0.3$, 0.5, 0.7, 0.9
+
+```{r}
+n=10
+p=0.3
+x=0:n 
+y=dbinom(x,n,p)
+#plot(x,y,type='p',pch=1,col='red',bg='green')    
+#plot(x,y,type='l',lty=4,lwd=3,col='red')     
+plot(x,y)
+y1=dbinom(x,n,0.5) 
+points(x,y1,col="red") 
+y2=dbinom(x,n,0.7) 
+points(x,y2,col="blue")
+y3=dbinom(x,n,0.9) 
+points(x,y3,col="green")
+```
+
+
+```{r}
+n=10
+p=0.3
+x=0:n 
+y=dbinom(x,n,p)
+plot(x,y,type='l',ylim = c(0, 0.40)) 
+y1=dbinom(x,n,0.5) 
+lines(x,y1,col="red") 
+y2=dbinom(x,n,0.7) 
+lines(x,y2,col="blue")
+y3=dbinom(x,n,0.9) 
+lines(x,y3,col="green") 
+legend("topleft",legend = c(0.3,0.5,0.7,0.9),col=c("black","red","blue","green"), 
+       lty=1,bty="n",horiz = TRUE,cex=0.7)  
+```
+
+
+
+
+
+2. Funciones cuyos nombres inician con `p`, por ejemplo: `pbinom`, las cuales evalúan la función de distribución. Es decir, en el caso binomial, contamos con la función  `pbinom` qué  evalúa la expresión -@eq-fdaBinomial.
+
+3. Funciones cuyos nombres inician con `q`, por ejemplo: `qbinom`. Estas funciones corresponden a la inversa de las funciones que inician con `p`. Más concretamente, a las  funciones `q` les entregas una probabilidad y ellas regresan el valor más pequeño de la variable hasta donde se acumula dicha probabilidad. 
+
+4. Funciones cuyos nombres inician con `r`, por ejemplo, `rbinom`, que permiten simular datos que siguen la distribución dada. 
+
+
+### Para consulta 
+
+Recordar los principales modelos discretos de probabilidad, por ejemplo, geométrica, binomial negativa, hipergeométrica y poisson. 
+
+## Variables aleatorias continuas
+
+Como en caso discreto, con variables contínuas contamos con 4 funciones cuyos nombres inician con: 
+
+* `d` para evaluar la función de densidad.
+* `p` para evaluar la función de distribución.
+* `q` para evaluar la inversa de la distribución.
+* `r` para generar números aleatorios que siguen esa distribución.
+
+Para ilustrar lo anterior usaremos la distribución normal. 
+
+### Distribución normal 
+
+Para lo relacionado con el modelo normal usamos las funciones `norm`, asi que tenemos `dnorm`, `pnorm`, `qnorm` y `rnorm`, a continuación ilustraremos su uso. 
+
+__Ejemplo__: Si $X$ es una variable aleatoria con distribución normal de media $\mu=10$ y $\sigma^2=9$, lo cual se nota por $X\sim N(\mu,\sigma^2)$, graficar su función de densidad. 
+```{r}
+x=pretty(c(0,20),500) # <1> 
+y=dnorm(x,mean=10,sd=3) #<2> 
+plot(x,y,type="l") #<3>   
+```
+1. Generamos los x's
+2. Evaluamos la densidad normal $f(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left\{\frac{(x-\mu)^2}{2\sigma^2}\right\}$
+3. Graficamos
+
+
+Para ilustrar el uso de la función `rnorm` generaremos datos que siguen una normal de media 10 y desviación 3 y dibujaremos el histograma de los datos junto con la densidad.
+
+```{r}
+d=rnorm(200,10,3)
+hist(d,freq=FALSE,main="",ylim = c(0,0.15))   
+lines(x,y,col='red',lwd=3)  
+```
+
+
+Ahora ilustraremos el uso de `pnorm` y `qnorm` con el siguiente ejemplo. Si $X$ es normal de media 10 y desviación estándar 3, hallar: 
+
+* $P(X>14)=1-P(X\leq 14)$ 
+* $P(4\leq X \leq 16)$
+* Hallar $x$ tal que $P(X\leq x)=0.95$ 
+* Hallar $x_1$ y $x_2$ tales que $P(x_1\leq X \leq x_2)=0.95$  
+
+```{r}
+1-pnorm(14,10,3) # solución de a) 
+pnorm(14,10,3,lower.tail = FALSE) # equivalente 
+pnorm(16,10,3)-pnorm(4,10,3) 
+qnorm(0.95,10,3) 
+## verificar 
+pnorm(14.93456,10,3)
+
+qnorm(0.025,10,3)
+
+qnorm(0.025,10,3,lower.tail = FALSE) 
+qnorm(0.975,10,3)
+
+```
+
+### Para consultar
+
+Consultar y resolver ejercicios usando los modelos continuos de uso frecuente, como: exponencial, uniforme, T de student, la distribución chi cuadrado, la F. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

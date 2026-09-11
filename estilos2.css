@@ -1,0 +1,48 @@
+/* --- 1. ESTILOS BASE DE LA PRESENTACIÓN --- */
+.reveal {
+  background-color: #024426 !important;
+  --r-main-color: #f9f9f9 !important;
+  color: #f9f9f9 !important;
+}
+
+.reveal .slides section h1, .reveal .slides section h2, 
+.reveal .slides section h3, .reveal .slides section h4 {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+.reveal .slides section a { color: #d1b061 !important; }
+.reveal .slides section ul li::marker { color: #ffffff !important; }
+.reveal .progress span { background: #ffffff !important; }
+.reveal .slide-background { background-color: #024426 !important; }
+
+/* Contenedor que fija ambos logos en la esquina */
+.logo-container {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 15px !important;
+  
+  /* CAMBIO AQUÍ: z-index negativo para enviarlos al fondo */
+  z-index: 1 !important; 
+  
+  /* Mantenemos el pointer-events para que no bloqueen clics */
+  pointer-events: none; 
+} 
+
+/* Escudo de la Universidad */
+.logo-unicor {
+  height: 100px !important; 
+  width: auto !important;
+  opacity: 0.8 !important;
+}
+
+/* Logo del Simposio */
+.logo-simposio {
+  height: 40px !important;           /* Ajuste este valor según el tamaño deseado */
+  width: auto !important;
+  opacity: 0.9 !important;
+} 

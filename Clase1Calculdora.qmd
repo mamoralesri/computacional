@@ -1,0 +1,936 @@
+---
+title: "R Como una calculadora "
+subtitle: "_Tipos de datos _"   
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
+    highlight: "tango"
+    center: true
+    transition: fade
+    lang: es
+    code-fold: true
+    #slide-level: 2
+    scrollable: true
+  beamer:
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
+    slide-level: 2
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
+toc: true
+toc-title: "Contenido"
+editor: source 
+---
+
+# Tipos de datos en R
+
+<!--## Tipos de datos básicos en R -->
+
+## Numéricos:
+
+`Numeric`: Números reales, pueden tener decimales (ej: 3.14, -2.5).
+
+```{r}
+#| echo: true
+
+a=3.14 
+class(a) 
+```
+
+`Integer`: Números enteros (ej: 5, -10).
+
+```{r}
+#| echo: true
+
+b1=5L 
+class(b1) 
+
+b2=-10L
+class(b2)
+```
+
+## 
+
+```{r}
+#| echo: true
+b1=5 # si no se especifica como 5L lo toma como real  
+class(b1) 
+```
+
+## La diferencia está en la memoria usada
+
+```{r}
+#| echo: true
+
+# Creamos un vector de 1 millón de enteros
+vector_enteros <- rep(5L, 1000000)
+
+# Creamos un vector de 1 millón de numéricos (reales)
+vector_numericos <- rep(5, 1000000)
+
+c("Entero"=object.size(vector_enteros),"Real"=object.size(vector_numericos) ) 
+```
+
+```{r}
+#| echo: false 
+rm(list=c("vector_enteros","vector_numericos"))
+```
+
+## 
+
+`Complex`: Números complejos (ej: 3+2i).
+
+```{r}
+#| echo: true
+c1= 3+2i
+class(c1) 
+```
+
+## Caracteres:
+
+`Character`: Texto, siempre encerrado entre comillas (ej: "Trat 1", "Análisis de datos").
+
+```{r}
+#| echo: true
+ch="Trat 1"  
+class(ch) 
+```
+
+## Lógicos:
+
+`Logical`: Valores booleanos, `TRUE` o `FALSE`.
+
+```{r}
+#| echo: true
+l=TRUE  
+class(l)  
+```
+
+## Funciones `is.`
+
+Se usan para indagar el tipo de dato que es un objeto
+
+```{r}
+#| echo: true
+
+is.numeric(b2)
+
+is.logical(ch)
+
+```
+
+::: callout-important
+Observe que estas funciones regresan un valor lógico (`logical`)
+:::
+
+## Tipos de datos básicos en R II
+
+### Factores:
+
+Factor: Categorías o niveles de una variable, utilizados para variables cualitativas (ej: "Hombre", "Mujer").
+
+## Estructuras de Datos
+
+### Vectores:
+
+Secuencia de elementos del **mismo tipo** (numéricos, caracteres, lógicos).
+
+### Matrices:
+
+Arreglos bidimensionales de *elementos* del mismo tipo.
+
+### Data frames:
+
+Estructura de datos similar a una hoja de cálculo, con columnas de (posiblemete) diferentes tipos.
+
+## Estructuras de Datos (II)
+
+### Listas:
+
+Objetos que pueden contener diferentes tipos de elementos, incluyendo otros objetos.
+
+## Conocer el tipo de dato
+
+```{r echo=TRUE,eval=FALSE}
+#| code-line-numbers: "|1|2|3|4"
+class(3.5)
+class(3)
+class(1:3)
+class(2L)
+```
+
+```{r echo=TRUE,eval=FALSE}
+#| code-line-numbers: "|1|2|3|4|5|6"
+class(3+2i)
+class('Hola mundo')
+class("Hola mundo")
+class(TRUE)
+class(FALSE) 
+class(NA)  
+```
+
+## Funciones `is`
+
+Estas funciones regresan `TRUE` si el objeto es del tipo indicado después del punto y `FALSE` en otro caso.
+
+```{r echo=TRUE, eval=FALSE}
+is.numeric(3)
+is.integer(3) 
+is.integer(3L)
+is.numeric("M")
+is.character("M")
+is.logical(TRUE)
+is.logical(NA)
+is.logical("M")
+```
+
+## Aplicación
+
+Código que toma un objeto `x`, si es numérico eleva al cuadrado, en caso contrario manda un mensaje de error.
+
+```{r echo=TRUE, eval=TRUE}
+#| code-line-numbers: "|1|2|3|5" 
+x="M"
+#x=4
+if(is.numeric(x)){
+x^2  
+}else{ cat("Se necesita un numérico")
+}
+```
+
+# Usando R como una calculadora
+
+## R como una calculadora
+
+### Qué aprenderemos:
+
+- Poder usar R como calculadora científica
+- Poder asignar una variable y ver su valor
+
+## Operaciones
+
+```{r echo=TRUE, eval=TRUE}
+2+2 # suma
+```
+
+```{r echo=TRUE, eval=TRUE}
+5-3 # resta 
+```
+
+```{r echo=TRUE, eval=TRUE}
+3*5 # producto
+```
+
+## Potencia
+
+```{r echo=TRUE, eval=TRUE}
+2^2 # potencia  
+9^(1/2) 
+```
+
+```{r echo=TRUE, eval=TRUE}
+### también se puede usar **
+2**2
+9**(1/2)
+```
+
+## Cociente
+
+```{r echo=TRUE, eval=TRUE}
+6/3
+```
+
+## Residuo de la división
+
+```{r}
+#| echo: true
+6%%2
+
+```
+
+```{r}
+#| echo: true
+
+10%%4
+```
+
+## parte entera de la división
+
+```{r}
+#| echo: true 
+
+6%/%4
+
+```
+
+## Ejemplo de aplicación
+
+El siguiente código genera un vector `x` numérico de longitud $n$, escribir el código `R` que indique si el número $n$ es par o es impar.
+
+Ayuda: La longitud de un vector `x` se obtiene con `length(x)`
+
+```{r}
+#| echo: true
+x=round(rnorm(sample(10:50,1)))
+```
+
+La longitud de `x` es: `r length(x)`
+
+```{r}
+#| echo: true
+n=length(x)
+if(n%%2==0){cat("n es par")
+  }else{cat("n es impar")}
+```
+
+## Varias operaciones juntas
+
+```{r echo=TRUE, eval=TRUE}
+4-2*3^2 
+```
+
+## Orden de las operaciones
+
+```{r echo=TRUE, eval=TRUE}
+# el orden de las operaciones se altera con parentices  
+(4-2)*3^2
+```
+
+## Tres formas de asignar valores a un objeto
+
+- La primera forma es usando `<-`
+
+```{r echo=TRUE, eval=TRUE}
+x<-10
+x
+```
+
+- La segunda forma es usando `=`
+
+```{r echo=TRUE, eval=TRUE}
+y=2
+y
+```
+
+- La tercera forma es usando `->`
+
+```{r echo=TRUE, eval=TRUE}
+10->x
+```
+
+## Ejemplo: Valor presente
+
+Suponga que queremos hacer un programa para estimar el valor presente de $\$ 100$ recibidos en dos años con una tasa de descuento anual del $8\%$. La fórmula relacionada se muestra a continuación $$Pv=\frac{Fv}{(1+R)^n}$$
+
+```{r echo=TRUE, eval=TRUE}
+Fv=100
+R=0.08
+n=2
+```
+
+## Ejemplo: Valor presente (cont)
+
+```{r echo=TRUE, eval=TRUE}
+Fv/(1+R)^2
+```
+
+```{r echo=TRUE, eval=TRUE}
+Fv/(1+R)^2->Pv
+Pv
+```
+
+## Vectores
+
+Para asignar un conjunto de valores a un vector, usamos `c(n1,n2,...,nk)`, `c` es una abreviatura de concatenar `concatenate`.
+
+```{r echo=TRUE, eval=TRUE}
+x<-c(1,2.6,4.3,5.25)
+```
+
+Para asignar un conjunto de enteros consecutivos `secuencia regular`, podríamos usar `n1:n2`, como `1:10`
+
+```{r echo=TRUE, eval=TRUE}
+y<-1:50
+y
+```
+
+## Vectores (cont.)
+
+```{r echo=TRUE, eval=TRUE}
+## desde 5 hasta 1 disminuyendo de 1 en 1 
+x<-5:1 
+x<-rev(1:5)  
+```
+
+R distingue entre mayúsculas y minúsculas, lo que significa que la `X` mayúscula y la `x` minúscula son variables diferentes.
+
+```{r echo=TRUE, eval=FALSE}
+x=10
+X
+```
+
+## Funciones `ls()` and `rm()`
+
+A veces necesitamos verificar todas las variables existentes (objetos) en la memoria. para eso usamos la función `ls()`.
+
+```{r echo=TRUE, eval=TRUE}
+ls()
+```
+
+Cuando ya no se necesita una variable, podemos eliminarla de la memoria con la función `rm()`
+
+```{r echo=TRUE, eval=TRUE}
+rm(z)
+ls()
+```
+
+## Borrar más de una
+
+```{r echo=TRUE, eval=TRUE}
+# borrar mas de una 
+#rm(y,y_g,ycs,yg)
+ls()
+```
+
+Para eliminar todas las variables (objetos), tenemos el siguiente código
+
+```{r echo=TRUE, eval=TRUE}
+rm(list=ls())
+ls()
+```
+
+## Imprimir el contenido de un objeto.
+
+Para imprimir una variable de carácter (es decir, una cadena) en la pantalla, podríamos usar las funciones `cat()` o `print()`. Recuerde encerrar las cadenas entre comillas simples o dobles.
+
+```{r echo=TRUE, eval=TRUE}
+cat('Hola R!!!!')
+print('Hola R!!!!')
+```
+
+## Imprimir el contenido de un objeto.
+
+```{r echo=TRUE, eval=TRUE}
+cat('Hola R!!!! \n \n \n') # \n es para nueva linea
+print('Hola R!!!!')
+```
+
+```{r echo=TRUE, eval=TRUE}
+print('Hola R!!!!  \n \n \n ')
+print('Hola R!!!!') # \n es para nueva linea
+```
+
+````{=html}
+<!--
+
+Cuando un comando ocupa varias líneas, aparecerá el símbolo `+`. Suponga que pretendemos asignar `x` con valores del 1 al 10.
+
+
+```{r echo=TRUE, eval=TRUE}
+x<-1: 
+10
+```
+
+A menudo, especialmente cuando somos principiantes, escribimos algunos simbolos del teclado incorrectos, como comillas dobles o simples sin una coincidencia. A veces, simplemente no queremos averiguar dónde está el problema, ya que puede llevar demasiado tiempo. En cambio, solo queremos volver al indicador R y volver a escribir el comando. En esos casos, presionamos la tecla 'Esc', en la parte superior izquierda de nuestro teclado, para regresar al indicador R `(>)`, tambié puede funcionar precionar `ctrl+c` 
+
+-->
+````
+
+# Secuencias
+
+## La función `seq()`
+
+La función `seq()` se utiliza para generar un conjunto de valores con cierto patrón.
+
+```{r echo=TRUE, eval=TRUE}
+seq(1,19,by=2)
+x<-seq(1, 11, by = pi) 
+x
+```
+
+El comando completo tiene el siguiente formato.
+
+```{r echo=TRUE, eval=TRUE}
+seq(from=1,to=3, by=0.5)
+```
+
+## La función rep() 
+
+La función rep() se usa para repetir el mismo valor $n$ veces, como se muestra a continuación.
+
+```{r echo=TRUE, eval=TRUE}
+rep(5,10)
+```
+
+```{r echo=TRUE, eval=TRUE}
+rep(c(1,2,3),5)
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+rep(c(1,2,3),each=5) 
+```
+
+## La función  length() 
+
+Para encontrar el número de valores (observaciones) que tiene un vector, aplicamos la función `length()`, como se muestra a continuación.
+
+```{r echo=TRUE, eval=TRUE}
+length(x)
+length(rep(5,7))
+```
+
+## Enfoque de posición 
+
+Hay dos formas de entregar datos a una función: por **posición** y por **palabra clave**. Para la función `seq()`, su formato es `seq(from,to,by)`. En el siguiente código de una línea, usamos la forma de posición. En otras palabras, el valor del argumento de entrada depende de su posición en el conjunto de valores de entrada entregados.
+
+```{r echo=TRUE, eval=TRUE}
+x<-seq(1,3,0.5)
+```
+
+## Enfoque de palabra clave
+
+Para el enfoque de **palabra clave**, agregamos una palabra clave delante de cada valor de entrada, como `from=1`. Una ventaja del enfoque de palabra clave es que el orden de los valores de entrada no influye; Por lo tanto, las siguientes tres lineas son equivalentes.
+
+```{r echo=TRUE, eval=TRUE}
+seq(from=1,to=3,by=0.5) # son equivalentes 
+seq(to=3,from=1,by=0.5)
+seq(by=0.5,to=3,from=1)
+```
+
+### Entrada de datos con `scan`
+
+Otra manera fácil de ingresar datos desde el teclado es usar la funcion `escan()`
+
+```{r echo=TRUE, eval=TRUE}
+# en los notebooks no trabaja 
+x<-scan()
+1
+4
+5
+1
+3
+
+
+```
+
+```{r echo=TRUE, eval=TRUE}
+#x=scan()
+#1 4 
+#2 5 
+#4 1 
+#5 7 
+#8 9 
+#1 2 
+#matrix(x,nrow=6,byrow = TRUE)
+```
+
+```{r echo=TRUE, eval=TRUE}
+print(x)
+```
+
+## Residuo de la división
+
+El operador `%%` regresa el residuo de la división
+
+```{r echo=TRUE, eval=TRUE}
+# residuo de la división 
+7%%2
+```
+
+```{r echo=TRUE, eval=TRUE}
+# ¿qué valor regresa la operación?  
+9%%3 
+```
+
+## Parte entera de la división
+
+El operador `%/%` regresa la parte entera de la división
+
+```{r echo=TRUE, eval=TRUE}
+7%/%2
+```
+
+# Funciones
+
+## Raíz cuadrada
+
+Calcular la raíz cuadrada de 5, es decir, $\sqrt{5}$
+
+```{r echo=TRUE, eval=TRUE}
+sqrt(5)
+sqrt(9)
+sqrt(-4)
+5/0
+```
+
+## Funciones trigonométricas
+
+Calcular \* $\sin(\pi/2)$ \* $\sin(\pi)$ \* $\sin(2\times \pi)$
+
+```{r echo=TRUE, eval=TRUE}
+pi
+sin(pi/2)
+sin(pi)
+```
+
+```{r echo=TRUE, eval=TRUE}
+sin(2*pi)
+```
+
+```{r echo=TRUE, eval=TRUE}
+pi
+```
+
+```{r echo=TRUE, eval=TRUE}
+round(sin(2*pi),10)
+```
+
+## Funciones trigonométricas: ejercicios
+
+Calcular \* $\cos(\pi/2)$ \* $\cos(\pi)$ \* $\cos(2\times \pi)$ \* $\tan(\pi/4)$
+
+```{r echo=TRUE, eval=TRUE}
+cos(pi/2)
+```
+
+```{r echo=TRUE, eval=TRUE}
+cos(pi)
+```
+
+```{r echo=TRUE, eval=TRUE}
+cos(2*pi)
+```
+
+```{r echo=TRUE, eval=TRUE}
+tan(pi/4)
+```
+
+## Funciones exponencial y logaritmo
+
+Aprenderemos a calcular expresiones de la forma $a^x$, $a \neq 0$, conocida como función exponencial de base $a$. Tambien expresiones de la forma $\log_a(x)$, conocida como función logaritmica de base $a \neq 0$, el valor que regresa la función corresponde al exponente al que hay que elevar la base $a$ para obtner $x$. En otras palabras, $\log_a(x)=y$ si, y solo si, $a^y=x$.
+
+
+## Ejercicios 
+
+- $3^4$
+- $e^4$ ($e$ es el nùmero de euler, la base de los logarimos naturales)
+- $\ln(2)$ logaritmo en base euler de 2 (número al que hay que elevar $e$ para obtener 2.
+- $\log_{10}(100)$, es decir el logaritmo en base 10 de 100 o lo que es lo mismo: número al que hay que elevar 10 para obtener 100.
+- $\log_{2}(8)$, número al que hay que elevar 2 para obtener 8.
+
+## Solución
+
+```{r echo=TRUE, eval=TRUE}
+3^4
+3**4
+exp(4)
+log(2)
+log(100,base=10)
+log10(100)
+log2(8)
+```
+
+## Solución (cont) 
+
+```{r echo=TRUE, eval=TRUE}
+log(100,base=10)
+log10(100) 
+log2(8)
+log(8,base=2)
+```
+
+
+## Ejemplo de aplicación 
+
+Graficar la función seno (en azul) y coseno (en rojo) , en el mismo sistema de coordenadas y con `x` variando en el intervalo $(-\pi,\pi)$. 
+
+```{r echo=TRUE, eval=FALSE}
+x=pretty(c(-pi,pi),5000)  
+y=sin(x) 
+plot(x,y,type="l",col="blue",lwd=3) 
+y1=cos(x) 
+lines(x,y1,type="l",col="red",lwd=3) 
+legend("topleft",legend = c("sen", "cos"),lty=1,col=c('blue','red'),bty="n",lwd=2)
+```
+
+
+
+## 
+
+```{r echo=FALSE, eval=TRUE} 
+x=pretty(c(-pi,pi),5000)  
+y=sin(x) 
+plot(x,y,type="l",col="blue",lwd=3) 
+abline(h=0)
+y1=cos(x) 
+lines(x,y1,type="l",col="red",lwd=3) 
+legend("topleft",legend = c("sen", "cos"),lty=1,col=c('blue','red'),bty="n",lwd=2)
+```
+
+# Mensajes de error 
+
+## Mensajes de error
+
+```{r echo=TRUE, eval=FALSE}
+### not run 
+squareroot(4)  # la función no existe 
+```
+
+```{r echo=TRUE, eval=FALSE}
+lenght(c(2,4,1)) 
+```
+
+```{r echo=TRUE, eval=TRUE}
+length(2)
+length(c(1,5,6,9))
+```
+
+```{r echo=TRUE, eval=TRUE}
+length(2)
+```
+
+```{r echo=TRUE, eval=FALSE}
+sqrt 4         # falta el parentesis 
+```
+
+```{r echo=TRUE, eval=FALSE}
+sqrt(4 
+```
+
+```{r echo=TRUE, eval=TRUE}
+y<-sqrt(-2) 
+x<-5/0
+```
+
+
+
+
+## Mensajes de error (II)
+
+```{r echo=TRUE, eval=TRUE}
+x
+y
+```
+
+```{r echo=TRUE, eval=TRUE}
+sqrt(-2+0i)
+```
+
+# Redondeo 
+
+## Funciones para redondeo
+
+```{r echo=TRUE, eval=TRUE}
+
+# al entero más cercano 
+round(127.8976)
+round(127.4999)
+# redondeo a tres cifras significativas 
+round(127.8976,3)
+```
+
+```{r echo=TRUE, eval=TRUE}
+## piso 
+floor(6.3) # mayor entero que es menor que 6.3
+floor(-5.8)
+```
+
+## Funciones para redondeo (II)
+
+```{r echo=TRUE, eval=TRUE}
+## Techo  
+ceiling(6.3) # menor entero que es mayor  que 6.3
+
+ceiling(-5.8)
+
+```
+
+## Vectores y asignaciones
+
+R opera sobre estructuras de datos con nombre. La estructura más simple de este tipo es el vector, que es una entidad única que consta de una colección ordenada datos. Los vectores son la estructura fundamental de datos en R, un número es en realidad un vector de longitud 1. En cuanto al contenido, hay tres tipos principales de vectores, a saber:
+
+- Numéricos (numerical), los cuales pueden ser:
+  - De reales (Double), la opción por defecto.
+  - De enteros (Integer) para compatibilidad con otros leguajes.
+- De caracteres (Character)
+- Lógicos (Logical)
+
+A continuación se crea el objeto (vector) `x` al cual se le `asigna` el valor de 2,
+
+```{r echo=TRUE, eval=TRUE}
+x=2
+mode(x)
+class(x)
+typeof(x)
+# crea el objeto (vector) z  y se le asigna el valor de 5
+z=5
+```
+
+## Funcion `assign()`
+
+Otra forma de asignar es con `assign()` de la siguiente manera.
+
+```{r echo=TRUE, eval=TRUE}
+assign("y", c(4,1.2,3,2.5,6) )
+### equivalente a 
+y<-c(4,1.2,3,2.5,6)
+### equivalente a 
+y=c(4,1.2,3,2.5,6)
+```
+
+
+
+
+
+## Aplicación 
+
+Graficar la función de densidad normal estándar  
+
+```{r echo=TRUE, eval=TRUE}
+x<-pretty(c(-3,3),100)
+y<-dnorm(x)
+plot(x,y,type="l")
+```
+
+## Aplicación 
+
+```{r echo=TRUE, eval=TRUE}
+x<-pretty(c(-3,3),100)
+y<-dnorm(x)
+z<-rnorm(100)
+hist(z,freq=FALSE,ylim=range(y))
+lines(x,y, col="red",lwd=2)
+```
+
+
+# Caracteres 
+
+
+## Vectores de caracteres
+
+¿Qué objetos tengo en memoria?
+
+```{r echo=TRUE, eval=TRUE}
+ch<-ls() 
+ch
+#mode(ch)
+#typeof(ch)
+class(ch)
+```
+
+```{r echo=TRUE, eval=TRUE}
+is.character(ch)
+```
+
+
+
+
+El objeto `ch` es un ejemplo de vector de caracteres. 
+
+Si el resultado de un calculo no se asigna, este se imprime y se pierde (no se conserva en ningún objeto)
+
+## Vectores lógicos
+
+¿Las componentes del vector son iguales a 3?
+
+```{r echo=TRUE, eval=TRUE}
+c(TRUE,FALSE,TRUE)
+l=c(3, 4 - 1, 1 + 1 + 1,5+2) == 3 
+l
+mode(l)
+typeof(l)
+class(l)
+```
+
+El anterior es un ejemplo de un vector lógico

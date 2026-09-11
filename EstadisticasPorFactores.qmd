@@ -1,0 +1,255 @@
+---
+title: "Estadística computacional"
+subtitle: "Cálculos por niveles de factores" 
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: "moon"
+    highlight: "tango"
+    center: true
+    #transition: fade
+    lang: es
+    code-fold: true
+    slide-level: 2
+    scrollable: true
+  beamer:
+    theme: "CambridgeUS"
+    slide-level: 2
+    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
+    fonttheme: "professionalfonts"
+toc: true
+toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
+toc-title: "Contenido"
+editor: source
+---
+```{r echo=FALSE}
+knitr::opts_chunk$set(out.width="90%",out.height="90%") 
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/cursos/estadisticacomputacional")
+library(ggridges) 
+library(reshape)
+library(ggplot2)
+library(tidyverse) 
+library(patchwork)
+```
+
+# Cálculo de estadísticas por niveles de factores
+
+## Introducción
+
+Un problema muy común al trabajar con datos es cómo calcular estadísticas de resumen y en general aplicar funciones sobre una variable pero considerando los niveles de otra u otras variables categóricas o factores. Otra forma de decirlo es hacer cálculos desagregados por niveles de uno o varios factores.
+
+## Introducción II 
+
+Para esa tarea contamos con varias funciones, que hacen la misma tarea y se diferencian solo por el formato en que entregan la respuesta, ellas son:
+
+-   `by`
+-   `tapply`
+-   `aggregate`
+
+
+## Data para los ejemplos
+
+Ejecute el siguiente código que crea un `data.frame` llamado `puntajes` que contiene nombres de jugadores de vídeo juegos y sus puntajes.
+
+```{r echo=TRUE,eval=TRUE}
+# para general siempre los mismos datos
+set.seed(1234) 
+# los datos 
+puntaje<-data.frame(
+jugador = rep(c("Tom", "Dick", "Harry"), 
+          times = c(2, 5, 3)),
+          puntos = round(rlnorm(10, 8), -1))
+```
+
+## Los datos
+
+```{r echo=FALSE,eval=TRUE}
+puntaje
+```
+
+-   Una tarea frecuente es, por ejemplo, sumar los puntos de cada jugador.
+
+-   Lo cual podríamos hacer de la siguiente manera
+
+## Suma de los puntajes de Dick
+
+```{r echo=TRUE,eval=TRUE}
+sum(puntaje[puntaje$jugador=="Dick",2])
+```
+
+-   La forma anterior funciona, pero sería poco eficiente, cuando se tengan muchos jugadores, porque habría que ejecutar el código para cada jugador.
+
+-   Ilustraremos varias formas de hacer esta tarea.
+
+-   La diferencia está en el formato en que se obtiene la respuesta.
+
+# Uso de `by` 
+
+## Con `by`
+
+```{r echo=TRUE,eval=TRUE}
+with(puntaje, by(puntos, jugador, sum))
+```
+
+Guardamos la repuesta en un objeto
+
+```{r echo=TRUE,eval=TRUE}
+sumas=with(puntaje, by(puntos, jugador, sum))
+```
+
+## Acceso a los resultados de `by`
+
+El objeto `sumas` creado por el código anterior, es de clase `by`, pero se puede acceder a sus elementos como una lista
+
+```{r echo=TRUE,eval=TRUE}
+class(sumas)
+names(sumas)
+sumas[["Dick"]]
+sumas[["Harry"]]
+```
+
+## 
+
+```{r echo=TRUE,eval=TRUE}
+is.list(sumas)
+```
+
+
+
+# Uso de `tapply` 
+
+## Cálculos con `tapply`
+
+La función `tapply` regresa un vector o una tabla
+
+```{r echo=TRUE,eval=TRUE}
+with(puntaje,tapply(puntos, jugador, sum))
+```
+
+Note que la respuesta es la misma, solo que está en un formato distinto (`array`).
+
+```{r echo=TRUE,eval=TRUE}
+sumas=with(puntaje, tapply(puntos, jugador, sum))
+class(sumas)
+names(sumas)
+```
+
+
+# Uso de `aggregate` 
+
+
+## Con `aggregate`
+
+Note que en este caso la variable que clasifica se debe entregar como una lista `list(jugador)`
+
+```{r echo=TRUE,eval=TRUE}
+with(puntaje,aggregate(puntos, list(jugador), sum))
+```
+
+La función `aggregate` regresa la respuesta como un `data.frame`
+
+```{r echo=TRUE,eval=TRUE}
+sumas=with(puntaje,aggregate(puntos, list(jugador), sum))
+class(sumas)
+```
+
+
+# Ejemplos 
+
+## Ejemplo 2
+
+Considere el siguiente conjunto de datos simulados. Calcule el ritmo cardíaco promedio discriminado por `Sexo` y `Edad`
+
+```{r echo=TRUE,eval=TRUE}
+set.seed(231)
+n<-sample(seq(50,300,by=5),1)
+Edad<-round(rnorm(n,mean=20,sd=0.5))
+Peso<-round(rnorm(n,mean=60,sd=3))
+Sexo<-sample(c("F","M"),n,replace=TRUE)
+Hijos<-rpois(n,lambda=2)
+Estrato<-sample(1:6,n,replace = TRUE, prob = c(0.30,0.20,0.15,0.15,0.13,0.07) ) 
+Ritmo<-round(rnorm(n,mean=60,sd=0.75)) 
+Datos<-data.frame(Edad,Peso,Sexo,Hijos,Estrato,Ritmo)
+```
+
+## Los datos
+
+```{r echo=TRUE,eval=TRUE}
+tail(Datos) 
+```
+
+En este ejemplo `Datos` tiene `r nrow(Datos)` filas.
+
+## Solución con `by`
+
+Note el uso de `list` para entregar los factores que clasifican
+
+```{r echo=TRUE,eval=TRUE}
+with(Datos, by(Ritmo, list(Sexo, Edad), mean))
+```
+
+## Solución con `tapply`
+
+Note el uso de `list` para entregar los factores que clasifican
+
+```{r echo=TRUE,eval=TRUE}
+with(Datos, tapply(Ritmo, list(Sexo, Edad), mean))
+```
+
+Note que la respuesta se entrega como una matriz
+
+## Solución con `aggregate`
+
+```{r echo=TRUE,eval=TRUE}
+with(Datos, aggregate(Ritmo, list(Sexo, Edad), mean)) 
+```
+
+La función `aggregate` regresa la respuesta como un `data.frame`
+
+# Ejercicios 
+
+## Ejercicios para practicar {.fragile}
+
+- Use el marco de datos `iris`, de los datos de ejemplo de R, el cual se carga así
+```{r echo=TRUE,eval=TRUE}
+    data(iris) 
+```
+y calcule las estadísticas básicas: mínimo, primer cuartil, mediana, media, tercer cuartil, máximo, varianza y desviación estándar para las variables `Sepal.Length  Sepal.Width Petal.Length    Petal.Width` por cada nivel de `Species`.
+
+
+## Ejercicios para practicar {.fragile}
+
+- Defina funciones que calculen 
+  - el error estándar de la media, definido como $\frac{S}{\sqrt n}$, 
+  - el coeficiente de variación definido como $\frac{\overline{X}}{S}$ y aplique estas funciones a cada variable de `iris` por cada nivel de `Species`
+
+## Ejercicios para practicar {.fragile}
+
+- Use el marco de datos de ejemplo `survey` de la librería `MASS`, el cual se puede cargar así
+```{r echo=TRUE,eval=TRUE}
+library(MASS)
+data(survey) 
+```
+y calcule:
+
+- Número de hombres y mujeres que participaron del estudio.
+
+- El pulso `(pulse)` promedio de hombres y mujeres.
+
+## Ejercicios para practicar II {.fragile}
+
+- El número de personas que fuman `(smoke)` frecuentemente `(Freq)`, nunca `(None)` y algunas veces `(Some)` 
+
+- El pulso `(pulse)` promedio de las personas que fuman `(smoke)` frecuentemente `(Freq)`, nunca `(None)` y algunas veces `(Some)`\
+- El pulso `(pulse)` promedio de hombres y mujeres que fuman `(smoke)` frecuentemente `(Freq)`, nunca `(None)` y algunas veces `(Some)`
+
+<!--
+## Ejercicios para entregar {.fragile}
+Se debe subir a cintia un documento en pdf que contenga el código R y la salida de ese código.
+--> 

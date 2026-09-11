@@ -1,0 +1,682 @@
+---
+title: "Tipos de Datos en Python"
+subtitle: "Python como Calculadora"    
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc: true
+    toc-depth: 1 
+    highlight: "tango"
+    center: true
+    transition: fade
+    lang: es
+    code-fold: true
+    #slide-level: 2
+    scrollable: true
+toc: true
+
+editor: source
+---
+
+```{r echo=FALSE}
+library(reticulate)
+use_condaenv("/Users/unicordoba/miniforge3/envs/limpio",required = TRUE)
+```
+
+# Objetivos de la Sesión
+
+- Comprender la naturaleza y utilidad de los diferentes tipos de datos en Python.
+- Diferenciar entre datos numéricos (enteros y flotantes), cadenas de texto y valores lógicos.
+- Reconocer estructuras de datos introductorias relevantes para el análisis de datos.
+- Aplicar funciones nativas de Python para verificar y convertir tipos de datos.
+
+# Tipos de datos: importancia
+
+- En estadística y programación, la forma en que el computador almacena la información dicta qué operaciones matemáticas o lógicas podemos realizar.
+
+- No podemos calcular la media de un texto, ni concatenar matemáticamente dos números lógicos sin una conversión previa.
+
+- Python es un lenguaje de tipado dinámico, lo que significa que el tipo de dato se asigna automáticamente durante la ejecución.
+
+# Datos Numéricos
+
+Python maneja los números principalmente de dos maneras fundamentales para nuestros cálculos.
+
+## Enteros (`int`)
+
+Representan números completos sin parte decimal. Son útiles para contar frecuencias, iteraciones, o tamaños de muestra ($n$).
+
+```{python}
+#| echo: true 
+# Ejemplo de Integer
+tamaño_muestra = 150
+print(tamaño_muestra)
+print(type(tamaño_muestra))
+```
+
+## Flotantes (`floats`)
+
+Representan números reales (con parte decimal). Son el estándar para variables continuas, probabilidades, promedios y estadísticos de prueba.
+
+```{python}
+#| echo: true
+
+# Ejemplo de Float
+media_muestral = 45.89
+p_valor = 0.035
+print(media_muestral)
+print(type(media_muestral))
+```
+
+## Datos de Texto o Caracteres (`str`)
+
+Conocidos como `strings`, almacenan texto. En el modelado estadístico, a menudo usamos `strings` para etiquetas, nombres de variables categóricas o descripciones cualitativas. Se delimitan con comillas simples o dobles.
+
+```{python}
+#| echo: true
+
+# Ejemplo de String
+categoria_tratamiento = "Tratamiento A"
+print(categoria_tratamiento)
+print(type(categoria_tratamiento))
+```
+
+## Datos Lógicos o Booleanos (`bool`)
+
+- Solo pueden tomar dos valores: `True` (Verdadero) o `False` (Falso).
+
+- Son la base del control de flujo y la evaluación de condiciones (por ejemplo, si un valor supera un umbral crítico).
+
+- En el fondo, Python evalúa True como $1$ y False como $0$.
+
+```{python}
+#| echo: true
+# Ejemplo de Booleano
+hipotesis_rechazada = True
+print(hipotesis_rechazada)
+print(type(hipotesis_rechazada))
+
+# Evaluación de una condición que retorna un booleano
+es_significativo = p_valor < 0.05
+print("¿Es estadísticamente significativo?:", es_significativo)
+```
+
+## Ejemplo de `bool`
+
+```{python}
+#| echo: true
+
+
+# Evaluación de una condición que retorna un booleano
+es_significativo = p_valor < 0.05
+print("¿Es estadísticamente significativo?:", es_significativo)
+```
+
+## Datos Especiales: Ausencia de Valor (NoneType)
+
+- En la limpieza de datos, es común encontrar valores perdidos (`Missing values`).
+
+- En Python puro, esto suele representarse con `None`.
+
+```{python}
+#| echo: true
+
+# Ejemplo de None
+dato_faltante = None
+print(type(dato_faltante))
+```
+
+## Conversión de Tipos (`Casting`)
+
+A veces necesitamos transformar un tipo de dato en otro, por ejemplo, convertir un texto numérico recolectado de un formulario web a un entero.
+
+```{python}
+#| echo: true
+
+
+# De string a entero
+texto_numero = "120"
+numero_real = int(texto_numero)
+print(type(numero_real))
+
+# De float a int (¡Cuidado: se pierde la parte decimal!)
+valor_estimado = 4.95
+entero_truncado = int(valor_estimado)
+print(entero_truncado)
+```
+
+## Ejercicio Práctico en Clase
+
+- Crear una variable llamada `edad` y asígnenle su edad en años (¿Qué tipo de dato es?).
+
+- Crear una variable estatura en metros (ej. 1.75).
+
+- Crear una variable `nombre_estudiante` con su nombre completo.
+
+- Evaluar de forma lógica (Booleana) si la edad es mayor a 18 y guardar el resultado en una variable llamada `es_mayor_edad`.
+
+- Usen la función `print()` para mostrar todas las variables y la función `type()` para verificar que usaron el tipo correcto.
+
+## Ejemplo de aplicación
+
+- Escribir un programa es `python` que capture dos números `a` y `b` y regrese la suma `a+b`
+
+- *Ayuda:* para capturar un valor desde el teclado use la función `input()`
+
+# Python como calculadora
+
+## Operaciones I
+
+```{python}
+#| echo: true
+
+# Suma 
+2+2
+
+
+
+
+```
+
+```{python}
+#| echo: true
+
+# Resta 
+5-3 
+```
+
+```{python}
+#| echo: true
+
+# Producto 
+3*5 
+```
+
+## Operaciones II
+
+```{python}
+#| echo: true
+
+## Cuidado 
+2^2 # no funciona como potencia     
+
+```
+
+```{python}
+#| echo: true
+
+### para la potenciación en python potencia se debe usar **
+print(2**2)
+9**(1/2) 
+
+```
+
+## Operaciones III
+
+```{python}
+#| echo: true
+
+# El orden de las operaciones se altera con paréntesis 
+
+(4-2)*3**2 
+```
+
+```{python}
+#| echo: true
+
+# Residuo de la división
+7%4
+
+```
+
+```{python}
+#| echo: true
+
+# Parte entera de la división 
+7//4
+
+```
+
+## Funciones I
+
+Para tener disponibles funciones matemáticas es necesario importar el paquete `math`
+
+```{python}
+#| echo: true
+
+# Raíz cuadrada 
+from math import sqrt
+sqrt(9)
+```
+
+```{python}
+#| echo: true
+
+# exponencial 
+from math import exp
+exp(1)
+```
+
+```{python}
+#| echo: true
+
+# logaritmo en base 10 
+from math import log10
+log10(100) 
+```
+
+## Funciones II
+
+```{python}
+#| echo: true
+
+from math import log
+# logaritmo en base 10 
+log(100,10)
+
+```
+
+```{python}
+#| echo: true
+
+# logaritmo en base 2 
+log(8,2)
+```
+
+## Funciones trigonométricas
+
+Usando Python, calcular
+
+- $\sin(\pi/2)$
+- $\sin(\pi)$
+- $\sin(2\times \pi)$
+- $\cos(\pi/2)$
+- $\cos(\pi)$
+- $\cos(2\times \pi)$
+- $\tan(\pi/4)$
+
+## Solución
+
+```{python}
+#| echo: true
+
+from math import sin, cos , pi 
+```
+
+## Tuplas
+
+Las tuplas sirven para agrupar objetos de diferente tipo, ellas estan *indexadas* y son **inmutables**, es decir, no se pueden modificar (agregar, quitar, cambiar entradas) una vez creadas.
+
+```{python echo=TRUE}
+mytupla0=('abc',4,True,5,False,2.5)
+mytupla=(1,0.7,mytupla0,"Hola") 
+print(mytupla0)
+mytupla
+```
+
+## Datos soportados por las tuplas
+
+:::callout-important
+Note que una tupla puede contener distintos tipos de datos (string, enteros, lógicos y floats), incluso otras tuplas y otros tipos de contenedores
+::: 
+
+## Acceso a datos en una tupla
+
+Para acceder a los elementos de una tupla se usa `tupla[indice]` donde *indice* es un número entero de cero hasta la longitud de la tupla menos uno $n-1$
+
+```{python echo=TRUE}
+mytupla[0] # <1> 
+```
+
+1.  Primer elemento de la tupla.
+
+## Ejecute I
+
+```{python eval=FALSE,echo=TRUE}
+mytupla[4]
+mytupla[2]=0 
+mytupla[2]='xyz'
+```
+
+## Ejecute II
+
+```{python eval=FALSE,echo=TRUE}
+mytupla[4] # IndexError: tuple index out of range
+# no corre, a eso se refiere con inmutable 
+mytupla[2]=0 #TypeError: 'tuple' object does not support item assignment
+mytupla[2]='xyz'
+```
+
+## Observe
+
+```{python,echo=TRUE}
+t1=(3,4) 
+print('t1= ',t1,'id de t1 antes ',id(t1))
+t2=(5,6)
+print('t2= ',t2,'id de t2 antes ',id(t2))
+print(t2)
+t1=t1+t2
+print('t1= ', t1,'id de t1 despues ', id(t1))
+print('t2= ', t2, 'id de t2 despues ', id(t2))
+```
+
+## Ventajas de la inmutabilidad
+
+- Seguridad: Como los datos no pueden ser modificados accidentalmente, es más seguro usar tuplas cuando se quiere proteger la integridad de los datos.
+
+- Uso como claves en diccionarios: Las tuplas, al ser inmutables, pueden ser utilizadas como claves en diccionarios, algo que no es posible con las listas.
+
+- Optimización: Las tuplas pueden ser más eficientes en términos de rendimiento y uso de memoria en comparación con las listas. La inmutabilidad hace que las tuplas sean útiles en situaciones donde se requiere un conjunto de datos constante y seguro.
+
+## Función `type`
+
+Para averiguar la **clase** de un objeto usamos la función `type()`
+
+```{python echo=TRUE}
+type(mytupla) 
+```
+
+## Averiguar si un objeto es una tupla
+
+- En algunas aplicaciones es necesario verificar si un objeto pertenece o no a una clase.
+
+- Por ejemplo, para dirigir el flujo de ejecución del código de programación de una función: si el objeto entregado es una tupla, ejecute ciertas líneas de código, de lo contrario ejecute otras líneas.
+
+- La función `isinstance(objeto,tipo)` regresa `True` si la clase del `objeto` entregado corresponde a `tipo`, en caso contrario regresa `False`.
+
+- Otra forma es mediante la función `type`
+
+## Función `isinstance`
+
+```{python echo=TRUE}
+isinstance(mytupla, tuple)
+```
+
+```{python echo=TRUE}
+isinstance('abcd', tuple)
+```
+
+```{python echo=TRUE}
+isinstance('abcd', str)
+```
+
+## Función `isinstance`
+
+```{python echo=TRUE}
+type(mytupla)
+```
+
+```{python echo=TRUE}
+type(mytupla) is tuple
+```
+
+```{python echo=TRUE}
+type(4) is tuple
+```
+
+```{python echo=TRUE}
+type(4) is int
+```
+
+## Otras formas de crear tuplas
+
+Otra forma de crear tuplas es mediante la siguiente orden, con la segunda linea se imprime el tipo de objeto que es `t3`, con el fin de verificar que efectivamente se ha creado una tupla.
+
+```{python echo=TRUE }
+t3=10,20 
+type(t3)  
+```
+
+Esta forma se conoce como creación de tuplas mediante *empaquetado*
+
+## Desempaquetado de tuplas
+
+También podemos recuperar los elementos de una tupla mediante el *desempaquetado*\index{Tuplas!desempaquetado}, de la siguiente manera
+
+```{python echo=TRUE,  eval=FALSE}
+x,y=t3
+print("x= ",x)
+print("y= ",y)
+```
+
+el primer elemento de la tupla `t3` se asigna al objeto `x` y el segundo a `y` luego se imprimen sus valores.
+
+## Tuplas especiales
+
+Se pueden crear tuplas vacías y tuplas que contiene un solo valor, estas últimas llamadas tuplas unitarias, como se muestra a continuación
+
+```{python echo=TRUE}
+tupvacia=() # crea una tupla vacía 
+tupunit=(4,) # crea una tupla con un único elemento 
+print(tupvacia,type(tupvacia),tupunit,type(tupunit))
+```
+
+note el uso de la coma después del elemento de la tupla unitaria, eso debe ser así porque de lo contrario no se estaría creando una tupla, sino un objeto de tipo entero (`int`)
+
+```{python echo=TRUE}
+x=(4) # cuidado!!! x es un entero, no una tupla  
+print(x,type(x))
+```
+
+## Indexado de tuplas.
+
+\index{Tuplas!Indexado de}
+
+Se puede crear una tupla a partir de otra mediante órdenes de la forma `tupla[i:j]` esto se conoce como indexación, veamos algunos ejemplos:
+
+```{python echo=TRUE}
+a=(3,2,4,1,6,4) # se crea la tupla a 
+b=a[1:4] # tupla b, creada a partir de a 
+print(b,type(b))
+```
+
+Note en la salida anterior que la tupla `b` inicia en `2`, y no en `3`, que es el primer elemento de la tupla `a` ¿por qué?
+
+```{python echo=TRUE,  eval=FALSE}
+a[:4]    # los cuatro primeros elementos de la tupla a
+a[2:]    # desde el tercer elemento hasta el final 
+a[::-1]  # la tupla en reversa  
+```
+
+# Funciones y métodos aplicables a tuplas {#sec-funcionesAplicablesATuplas}
+
+\index{Tuplas!Función!\texttt{len()}}\index{Tuplas!Método!\texttt{.index}}\index{Tuplas!Método!\texttt{.count()}}
+
+## La función `len()`
+
+- La función `len()` regresa el número de elementos que contiene una tupla
+
+```{python echo=TRUE}
+print(len(t1)) # Imprime  la longitud  de la tupla
+t1[len(t1)-1]  # recupera el último 
+```
+
+## Método `.index(x)`
+
+- El método `.index(x)` regresa el índice que le corresponde al elemento `x` en la tupla, si el elemento está más de una vez regresa el índice de la primera ocurrencia, en caso que `x` no esté ocurre un error.
+
+```{python echo=TRUE}
+t1.index(4)    # índice correspondiente al primer 4 en t1
+```
+
+## Método `.count()`
+
+- El método `.count()` regresa el número de veces que un elemento está en la tupla, en caso de no estar regresa cero, a continuación se muestra como usarlos sobre la tupla `t1` creada arriba
+
+```{python echo=TRUE}
+t1.count(4) # número de veces que está 4 
+```
+
+## 
+
+::: callout-important
+Habrá notado la diferencia en el llamado a `len()` frente a `.index()` y `.count()`:
+
+- `len()` es una función genérica de Python, así que puede aplicarse a diferentes tipos de objetos,
+
+- Mientras que los dos últimos son *métodos*, definidos sobre la clase *tuple*.
+:::
+
+## Diferencia entre método y función {.smaller}
+
+- Cuando se crea una tupla se le asocian los métodos propios de la clase, es decir, el método está asociado al objeto.
+
+- Las funciones sólo se pueden llamar por su nombre, ya que se definen de forma independiente,
+
+- Los métodos no pueden ser llamados únicamente por su nombre, necesitamos invocar la clase por una referencia de esa clase en la que está definida.
+
+- Esa es la razón por la que **no usamos** `index(t1,4)` o `count(t1,4)` sino `t1.index(4)` o `t1.count(4)`
+
+- Porque estos son métodos definidos sobre la clase `tuple`, mientras que `len()` es una función a la cual se le entrega una tupla y regresa su longitud,
+
+- `len()` se puede usar con otros tipos de contenedores, incluso con cadenas de caracteres.
+
+# Operaciones con tuplas
+
+## Operador `in`
+
+Para saber si un elemento hace parte de una tupla, usamos el operador `in` el cual regresa un valor lógico `True` o `False` dependiendo de si el elemento se encuentra o no en la tupla.
+
+```{python echo=TRUE}
+4 in t1     # True sí 4 está en t1, False si no  
+"x" in t1   # True sí  "x" está en t1,  False si no 
+"abc" in t1 # True sí "abc" está en t1,  False si no 
+```
+
+## Concatenación de tuplas.
+
+\index{Tuplas!Operaciones con}
+
+Se pueden concatenar y replicar tuplas usando los operadores `+` y `*` de la siguiente forma
+
+```{python echo=TRUE}
+Trats=("T1","T2","T3") 
+(2,3,4) + Trats # Concatena la tupla (2,3,4) con Trats 
+Trats*3         # replica la tupla Trats tres veces 
+(2,3,4)*2       # replica la tupla (2,3,4) tres veces 
+```
+
+## Iterar sobre una tupla.
+
+\index{Tuplas!Iterar sobre una}\index{Iterar}
+
+Una tupla es un objeto *iterable*, es decir, se pueden recorrer uno tras otro sus elementos usando bucles, a continuación un ejemplo usando `for`
+
+```{python echo=TRUE}
+for i in Trats:
+    print(i) 
+```
+
+## 
+
+```{python echo=TRUE}
+t1=('abc',4,True,5,False,2.5) 
+entero = 0
+for i in t1:
+    if type(i) is int:
+        entero+=1
+NoEnteros=len(t1)-entero
+print(f"Hay {entero} enteros en la tupla y {NoEnteros} que no son enteros")  
+```
+
+## Ejemplo de aplicación.
+
+En el siguiente bloque de código se generan datos de una población normal con media cero y desviación estándar 10. Luego se usa la función `shapiro` del módulo `scipy.stats`, para llevar a cabo la prueba de *Shapiro Wilks* \index{Prueba!de Shapiro Wilks} usando estos datos. Lo que se quiere resaltar es que la función regresa una tupla que tiene como primer elemento el estadístico $W$ y en la segunda posición el $p-$valor de la prueba, veamos
+
+## Ejemplo de aplicación II {.smaller}
+
+```{python echo=TRUE}
+#| code-line-numbers: "|4|5|6"
+import scipy.stats as s  # <1>
+import numpy as np # <2>
+np.random.seed(seed=123) # <3>  
+n = s.norm(0,10) # <4> 
+datos=n.rvs(100) # <5>  
+res=s.shapiro(datos) # <6>   
+```
+
+1.  Carga del modulo `scipy.stats`.
+2.  Carga del paquete `numpy`
+3.  Establece una semilla para el generador de números aleatorios de `NumPy`, para que el ejemplo sea reproducible.
+4.  Se `instancia` una variable aleatoria normal de media 0 y desviación estándar 10.
+5.  Se simula la toma de una muestra aleatoria de una población con distribución normal de media 0 y desviación estándar 10.
+6.  Prueba de Shapiro Wilks.
+
+## Ejemplo de aplicación III
+
+Podemos recuperar los valores del estadístico de prueba, $W$, y el $p-$valor, mediante el desempaquetado o mediante el indexado como se muestra a continuación
+
+```{python echo=TRUE}
+W,p=res  # desempaquetado, equivalente a W=res[0] ; p=res[1]
+```
+
+si estamos escribiendo un informe donde sea necesario reportar el resultado de la prueba podríamos usar
+
+```{python echo=TRUE, eval=FALSE}
+print("Estadístico de S-Wilks, %0.3f, p_valor = %0.4f" %res)
+```
+
+## ¿Cómo saber si un objeto de Python es una tupla?
+
+\index{Tuplas!Función \texttt{isinstance()}} \index{Tuplas!Función \texttt{type()}}
+
+En algunas aplicaciones es necesario verificar si un objeto pertenece o no a una clase. Por ejemplo, para dirigir el flujo de ejecución del código de programación de una función: si el objeto entregado es una tupla, ejecute ciertas líneas de código, de lo contrario ejecute otras líneas. La función `isinstance(objeto,tipo)` regresa `True` si la clase del `objeto` entregado corresponde a `tipo`, en caso contrario regresa `False`.
+
+```{python echo=TRUE}
+isinstance(t1, tuple)
+```
+
+## Función `type()`
+
+Otra forma es usando la función `type()`, como se muestra a continuación
+
+```{python echo=TRUE}
+type(t1) is tuple
+type(4) is tuple
+```
+
+## Otros tipos de datos
+
+Esta última línea regresa `False` porque el número `4` no es una tupla. En las siguientes líneas se ilustra como averiguar por los tipos de datos más usados en estadística
+
+```{python echo=TRUE,  eval=FALSE}
+type(x) is int    # True si x es entero, False en otro caso
+type(x) is float  # True si x un real, False en otro caso
+type(x) is str    # True si x es string,  False en otro caso
+type(x) is bool   # True si x es lógico,  False en otro caso 
+```
+
+## Ejemplo
+
+A manera de ejemplo, programar una función que reciba un objeto y en caso que este sea una tupla regrese el mensaje `'Es una tupla'`, en caso contrario regrese `'No es una tupla'`
+
+```{python echo=TRUE}
+#| code-line-numbers: "|2"
+# Se define la función 
+def verificartupla(x):
+  if(type(x) is tuple):
+    print("Es una tupla")
+  else:
+    print("No es una tupla")
+# Fin de definición de función
+```
+
+## Uso de la función
+
+```{python echo=TRUE, eval=FALSE}
+# Uso de  la función 
+verificartupla(t1) # Retorna: `True`, `t1` es una tupla
+verificartupla("hola") # Retorna: `False`, `"hola"` no es una tupla
+```

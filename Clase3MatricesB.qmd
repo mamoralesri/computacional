@@ -1,6 +1,6 @@
 ---
-title: "Matrices"
-subtitle: " "   
+title: "Matrices" 
+subtitle: "Acceso, edición, operaciones y aplicaciones en algebra lineal "   
 author: 
   - name: Mario Morales
     orcid: 0000-0001-8814-0179
@@ -10,22 +10,106 @@ author:
       - name: Universidad de Córdoba, Montería
 format: 
   revealjs:
-    theme: "moon"
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
     highlight: "tango"
     center: true
-    #transition: fade
+    transition: fade
     lang: es
     code-fold: true
-    slide-level: 2
+    #slide-level: 2
     scrollable: true
   beamer:
-    theme: "CambridgeUS"
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
     slide-level: 2
-    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
-    fonttheme: "professionalfonts"
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
 toc: true
-toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
 toc-title: "Contenido"
+editor: source 
 ---
 
 # Matrices
@@ -225,6 +309,30 @@ apply(Ventas,1,var)
 apply(Ventas,2,max) 
 ```
 
+# Si hay datos faltantes `NA` 
+
+```{r}
+#| echo: true
+Ventas2=matrix(c(5,4,9,7,6,3,3,2,5,2,1,8,NA,4,3),ncol=5)
+```
+
+```{r}
+#| echo: true
+
+
+apply(Ventas2,1,sum)
+```
+
+
+```{r}
+#| echo: true
+
+apply(Ventas2,1,sum,na.rm=TRUE)
+```
+
+
+
+
 
 ## Transpuesta de una matriz
 
@@ -347,7 +455,7 @@ Si $A(i,j)=A(j,i)$ para todo $i$, $j$ la matriz $A$ es simétrica
 
 ```{r}
 #| echo: true
-#| output-location: fragment
+
   
 S=Ventas%*%t(Ventas)
 ```

@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<script src="Factores_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Factores_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Factores_files/libs/quarto-html/popper.min.js"></script>
+<script src="Factores_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Factores_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Factores_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="Factores_files/libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="author" content="Mario Morales">
+  <title>Estadística computacional</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Factores_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Factores_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="Factores_files/libs/revealjs/dist/theme/quarto-0c8acc74dca0c2faaedea4940f202713.css">
+  <link href="Factores_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Factores_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Factores_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Factores_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Estadística computacional</h1>
+  <p class="subtitle">Factores</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+<a href="https://mariomorales.xyz/">Mario Morales</a> <a href="https://orcid.org/0000-0001-8814-0179" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:mamorales@correo.unicordoba.edu.co">mamorales@correo.unicordoba.edu.co</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidad de Córdoba, Montería
+          </p>
+    </div>
+</div>
+
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Contenido</h2>
+<ul>
+<li><a href="#/factores-creación-y-manipulación" id="/toc-factores-creación-y-manipulación">Factores: creación y manipulación</a></li>
+<li><a href="#/motivación" id="/toc-motivación">Motivación</a></li>
+<li><a href="#/creación-de-factores" id="/toc-creación-de-factores">Creación de factores</a></li>
+<li><a href="#/recodificación" id="/toc-recodificación">Recodificación</a></li>
+<li><a href="#/borrar-niveles-sin-datos" id="/toc-borrar-niveles-sin-datos">Borrar niveles sin datos</a></li>
+<li><a href="#/categorización-de-variables-continuas" id="/toc-categorización-de-variables-continuas">Categorización de variables continuas</a></li>
+<li><a href="#/creación-de-factores-con-gl" id="/toc-creación-de-factores-con-gl">Creación de factores con <code>gl</code></a></li>
+<li><a href="#/nivel-de-referencia-de-un-factor" id="/toc-nivel-de-referencia-de-un-factor">Nivel de referencia de un factor</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="factores-creación-y-manipulación" class="title-slide slide level1 center">
+<h1>Factores: creación y manipulación</h1>
+
+</section>
+<section id="introducción" class="slide level2 center">
+<h2>Introducción</h2>
+<p>Los factores son un tipo de variable especial para almacenar variables categóricas (cualitativas). A veces se comportan como cadenas y, a veces, como números enteros.</p>
+<p>En esta clase aprenderemos a crear y a manipular factores.</p>
+</section></section>
+<section>
+<section id="motivación" class="title-slide slide level1 center">
+<h1>Motivación</h1>
+
+</section>
+<section id="ejemplo-de-motivación" class="slide level2 fragile center">
+<h2>Ejemplo de motivación</h2>
+<ul>
+<li><p>Ingresemos los siguientes datos</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>sexo<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>) </span>
+<span id="cb1-2"><a href=""></a><span class="fu">class</span>(sexo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div></li>
+<li><p>Observe que sexo es un vector numérico, ahora pidamos un <code>summary</code> de <code>sexo</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">summary</span>(sexo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.3913  1.0000  1.0000 </code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="ejemplo-de-motivación-ii" class="slide level2 fragile center">
+<h2>Ejemplo de motivación II</h2>
+<ul>
+<li><p>Lo anterior no es útil porque el sexo es una característica nominal.</p></li>
+<li><p>Debemos indicarle a <code>R</code> que <code>sexo</code> es un factor</p></li>
+</ul>
+</section></section>
+<section>
+<section id="creación-de-factores" class="title-slide slide level1 center">
+<h1>Creación de factores</h1>
+
+</section>
+<section id="usando-la-función-factor." class="slide level2 center">
+<h2>Usando la función <code>factor</code>.</h2>
+<p>Se pueden crear factores utilizando la función <code>factor</code>. El primer argumento (y único obligatorio) es un vector.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>sexof<span class="ot">&lt;-</span><span class="fu">factor</span>(sexo)</span>
+<span id="cb5-2"><a href=""></a>sexof</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0 1 0 0 0 0 0 0 0 1 1 0 1 1 0 1 0 0 0 0 1 1 1
+Levels: 0 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">summary</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> 0  1 
+14  9 </code></pre>
+</div>
+</div>
+</section>
+<section id="etiquetas-para-los-niveles-del-factor" class="slide level2 center">
+<h2>Etiquetas para los niveles del factor</h2>
+<p>Al momento de crear un factor, podemos asignar etiquetas para sus niveles, por ejemplo, si en el vector <code>sexo</code> 0 corresponde a femenino (<code>Fem</code>) y 1 a masculino (<code>Mas</code>), queremos indicarlo en la creación del factor.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>sexof<span class="ot">&lt;-</span><span class="fu">factor</span>(sexo,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Fem"</span>,<span class="st">"Mas"</span>))</span>
+<span id="cb9-2"><a href=""></a>sexof</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Fem Mas Fem Fem Fem Fem Fem Fem Fem Mas Mas Fem Mas Mas Fem Mas Fem Fem Fem
+[20] Fem Mas Mas Mas
+Levels: Fem Mas</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">summary</span>(sexof) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fem Mas 
+ 14   9 </code></pre>
+</div>
+</div>
+</section>
+<section id="is.factor" class="slide level2 center">
+<h2><code>is.factor</code></h2>
+<p>¿ Qué clase de objeto es <code>sexof</code> ?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">class</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p>Para comprobar si un objeto es factor, usamos la función <code>is.factor</code>, en caso afirmativo obtenemos <code>TRUE</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">is.factor</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="recuperar-los-niveles-de-un-factor" class="slide level2 center">
+<h2>Recuperar los niveles de un factor</h2>
+<p>Las opciones “Fem” y “Mas” se denominan <strong>niveles del factor</strong> y se pueden recuperar con la función <code>levels</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">levels</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fem" "Mas"</code></pre>
+</div>
+</div>
+<p>El número de niveles de un factor (equivalente a la longitud del vector que regresa <code>levels</code>) se puede recuperar con la función <code>nlevels</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">nlevels</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section>
+<section id="cambio-de-las-etiquetas-de-un-factor" class="slide level2 center">
+<h2>Cambio de las etiquetas de un factor</h2>
+<p>Podemos cambiar las etiquetas (los <code>labels</code>) de un factor, con la función <code>levels</code>. Por ejemplo, si en lugar de “Fem” y “Mas” queremos “Femenino” y “Masculino”.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">levels</span>(sexof)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Femenino"</span>,<span class="st">"Masculino"</span>) </span>
+<span id="cb21-2"><a href=""></a><span class="fu">table</span>(sexof)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>sexof
+ Femenino Masculino 
+       14         9 </code></pre>
+</div>
+</div>
+</section>
+<section id="al-momento-de-crear-un-data-frame" class="slide level2 center">
+<h2>Al momento de crear un data frame</h2>
+<p>Siempre que cree un marco de datos con una columna de datos de texto, es posible indicarle a <code>R</code>, que asuma esta columna como de datos categóricos, es decir, que realice la conversión a factor con el argumento <code>stringsAsFactors=TRUE</code>. El siguiente conjunto de datos de ejemplo contiene las edades de 10 adultos:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>edad<span class="ot">=</span><span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">19</span>,<span class="dv">18</span>,<span class="dv">21</span>,<span class="dv">20</span>)</span>
+<span id="cb23-2"><a href=""></a>sexo<span class="ot">=</span><span class="fu">c</span>(<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"F"</span>)</span>
+<span id="cb23-3"><a href=""></a>datos<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">edad=</span>edad,<span class="at">sexo=</span>sexo,<span class="at">stringsAsFactors=</span><span class="cn">TRUE</span>) </span>
+<span id="cb23-4"><a href=""></a><span class="fu">str</span>(datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   6 obs. of  2 variables:
+ $ edad: num  18 20 19 18 21 20
+ $ sexo: Factor w/ 2 levels "F","M": 2 1 2 2 1 1</code></pre>
+</div>
+</div>
+<ul>
+<li>Ejercicio: calcule la edad promedio para cada nivel de <code>sexo</code></li>
+</ul>
+</section>
+<section id="solución" class="slide level2 center">
+<h2>Solución</h2>
+<ul>
+<li>Usamos la función <code>tapply</code></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">with</span>( datos, <span class="fu">tapply</span>(edad,sexo, mean) ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       F        M 
+20.33333 18.33333 </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="recodificación" class="title-slide slide level1 center">
+<h1>Recodificación</h1>
+
+</section>
+<section id="recodificación-1" class="slide level2 center">
+<h2>Recodificación</h2>
+<p>Hay aplicaciones donde se requiere recodificar los niveles de un factor, por ejemplo</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>sexo2<span class="ot">=</span><span class="fu">c</span>(<span class="st">'F'</span>,<span class="st">'f'</span>,<span class="st">'M'</span>,<span class="st">'m'</span>,<span class="st">'M'</span>,<span class="st">'m'</span>,<span class="st">'F'</span>,<span class="st">'f'</span>,<span class="st">'M'</span>,<span class="st">'m'</span>,<span class="st">'M'</span>,<span class="st">'m'</span>,<span class="st">'S'</span>)</span>
+<span id="cb27-2"><a href=""></a>sexo2<span class="ot">=</span><span class="fu">factor</span>(sexo2)</span>
+<span id="cb27-3"><a href=""></a><span class="fu">summary</span>(sexo2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>f F m M S 
+2 2 4 4 1 </code></pre>
+</div>
+</div>
+<ul>
+<li><p>Queremos que los niveles ‘F’ y ‘f’ se recodifiquen como <code>femenino</code>; ‘M’,‘m’ como masculino y ‘S’ como dato faltante.</p></li>
+<li><p>Eso lo podemos hacer mediante la función <code>recode</code>, de la librería <code>car</code>.</p></li>
+</ul>
+</section>
+<section id="uso-de-recode-de-la-librería-car" class="slide level2 center">
+<h2>Uso de <code>recode</code> de la librería <code>car</code></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">library</span>(car)</span>
+<span id="cb29-2"><a href=""></a>sexo2<span class="ot">=</span><span class="fu">recode</span>(sexo2,<span class="st">"c('F','f')='Femenino';</span></span>
+<span id="cb29-3"><a href=""></a><span class="st">             c('M','m') = 'Masculino';</span></span>
+<span id="cb29-4"><a href=""></a><span class="st">             else=NA"</span>)</span>
+<span id="cb29-5"><a href=""></a><span class="fu">summary</span>(sexo2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Femenino Masculino      NA's 
+        4         8         1 </code></pre>
+</div>
+</div>
+</section>
+<section id="otro-ejemplo-de-recodificación" class="slide level2 center">
+<h2>Otro ejemplo de recodificación</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>satis
+ 1  2  3  4  5  6  7  8  9 10 
+46 39 54 51 50 70 51 46 44 49 </code></pre>
+</div>
+</div>
+<p>Colapsar 1,2,3 como satisfacción baja, 4, 5, 6 y 7 como media y 8, 9, 10, como satisfacción alta.</p>
+</section>
+<section id="solución-1" class="slide level2 center">
+<h2>Solución</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">library</span>(car)</span>
+<span id="cb32-2"><a href=""></a>satis_r<span class="ot">=</span><span class="fu">recode</span>(satis,<span class="st">"c(1,2,3)='Baja';c(4,5,6,7)='Media';else='Alta'"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section></section>
+<section>
+<section id="borrar-niveles-sin-datos" class="title-slide slide level1 center">
+<h1>Borrar niveles sin datos</h1>
+
+</section>
+<section id="borrar-niveles-de-un-factor" class="slide level2 center">
+<h2>Borrar niveles de un factor</h2>
+<p>En el proceso de limpieza de conjuntos de datos, o de extraer subconjuntos, es posible que se eliminen todos los datos correspondientes a uno o más niveles de un factor, veamos el siguiente ejemplo.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb33-2"><a href=""></a>peso<span class="ot">=</span><span class="fu">rpois</span>(<span class="dv">25</span>,<span class="at">lambda =</span> <span class="dv">40</span>)</span>
+<span id="cb33-3"><a href=""></a>trat<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>),<span class="dv">25</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>) )</span>
+<span id="cb33-4"><a href=""></a>dataT<span class="ot">=</span><span class="fu">data.frame</span>(peso,trat)</span>
+<span id="cb33-5"><a href=""></a><span class="fu">head</span>(dataT)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  peso trat
+1   32    C
+2   41    B
+3   42    A
+4   35    A
+5   43    A
+6   36    A</code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2 center">
+<h2></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">barplot</span>(<span class="fu">table</span>(dataT<span class="sc">$</span>trat)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="Factores_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:90.0%;height:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="seleccionamos-solo-dos-niveles-de-trat" class="slide level2 center">
+<h2>Seleccionamos solo dos niveles de trat</h2>
+<p>Vamos a filtrar los datos para quedarnos solo con los niveles <code>A</code> y <code>B</code> de <code>trat</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>dataTb<span class="ot">=</span><span class="fu">subset</span>(dataT,<span class="at">subset=</span>trat<span class="sc">!=</span><span class="st">'C'</span>)</span>
+<span id="cb36-2"><a href=""></a><span class="fu">table</span>(dataTb<span class="sc">$</span>trat) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+A B C 
+9 7 0 </code></pre>
+</div>
+</div>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">levels</span>(dataTb<span class="sc">$</span>trat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "B" "C"</code></pre>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2 center">
+<h2></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">barplot</span>(<span class="fu">table</span>(dataTb<span class="sc">$</span>trat)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="Factores_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:90.0%;height:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="borrar-los-niveles-que-estén-en-cero" class="slide level2 center">
+<h2>Borrar los niveles que estén en cero</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>dataTb<span class="sc">$</span>trat<span class="ot">=</span><span class="fu">droplevels</span>(dataTb<span class="sc">$</span>trat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="section-2" class="slide level2 center">
+<h2></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">barplot</span>(<span class="fu">table</span>(dataTb<span class="sc">$</span>trat)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="Factores_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:90.0%;height:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="categorización-de-variables-continuas" class="title-slide slide level1 center">
+<h1>Categorización de variables continuas</h1>
+
+</section>
+<section id="categorizando-variables-continuas" class="slide level2 center">
+<h2>Categorizando variables continuas</h2>
+<ul>
+<li><p>Una forma útil de resumir una variable numérica es contar cuántos valores <strong>caen</strong> en diferentes <em>categorías</em> o intervalos de <em>clase</em>.</p></li>
+<li><p>La función <code>cut</code> ‘corta’ una variable numérica en pedazos, devolviendo un factor.</p></li>
+<li><p>Esta se usa comúnmente con la función <code>table</code> para obtener el número de datos que quedan en los diferentes grupos (frecuencias).</p></li>
+</ul>
+</section>
+<section id="categorizando-variables-continuas-1" class="slide level2 center">
+<h2>Categorizando variables continuas</h2>
+<p>El siguiente código genera aleatoriamente las edades de diez mil trabajadores (de 16 a 66, usando una distribución beta)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) </span>
+<span id="cb43-2"><a href=""></a>edades<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="dv">16</span> <span class="sc">+</span> <span class="dv">50</span> <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="dv">10000</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb43-3"><a href=""></a><span class="fu">head</span>(edades)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23 40 50 18 42 43</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">cat</span>(<span class="st">'Edad minima'</span>, <span class="fu">min</span>(edades),<span class="st">"años </span><span class="sc">\n</span><span class="st">"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Edad minima 16 años </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">cat</span>(<span class="st">'Edad maxima'</span>, <span class="fu">max</span>(edades),<span class="st">"años</span><span class="sc">\n</span><span class="st">"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Edad maxima 64 años</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">cat</span>(<span class="st">'Numero de datos:'</span>, <span class="fu">length</span>(edades),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Numero de datos: 10000 </code></pre>
+</div>
+</div>
+<p>La tarea consiste en agruparlos en grupos de edades de 10 años.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16 26 36 46 56 66</code></pre>
+</div>
+</div>
+</section>
+<section id="categorizando-variables-continuas-2" class="slide level2 center">
+<h2>Categorizando variables continuas</h2>
+<p>La tarea consiste en agruparlos en grupos de edades de 10 años.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16 26 36 46 56 66</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>edades_agrup<span class="ot">&lt;-</span><span class="fu">cut</span>(edades, <span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>))</span>
+<span id="cb55-2"><a href=""></a><span class="fu">head</span>(edades)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23 40 50 18 42 43</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="fu">head</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] (16,26] (36,46] (46,56] (16,26] (36,46] (36,46]
+Levels: (16,26] (26,36] (36,46] (46,56] (56,66]</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="fu">class</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+</section>
+<section id="categorizando-variables-continuas-3" class="slide level2 center">
+<h2>Categorizando variables continuas</h2>
+<p>El resultado</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">summary</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(16,26] (26,36] (36,46] (46,56] (56,66]    NA's 
+   1940    3443    2936    1457     220       4 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a><span class="fu">table</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>edades_agrup
+(16,26] (26,36] (36,46] (46,56] (56,66] 
+   1940    3443    2936    1457     220 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a><span class="fu">sum</span>(<span class="fu">table</span>(edades_agrup))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9996</code></pre>
+</div>
+</div>
+</section>
+<section id="categorizando-variables-continuas-4" class="slide level2 center">
+<h2>Categorizando variables continuas</h2>
+<p>Los 4 datos que faltan son los de las 4 personas que tienen edad igual a 16.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="fu">sum</span>(edades<span class="sc">==</span><span class="dv">16</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a><span class="fu">which</span>(edades<span class="sc">==</span><span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5853 6429 8441 9186</code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a>edades_agrup[<span class="fu">which</span>(edades<span class="sc">==</span><span class="dv">16</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+Levels: (16,26] (26,36] (36,46] (46,56] (56,66]</code></pre>
+</div>
+</div>
+</section>
+<section id="solución-2" class="slide level2 center">
+<h2>Solución</h2>
+<p>Configuramos la opción <code>include.lowest = TRUE</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a>edades_agrup<span class="ot">&lt;-</span><span class="fu">cut</span>(edades, <span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>),</span>
+<span id="cb73-2"><a href=""></a>                  <span class="at">include.lowest =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb73-3"><a href=""></a><span class="fu">table</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>edades_agrup
+[16,26] (26,36] (36,46] (46,56] (56,66] 
+   1944    3443    2936    1457     220 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a><span class="fu">sum</span>(<span class="fu">table</span>(edades_agrup))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10000</code></pre>
+</div>
+</div>
+</section>
+<section id="como-cambiar-ab-a-ab" class="slide level2 center">
+<h2>Como cambiar (a,b] a [a,b)</h2>
+<p>Configuramos la opción <code>right = TRUE</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a>edades_agrup<span class="ot">&lt;-</span><span class="fu">cut</span>(edades, <span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>),</span>
+<span id="cb77-2"><a href=""></a>                  <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb77-3"><a href=""></a>                  <span class="at">right =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb77-4"><a href=""></a><span class="fu">table</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>edades_agrup
+[16,26) [26,36) [36,46) [46,56) [56,66] 
+   1632    3404    3062    1612     290 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a><span class="fu">sum</span>(<span class="fu">table</span>(edades_agrup))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10000</code></pre>
+</div>
+</div>
+</section>
+<section id="cambiamos-las-etiquetas" class="slide level2 center">
+<h2>Cambiamos las etiquetas</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a><span class="fu">levels</span>(edades_agrup)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">'Jovenes'</span> , <span class="st">'Adultos Jovenes'</span> , </span>
+<span id="cb81-2"><a href=""></a>                        <span class="st">'Adultos'</span>,<span class="st">'Mayores'</span>,</span>
+<span id="cb81-3"><a href=""></a>                        <span class="st">'Adulto Mayor'</span>) </span>
+<span id="cb81-4"><a href=""></a><span class="fu">table</span>(edades_agrup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>edades_agrup
+        Jovenes Adultos Jovenes         Adultos         Mayores    Adulto Mayor 
+           1632            3404            3062            1612             290 </code></pre>
+</div>
+</div>
+</section>
+<section id="cambiar-etiquetas-al-momento-de-llamar-a-cut" class="slide level2 center">
+<h2>Cambiar etiquetas al momento de llamar a <code>cut</code></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>edades_agrup<span class="ot">&lt;-</span><span class="fu">cut</span>(edades, <span class="fu">seq.int</span>(<span class="dv">16</span>, <span class="dv">66</span>, <span class="dv">10</span>),<span class="at">labels=</span><span class="fu">c</span>(<span class="st">'Jovenes'</span> , <span class="st">'Ad Jovenes'</span> , </span>
+<span id="cb83-2"><a href=""></a>                        <span class="st">'Adultos'</span>,<span class="st">'Mayores'</span>,</span>
+<span id="cb83-3"><a href=""></a>                        <span class="st">'Ad Mayor'</span>),<span class="at">include.lowest=</span><span class="cn">TRUE</span>,<span class="at">right =</span> <span class="cn">FALSE</span> )</span>
+<span id="cb83-4"><a href=""></a><span class="fu">head</span>( <span class="fu">data.frame</span>(edades,edades_agrup) ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  edades edades_agrup
+1     23      Jovenes
+2     40      Adultos
+3     50      Mayores
+4     18      Jovenes
+5     42      Adultos
+6     43      Adultos</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="creación-de-factores-con-gl" class="title-slide slide level1 center">
+<h1>Creación de factores con <code>gl</code></h1>
+
+</section>
+<section id="creación-de-un-factor-mediante-la-función-gl" class="slide level2 center">
+<h2>Creación de un factor mediante la función <code>gl</code></h2>
+<ul>
+<li><p>Para datos balanceados, donde hay un número igual de puntos de datos para cada nivel, la función <code>gl</code> se puede usar para generar un factor.</p></li>
+<li><p>En su forma más simple, la función toma un número entero para el número de niveles en el factor resultante y otro número entero para cuántas veces se debe repetir cada nivel.</p></li>
+<li><p>Si quiere establecer los nombres de los niveles, deberá pasar un vector de caracteres al argumento <code>labels</code>.</p></li>
+</ul>
+</section>
+<section id="ejemplo" class="slide level2 center">
+<h2>Ejemplo</h2>
+<p>Creamos un factor con tres niveles y cuatro observaciones en cada nivel</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a><span class="fu">gl</span>(<span class="dv">3</span>, <span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 1 2 2 2 2 3 3 3 3
+Levels: 1 2 3</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-labels" class="slide level2 center">
+<h2>Ejemplo con <code>labels</code></h2>
+<p>Creamos un factor con tres niveles y cuatro observaciones en cada nivel</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href=""></a><span class="fu">gl</span>(<span class="dv">3</span>, <span class="dv">4</span>,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A A A A B B B B C C C C
+Levels: A B C</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-length" class="slide level2 center">
+<h2>Ejemplo con <code>length</code></h2>
+<p>Creamos un factor con tres niveles y cuatro observaciones en cada nivel, con longitud 24.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href=""></a><span class="fu">gl</span>(<span class="dv">3</span>, <span class="dv">4</span>,<span class="at">length=</span><span class="dv">24</span>,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A A A A B B B B C C C C A A A A B B B B C C C C
+Levels: A B C</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="nivel-de-referencia-de-un-factor" class="title-slide slide level1 center">
+<h1>Nivel de referencia de un factor</h1>
+
+</section>
+<section id="el-data-para-los-ejemplos" class="slide level2 center">
+<h2>El data para los ejemplos</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb91-2"><a href=""></a>peso<span class="ot">=</span><span class="fu">rpois</span>(<span class="dv">25</span>,<span class="at">lambda =</span> <span class="dv">40</span>)</span>
+<span id="cb91-3"><a href=""></a>trat<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>),<span class="dv">25</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>) )</span>
+<span id="cb91-4"><a href=""></a>dataT<span class="ot">=</span><span class="fu">data.frame</span>(peso,trat)</span>
+<span id="cb91-5"><a href=""></a><span class="fu">head</span>(dataT)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  peso trat
+1   32    C
+2   41    B
+3   42    A
+4   35    A
+5   43    A
+6   36    A</code></pre>
+</div>
+</div>
+</section>
+<section id="cálculo-de-la-media-por-niveles" class="slide level2 center">
+<h2>Cálculo de la media por niveles</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href=""></a><span class="fu">with</span>(dataT, <span class="fu">tapply</span>(peso, trat, mean) ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       A        B        C 
+37.88889 41.42857 38.00000 </code></pre>
+</div>
+</div>
+<p>Observe que la salida pone de primero la media del nivel <code>A</code>, este se conoce como <strong>nivel de referencia</strong>, el cual es muy importante al momento de hacer cálculos con factores.</p>
+</section>
+<section id="medias-de-peso-para-cada-nivel-de-trat" class="slide level2 center">
+<h2>Medias de <code>peso</code> para cada nivel de <code>trat</code></h2>
+</section>
+<section id="nivel-de-referencia" class="slide level2 center">
+<h2>Nivel de referencia</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href=""></a>mod<span class="ot">=</span><span class="fu">lm</span>(peso<span class="sc">~</span>trat,<span class="at">data=</span>dataT) </span>
+<span id="cb95-2"><a href=""></a><span class="fu">summary</span>(mod)[[<span class="st">"coefficients"</span>]]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error     t value     Pr(&gt;|t|)
+(Intercept) 37.8888889   1.564446 24.21872842 2.357926e-17
+tratB        3.5396825   2.365220  1.49655544 1.487186e-01
+tratC        0.1111111   2.212461  0.05022061 9.603998e-01</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Observe en la salida anterior, no aparece <code>tratA</code> .</p>
+<ul>
+<li>Qué pasó con <code>tratA</code>?</li>
+<li>A qué corresponde el valor 3.5396825?</li>
+</ul></li>
+</ul>
+<p><code>tratA</code> no aparece porque es el nivel de referencia y el valor que aparece debajo de <code>Estimate</code>, como <code>tratB</code>, corresponde a la diferencia de los promedios: <span class="math display">\[\bar{X}_{B}-\bar{X}_{A}\]</span> (B-A)</p>
+</section>
+<section id="verificación" class="slide level2 center">
+<h2>Verificación</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href=""></a>medias<span class="ot">=</span><span class="fu">with</span>(dataT, <span class="fu">tapply</span>(peso, trat, mean) ) </span>
+<span id="cb97-2"><a href=""></a>medias[<span class="st">"B"</span>]<span class="sc">-</span>medias[<span class="st">"A"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       B 
+3.539683 </code></pre>
+</div>
+</div>
+</section>
+<section id="cambio-del-nivel-de-referencia" class="slide level2 center">
+<h2>Cambio del nivel de referencia</h2>
+<p>Cambiemos el nivel de referencia al nivel <code>C</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href=""></a>dataT<span class="sc">$</span>trat<span class="ot">=</span><span class="fu">relevel</span>(dataT<span class="sc">$</span>trat,<span class="at">ref=</span><span class="st">'C'</span>)</span>
+<span id="cb99-2"><a href=""></a><span class="fu">with</span>( dataT, <span class="fu">tapply</span>(peso,trat, mean) ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       C        A        B 
+38.00000 37.88889 41.42857 </code></pre>
+</div>
+</div>
+<p>Observe que ahora ‘C’ aparece de primero</p>
+</section>
+<section id="section-3" class="slide level2 center">
+<h2></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href=""></a>mod<span class="ot">=</span><span class="fu">lm</span>(peso<span class="sc">~</span>trat,<span class="at">data=</span>dataT) </span>
+<span id="cb101-2"><a href=""></a><span class="fu">summary</span>(mod)[[<span class="st">"coefficients"</span>]]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error     t value     Pr(&gt;|t|)
+(Intercept) 38.0000000   1.564446 24.28975109 2.215741e-17
+tratA       -0.1111111   2.212461 -0.05022061 9.603998e-01
+tratB        3.4285714   2.365220  1.44957836 1.612828e-01</code></pre>
+</div>
+</div>
+<p>Ahora aparece <code>tratA</code> y <code>tratC</code> no aparece porque es el nivel de referencia, note también que se tiene -0.1111111 que corresponde a <span class="math display">\[\bar{X}_{A}-\bar{X}_{C}\]</span></p>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Factores_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Factores_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Factores_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Factores_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copiado");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copiado");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,0 +1,125 @@
+---
+title: "Quarto: El Futuro de tus Informes"
+subtitle: "Estadística - Segundo Semestre"
+author: "M. A. Morales R."
+institute: "Universidad de Córdoba, Colombia"
+date: today
+date-format: "DD/MM/YYYY" 
+format: 
+  revealjs:
+    theme: sky
+    transition: slide
+    logo: logo_unicordoba.png # Si tiene el logo, colóquelo en la carpeta
+    footer: "Introducción a Quarto - 2026"
+    scrollable: true 
+  beamer:
+    theme: Madrid
+    colortheme: orchid
+    navigation: horizontal
+    header-includes: |
+      \setbeamercolor{palette primary}{bg=blue!40!black,fg=white}
+      \setbeamercolor{palette secondary}{bg=orange!80!black,fg=white}
+      \setbeamercolor{palette tertiary}{bg=blue!40!black,fg=white}
+      \setbeamercolor{titlelike}{parent=palette primary}
+      \setbeamercolor{structure}{fg=blue!40!black}
+      \setbeamercolor{item}{fg=orange!80!black}
+---
+
+## ¿Qué es Quarto?
+
+Es el sistema de publicación científica de última generación. Permite combinar:
+
+-   **Texto narrativo** (Markdown).
+-   **Código de programación** (R o Python).
+-   **Resultados matemáticos** (LaTeX).
+
+Todo en un solo documento **reproducible**.
+
+## ¿Por qué Quarto?
+
+Es la herramienta que separa a un estudiante promedio de un **científico de datos**.
+
+-   **Rigor:** Tus cálculos y texto viven juntos.
+-   **Estética:** PDF profesional sin esfuerzo.
+-   **Reproducibilidad:** Cambia un dato y el informe se actualiza solo.
+
+## Los 3 Pilares del Éxito
+
+:::::: columns
+::: {.column width="30%"}
+### Markdown
+
+Escritura simple y clara.
+:::
+
+::: {.column width="30%"}
+### Código (R o Python)
+
+Cálculos que no mienten.
+:::
+
+::: {.column width="30%"}
+### LaTeX
+
+Ecuaciones de nivel internacional.
+:::
+::::::
+
+## Adiós al "Copia y Pega" 
+
+::: callout-important
+El 90\% de los errores en informes universitarios se deben a transcripciones manuales de Excel a Word.
+:::
+
+
+Con Quarto, ese riesgo es **cero**.
+
+## La Elegancia de Gauss
+
+En sus informes, las fórmulas se verán así:
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
+
+Y la varianza:
+
+$$s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}$$
+
+## Visualización Impecable
+
+Los gráficos de `ggplot2` se integran con calidad vectorial.
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) +  geom_point(color="blue")
+
+```
+
+## 
+
+```{r echo=FALSE,eval=TRUE,out.width="100%       ",out.height="80%"}
+library(tidyverse)
+ggplot(mpg, aes(x = displ, y = hwy)) +
+geom_point() +
+geom_point(
+data = mpg |> filter(class == "2seater"),
+color = "red"
+) +
+geom_point(
+data = mpg |> filter(class == "2seater"),
+shape = "circle open", size = 5, color = "red"
+)
+
+```
+
+## Próximo Paso: ¡Tu primer informe!
+
+1.  Abre RStudio.
+2.  Crea un nuevo archivo `.qmd`.
+3.  Escribe tus hallazgos.
+4.  Presiona **Render**.
+
+\centering
+
+\Large \textbf{¡Bienvenidos a la excelencia estadística!}

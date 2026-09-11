@@ -1,0 +1,90 @@
+---
+title: "Quarto: Tu Superpoder para Informes Estadísticos"
+subtitle: "Segundo Semestre - Estadística"
+author: "Mario Alfonso Morales Rivera"
+institute: "Universidad de Córdoba, Colombia"
+format: 
+  revealjs:
+    theme: sky
+    transition: slide
+    logo: logo_unicordoba.png # Si tiene el logo, colóquelo en la carpeta
+    footer: "Introducción a Quarto - 2026"
+    scrollable: true
+---
+
+## ¿Qué es Quarto?
+
+Es el sistema de publicación científica de última generación. Permite combinar:
+
+* **Texto narrativo** (Markdown).
+* **Código de programación** (R o Python).
+* **Resultados matemáticos** (LaTeX).
+
+Todo en un solo documento **reproducible**.
+
+## Los Tres Pilares del Informe
+
+::: {.columns}
+
+::: {.column width="33%"}
+### [Texto]{style="color: #d62828;"}
+Escribe tus análisis de forma natural, sin las distracciones de Word.
+:::
+
+::: {.column width="33%"}
+### [Código]{style="color: #f77f00;"}
+Bloques que ejecutan cálculos y generan gráficos en tiempo real.
+:::
+
+::: {.column width="33%"}
+### [Ciencia]{style="color: #003049;"}
+Ecuaciones perfectas con sintaxis LaTeX.
+:::
+
+:::
+
+## El Flujo de Trabajo
+
+1.  **Escribes:** Creas tu archivo `.qmd`.
+2.  **Renderizas:** Presionas el botón **Render** (el martillo azul ).
+3.  **Publicas:** Obtienes un PDF, HTML o Word profesional.
+
+> **Regla de Oro:** Lo que ves en el código es lo que obtienes en el informe.
+
+## Markdown: El Lenguaje Simple
+
+Es texto plano que Quarto transforma en diseño profesional:
+
+* `# Título` se convierte en un encabezado principal.
+* `**Negrita**` resalta conceptos clave.
+* `*Cursiva*` para énfasis.
+* `- Listas` para organizar ideas.
+
+## Adiós al "Copia y Pega"
+
+En estadística, los datos cambian. Con Quarto:
+
+* Si actualizas tu base de datos, el informe **se actualiza solo**.
+* Los gráficos de `ggplot2` se insertan automáticamente.
+* No hay riesgo de transcribir mal un p-valor o una media.
+
+## El Idioma de Gauss (LaTeX)
+
+Para sus fórmulas, usen la sintaxis universal:
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+
+Se escribe así de fácil: 
+`$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$`
+
+## Ejemplo de Código Vivo
+
+Aquí es donde ocurre la magia:
+
+```{r}
+#| echo: true
+#| fig-cap: "Relación IMC vs Masa Grasa"
+#| output-location: fragment
+
+library(ggplot2)
+# ggplot(df, aes(x = imc, y = masa_grasa)) + geom_point()
