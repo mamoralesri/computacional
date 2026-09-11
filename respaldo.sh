@@ -3,16 +3,22 @@
 
 # ============================
 # Script: respaldo_pro.sh
-# Objetivo: Sincronizar y respaldar cambios (Mac <-> Ubuntu)
+# Objetivo: Sincronizar y respaldar cambios de manera segura
 # ============================
 
 echo "=== Iniciando sincronización para: $(basename "$PWD") ==="
 echo "Fecha: $(date)"
 
 if [[ -d ".git" ]]; then
-    # 1. Traer cambios de la nube por si trabajó en Ubuntu
+    # 1. Traer cambios de la nube
     echo "→ Sincronizando con la nube (Pull)..."
-    git pull origin main --no-rebase
+    if ! git pull origin main --no-rebase; then
+        echo "   ❌ ERROR FATAL: Conflicto o problema al descargar (Pull)."
+        echo "   El script se ha detenido para proteger sus archivos."
+        echo "   Solucione el conflicto manualmente antes de continuar."
+        echo "=== Fin del proceso con errores ==="
+        exit 1
+    fi
 
     # 2. Preparar cambios locales
     echo "→ Verificando cambios locales..."
@@ -26,7 +32,12 @@ if [[ -d ".git" ]]; then
         git commit -m "Respaldo automático: $(date +"%Y-%m-%d %H:%M")"
         
         echo "→ Subiendo a GitHub..."
-        git push origin main
+        if ! git push origin main; then
+            echo "   ❌ ERROR: No se pudo subir a GitHub (Push)."
+            echo "   Revise su conexión a internet o los permisos de la cuenta."
+            echo "=== Fin del proceso con errores ==="
+            exit 1
+        fi
         echo "   ✔ ¡Misión cumplida! Todo está sincronizado."
     fi
 else
