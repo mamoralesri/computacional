@@ -1,6 +1,6 @@
 ---
-title: "Estadística computacional"
-subtitle: "Factores"
+title: "Factores"
+subtitle:  "Estadística computacional"
 author: 
   - name: Mario Morales
     orcid: 0000-0001-8814-0179
@@ -10,23 +10,105 @@ author:
       - name: Universidad de Córdoba, Montería
 format: 
   revealjs:
-    theme: "moon"
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 3
+    embed-resources: true
+    toc-depth: 2 
     highlight: "tango"
     center: true
-    #transition: fade
+    transition: fade
     lang: es
     code-fold: true
-    slide-level: 2
+    #slide-level: 3
     scrollable: true
   beamer:
-    theme: "CambridgeUS"
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
     slide-level: 2
-    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
-    fonttheme: "professionalfonts"
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
 toc: true
-toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
-toc-title: "Contenido"
-editor: source
+editor: source 
 ---
 
 ```{r echo=FALSE}
@@ -169,7 +251,7 @@ sexo2=factor(sexo2)
 summary(sexo2)
 ```
 
--   Queremos que los niveles 'F' y 'f' se recodifiquen como `femenino`; 'M','m' como masculino y 'S' como dato faltante.
+-   Queremos que los niveles 'F' y 'f' se recodifiquen como `femenino`; 'M' y 'm' como masculino y 'S' como dato faltante.
 
 -   Eso lo podemos hacer mediante la función `recode`, de la librería `car`.
 
@@ -187,8 +269,13 @@ summary(sexo2)
 ## Otro ejemplo de recodificación 
 
 ```{r}
+#| echo: true
+
+
 set.seed(1234)
+# 500 números entre 1 y 10 tomados en forma aleatoria 
 satis=sample(1:10,size = 500,replace = TRUE)
+# se convierte en factor
 satis=factor(satis)
 table(satis)
 ```
@@ -300,8 +387,18 @@ seq.int(16, 66, 10)
 edades_agrup<-cut(edades, seq.int(16, 66, 10))
 head(edades)
 head(edades_agrup)
+```
+
+## 
+
+
+```{r echo=TRUE,eval=TRUE}
+
+head(data.frame(edades,edades_agrup))
 class(edades_agrup)
 ```
+
+
 
 ## Categorizando variables continuas
 
@@ -403,6 +500,156 @@ Creamos un factor con tres niveles y cuatro observaciones en cada nivel, con lon
 gl(3, 4,length=24,labels = c("A","B","C")) 
 ```
 
+
+
+
+# El orden y nivel de referencia de un factor 
+
+## El problema del orden alfabético
+
+Por defecto, R ordena los niveles de un factor **alfabéticamente**. Esto puede ser un problema cuando nuestras categorías tienen un orden lógico o cuando queremos que una categoría específica sea nuestra base (nivel de referencia).
+
+Veamos un ejemplo con las tallas de unas camisetas:
+
+```{r echo=TRUE,eval=TRUE}
+tallas <- c("Pequeño", "Grande", "Mediano", "Pequeño", "Mediano", "Grande")
+tallas_factor <- factor(tallas)
+```
+
+## El impacto visual del orden
+
+
+```{r}
+#| echo: true
+
+levels(tallas_factor)
+```
+
+R ordenó las categorías como: Grande, Mediano, Pequeño (G, M, P).
+
+Si graficamos esto en una tabla o un gráfico de barras, el orden no tendrá sentido lógico:
+
+## 
+
+```{r}
+#| echo: true
+#| fig-height: 4
+barplot(table(tallas_factor), col="steelblue", main="Tallas (Orden Alfabético)")
+```
+
+
+## Nivel de `referencia` 
+
+Aquí, "Grande" es el nivel de `referencia` (el que aparece de primero a la izquierda) simplemente porque empieza con la letra `G`. 
+
+Si queremos que R tome "Pequeño" como el nivel de referencia (el primero), usamos la función `relevel`: 
+
+
+## Cambio de nivel de referencia 
+
+```{r}
+#| echo: true
+
+
+tallas_factor <- relevel(tallas_factor, ref = "Pequeño")
+levels(tallas_factor)
+```
+
+## Barplot 
+
+```{r}
+#| echo: true
+#| fig-height: 4
+barplot(table(tallas_factor), col="steelblue", main="Tallas")
+```
+
+## Ordenando todos los niveles explicitamente
+
+Si queremos controlar el orden absoluto de todos los niveles (para que sea Pequeño, luego Mediano, luego Grande), lo definimos desde la creación del factor usando el argumento `levels`: 
+
+```{r}
+#| echo: true
+
+
+tallas_factor <- factor(tallas, levels = c("Pequeño", "Mediano", "Grande"))
+levels(tallas_factor)
+```
+
+## Barplot 
+
+```{r}
+#| fig-height: 3.5
+barplot(table(tallas_factor), col="seagreen", main="Tallas (Orden Lógico)")
+```
+ 
+# Ejemplo Integrador
+
+
+## Caso de Estudio: Encuesta de Salud
+
+Supongamos que recolectamos datos de 20 pacientes en una clínica. Registramos su edad y su nivel de actividad física (registrado originalmente con números: 1=Sedentario, 2=Moderado, 3=Activo).
+
+Queremos preparar estos datos para un reporte.
+
+```{r echo=TRUE,eval=TRUE}
+set.seed(42)
+edades_pacientes <- sample(18:75, 20, replace = TRUE)
+actividad_num <- sample(1:3, 20, replace = TRUE)
+
+datos_clinica <- data.frame(Edad = edades_pacientes, Actividad = actividad_num)
+head(datos_clinica, 4)
+ 
+```
+
+
+## Paso 1: Convertir y recodificar la actividad
+La columna Actividad es un número, pero representa categorías. Vamos a convertirla a factor y asignarle sus etiquetas reales, asegurando el orden lógico.
+
+```{r}
+#| echo: true
+
+
+datos_clinica$Actividad <- factor(datos_clinica$Actividad, 
+  levels = c(1, 2, 3), 
+  labels = c("Sedentario", "Moderado", "Activo"))
+
+table(datos_clinica$Actividad)
+```
+
+## Paso 2: Categorizar la variable continua (Edad)
+El director de la clínica nos pide agrupar a los pacientes por rango de edad: "Joven" (18-35), "Adulto" (36-55) y "Mayor" (56-80). Usaremos `cut`. 
+
+```{r}
+#| echo: true
+
+datos_clinica$Grupo_Edad <- cut(datos_clinica$Edad, 
+      breaks = c(18, 35, 55, 80), 
+      labels = c("Joven", "Adulto", "Mayor"),
+      include.lowest = TRUE) 
+head(datos_clinica, 5)
+```
+
+
+## Paso 3: Visualización final
+Ahora que nuestros factores están limpios y ordenados, podemos ver fácilmente cómo se distribuye la actividad física según los grupos de edad.
+
+```{r}
+#| fig-height: 4.5
+
+# Primero creamos la tabla cruzada de frecuencias
+tabla_actividad <- table(datos_clinica$Actividad, datos_clinica$Grupo_Edad)
+
+# Gráfico de barras agrupadas (lado a lado)
+barplot(tabla_actividad, 
+        col = c("tomato", "gold", "palegreen"),
+        main = "Nivel de Actividad Física por Grupo de Edad",
+        xlab = "Grupo de Edad", 
+        ylab = "Número de Pacientes",
+        beside = TRUE, # Cambie a FALSE si prefiere barras apiladas
+        legend.text = TRUE, 
+        args.legend = list(x = "topright", bty = "n"))
+
+```
 
 
 

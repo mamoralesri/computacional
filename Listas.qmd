@@ -9,22 +9,105 @@ author:
       - name: Universidad de Córdoba, Montería
 format: 
   revealjs:
-    theme: "moon"
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
     highlight: "tango"
     center: true
-    #transition: fade
+    transition: fade
     lang: es
     code-fold: true
-    slide-level: 2
+    #slide-level: 3
     scrollable: true
   beamer:
-    theme: "CambridgeUS"
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
     slide-level: 2
-    keep-tex: false # Cambiado a false para evitar basura de archivos temporales
-    fonttheme: "professionalfonts"
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
 toc: true
-toc-depth: 1 # <--- ¡CLAVE! Solo nivel 1 para que quepa en la pantalla
-toc-title: "Contenido"
+editor: source  
 ---
 
 
@@ -38,7 +121,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Estudiaremos como crear listas con la función `list`, como acceder a los elementos de una lista veremos un ejemplo de aplicación. 
 
-## Definicón 
+## Definición 
 
 Una lista es, en términos generales, es un vector donde cada elemento puede ser de un tipo diferente.
 
@@ -104,6 +187,14 @@ print(li)
 #| eval: false 
 df=data.frame(x=rbinom(6,10,0.3),g=c(1,2))
 l[['data']]=df
+```
+
+* Equivalente a
+
+```{r}
+#| eval: false 
+df=data.frame(x=rbinom(6,10,0.3),g=c(1,2))
+l$data=df 
 ```
 
 
@@ -221,6 +312,8 @@ Si indexamos la lista con un vector lógico, obtenemos aquellos elementos de la 
 # recuperamos el elemento 1 y 3 
 l[c(TRUE,FALSE,TRUE,FALSE)]
 ```
+
+# Ejemplo de Aplicación
 
 ## Aplicación 
 
@@ -360,4 +453,132 @@ Nota: La varianza con datos agrupados se obtiene con la siguiente formula
 $$S^2_a=\frac{\sum(M_i-\bar X_a)^2\times f_i }{n-1}=\frac{\sum M^2_if_i-n\bar X_a^2}{n-1}$$  
 
 
+# Listas anidadas 
+
+## Listas Anidadas 
+
+* Dado que una lista puede contener **cualquier** tipo de objeto en R, ¡también puede albergar otras listas en su interior! 
+
+* A esto se le conoce como una lista anidada.
+
+* Esta característica es muy poderosa porque nos permite crear estructuras jerárquicas complejas.
+
+## Ejemplo: lista anidada 
+
+```{r}
+#| echo: true
+
+# Creamos una lista que contiene otra lista internamente
+curso <- list(
+  asignatura = "Estadística Computacional",
+  semestre = "2026-2",
+  notas = list(
+    corte1 = c(4.5, 3.8, 4.0),
+    corte2 = c(3.2, 4.1, 4.8)
+  )
+)
+```
+
+## Indexado en Listas Anidadas  
+
+Para acceder a los elementos profundos ("sub-elementos") de una lista anidada, simplemente debemos encadenar los operadores de extracción, ya sea el signo `$` o los dobles corchetes `[[]]`.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+# Encadenando el signo $ (Muy intuitivo)
+curso$notas$corte1
+```
+
+
+## Con dobles corchetes `[[]]`
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+# Encadenando dobles corchetes (Elemento 3, sub-elemento 2)
+curso[[3]][[2]]
+```
+
+## Ejercicio 
+
+Calcular la nota promedio del segundo corte
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+# Calculando la media de un sub-elemento
+mean(curso$notas$corte2)
+```
+
+# Iteración en listas 
+
+## Iteración en Listas: Familia `apply`
+
+En R, es muy común querer realizar la **misma operación matemática o estadística** sobre cada uno de los elementos de una lista.
+
+Aunque esto se puede hacer con un bucle `for`, en R la mejor práctica (y la más rápida) es usar la familia de funciones `apply`. Hoy nos enfocaremos en dos de las más importantes para listas:
+
+*   `lapply()`: Devuelve siempre una **l**ista.
+*   `sapply()`: Devuelve un resultado **s**implificado (usualmente un vector).
+
+## La función `lapply()`
+
+La función `lapply()` (List Apply) toma una lista, aplica una función a cada uno de sus elementos y **siempre devuelve otra lista** de la misma longitud.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+# Creamos una lista con tres vectores numéricos
+notas_estudiantes <- list(
+  Juan = c(4.0, 3.5, 4.2),
+  Maria = c(4.8, 5.0, 4.6),
+  Pedro = c(3.1, 2.8, 3.5)
+)
+
+# Calculamos la media de cada estudiante
+medias_lista <- lapply(notas_estudiantes, mean)
+medias_lista
+```
+
+
+## La función `sapply()` 
+
+
+* La función `sapply()`  (Simplified Apply) hace exactamente el mismo cálculo que `lapply()`, pero intenta simplificar el resultado final.
+
+* Si el resultado de la función es un solo número por cada elemento (como la media), `sapply()` lo agrupa todo elegantemente en un vector numérico.
+
+## Uso de `sapply()`  
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+# Mismo cálculo, pero con sapply
+medias_vector <- sapply(notas_estudiantes, mean)
+medias_vector
+``` 
+
+
+## Argumentos adicionales en `apply` 
+
+
+* Tanto `lapply()` como `sapply()`  permiten pasarle argumentos adicionales a la función que estamos aplicando.
+
+* Por ejemplo, si uno de los estudiantes faltó a un examen y tiene un NA:
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+notas_con_na <- list(Juan = c(4.0, 3.5, 4.2), Ana = c(4.5, NA, 4.0))
+
+# Agregamos na.rm = TRUE como tercer argumento
+sapply(notas_con_na, mean, na.rm = TRUE)
+```
 

@@ -1243,16 +1243,13 @@ margin-right: 0; }
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a><span class="fu">head</span>(datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a><span class="fu">head</span>(datos,<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>   x y     z
-1  5 M FALSE
-2  9 M FALSE
-3  9 M FALSE
-4  9 F FALSE
-5 10 M FALSE
-6  9 M  TRUE</code></pre>
+<pre><code>  x y     z
+1 5 M FALSE
+2 9 M FALSE
+3 9 M FALSE</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1486,14 +1483,31 @@ May 10  M FALSE</code></pre>
 </div>
 </div>
 </section>
+<section id="nombres-de-filas-y-columnas-al-tiempo" class="slide level2 center">
+<h2>Nombres de filas y columnas al tiempo</h2>
+<p>La función <code>dimnames()</code> regresa una lista cuya primera componente tiene el vector de nombres de fila y la segunda el vector de nombres de columnas.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="fu">dimnames</span>(datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot;
+
+[[2]]
+[1] &quot;Cx&quot; &quot;Cy&quot; &quot;Cz&quot;</code></pre>
+</div>
+</div>
+</section>
 <section id="cambio-de-nombre" class="slide level2 center">
 <h2>Cambio de nombre</h2>
 <p>Para cambiar los nombres de columnas procedemos de la siguiente forma</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="fu">colnames</span>(datos)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Colx&#39;</span>,<span class="st">&#39;Coly&#39;</span>,<span class="st">&#39;Colz&#39;</span>) </span>
-<span id="cb40-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="fu">colnames</span>(datos)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;Colx&#39;</span>,<span class="st">&#39;Coly&#39;</span>,<span class="st">&#39;Colz&#39;</span>) </span>
+<span id="cb42-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Coly  Colz
@@ -1515,8 +1529,8 @@ Oct    8    M FALSE</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="fu">colnames</span>(datos)[<span class="dv">2</span>]<span class="ot">=</span><span class="st">&#39;Col2&#39;</span> </span>
-<span id="cb42-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a><span class="fu">colnames</span>(datos)[<span class="dv">2</span>]<span class="ot">=</span><span class="st">&#39;Col2&#39;</span> </span>
+<span id="cb44-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz
@@ -1544,8 +1558,8 @@ Oct    8    M FALSE</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a>datos<span class="sc">$</span>Cx2<span class="ot">=</span>datos<span class="sc">$</span>Colx<span class="sc">^</span><span class="dv">2</span> </span>
-<span id="cb44-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a>datos<span class="sc">$</span>Cx2<span class="ot">=</span>datos<span class="sc">$</span>Colx<span class="sc">^</span><span class="dv">2</span> </span>
+<span id="cb46-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz Cx2
@@ -1568,8 +1582,8 @@ Oct    8    M FALSE  64</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a>datos[<span class="st">&quot;Sex&quot;</span>]<span class="ot">=</span><span class="fu">ifelse</span>(datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb46-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a>datos[<span class="st">&quot;Sex&quot;</span>]<span class="ot">=</span><span class="fu">ifelse</span>(datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb48-2"><a href></a>datos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz Cx2 Sex
@@ -1592,8 +1606,8 @@ Oct    8    M FALSE  64   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a>datos<span class="sc">$</span>Cx2<span class="ot">=</span><span class="cn">NULL</span></span>
-<span id="cb48-2"><a href></a>datos </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href></a>datos<span class="sc">$</span>Cx2<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb50-2"><a href></a>datos </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz Sex
@@ -1632,7 +1646,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href></a>datos[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href></a>datos[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)] </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Col2  Colz
@@ -1650,7 +1664,7 @@ Oct    M FALSE</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href></a>datos[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href></a>datos[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Sex
@@ -1668,7 +1682,7 @@ Aug    6   0</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href></a>datos[<span class="fu">c</span>(<span class="st">&#39;Feb&#39;</span>,<span class="st">&#39;Apr&#39;</span>,<span class="st">&#39;Jun&#39;</span>,<span class="st">&#39;Aug&#39;</span>),<span class="sc">-</span><span class="dv">1</span>]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href></a>datos[<span class="fu">c</span>(<span class="st">&#39;Feb&#39;</span>,<span class="st">&#39;Apr&#39;</span>,<span class="st">&#39;Jun&#39;</span>,<span class="st">&#39;Aug&#39;</span>),<span class="sc">-</span><span class="dv">1</span>]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Col2  Colz Sex
@@ -1685,7 +1699,7 @@ Aug    F  TRUE   0</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href></a>datos[<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>), ]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href></a>datos[<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>), ]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz Sex
@@ -1699,7 +1713,7 @@ Sep    9    M  TRUE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href></a>datos[<span class="sc">!</span><span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>), ]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href></a>datos[<span class="sc">!</span><span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>), ]  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Colx Col2  Colz Sex
@@ -1717,8 +1731,8 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href></a>datosM<span class="ot">=</span>datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,] </span>
-<span id="cb60-2"><a href></a><span class="fu">mean</span>(datosM<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href></a>datosM<span class="ot">=</span>datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,] </span>
+<span id="cb62-2"><a href></a><span class="fu">mean</span>(datosM<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.75</code></pre>
@@ -1728,8 +1742,8 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href></a>datosF<span class="ot">=</span>datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;F&quot;</span>,]  </span>
-<span id="cb62-2"><a href></a><span class="fu">mean</span>(datosF<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href></a>datosF<span class="ot">=</span>datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;F&quot;</span>,]  </span>
+<span id="cb64-2"><a href></a><span class="fu">mean</span>(datosF<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.5</code></pre>
@@ -1741,8 +1755,8 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href></a>datosF<span class="ot">=</span>datos[<span class="sc">!</span>datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,]  </span>
-<span id="cb64-2"><a href></a><span class="fu">mean</span>(datosF<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href></a>datosF<span class="ot">=</span>datos[<span class="sc">!</span>datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>,]  </span>
+<span id="cb66-2"><a href></a><span class="fu">mean</span>(datosF<span class="sc">$</span>Colx) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.5</code></pre>
@@ -1755,7 +1769,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href></a><span class="fu">var</span>(datos[datos<span class="sc">$</span>Colz,][[<span class="st">&quot;Colx&quot;</span>]]) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href></a><span class="fu">var</span>(datos[datos<span class="sc">$</span>Colz,][[<span class="st">&quot;Colx&quot;</span>]]) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.25</code></pre>
@@ -1768,7 +1782,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href></a><span class="fu">var</span>(datos[<span class="sc">!</span>datos<span class="sc">$</span>Colz,][[<span class="st">&quot;Colx&quot;</span>]])  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href></a><span class="fu">var</span>(datos[<span class="sc">!</span>datos<span class="sc">$</span>Colz,][[<span class="st">&quot;Colx&quot;</span>]])  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.066667</code></pre>
@@ -1781,7 +1795,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href></a><span class="fu">mean</span>(datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&#39;M&#39;</span> <span class="sc">&amp;</span> <span class="sc">!</span>datos<span class="sc">$</span>Colz, ][[<span class="st">&#39;Colx&#39;</span>]])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href></a><span class="fu">mean</span>(datos[datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&#39;M&#39;</span> <span class="sc">&amp;</span> <span class="sc">!</span>datos<span class="sc">$</span>Colz, ][[<span class="st">&#39;Colx&#39;</span>]])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.2</code></pre>
@@ -1794,7 +1808,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href></a><span class="fu">nrow</span>(datos[datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx) <span class="sc">&amp;</span> datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span> ,]  ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href></a><span class="fu">nrow</span>(datos[datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx) <span class="sc">&amp;</span> datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span> ,]  ) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
@@ -1806,7 +1820,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href></a><span class="fu">sum</span>(datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx) <span class="sc">&amp;</span> datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href></a><span class="fu">sum</span>(datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx) <span class="sc">&amp;</span> datos<span class="sc">$</span>Col2<span class="sc">==</span><span class="st">&quot;M&quot;</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
@@ -1818,7 +1832,7 @@ Oct    8    M FALSE   1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href></a><span class="fu">sum</span>(datos[datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx),][[<span class="st">&#39;Col2&#39;</span>]]<span class="sc">==</span><span class="st">&quot;M&quot;</span>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href></a><span class="fu">sum</span>(datos[datos<span class="sc">$</span>Colx<span class="sc">&gt;</span><span class="fu">mean</span>(datos<span class="sc">$</span>Colx),][[<span class="st">&#39;Col2&#39;</span>]]<span class="sc">==</span><span class="st">&quot;M&quot;</span>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>

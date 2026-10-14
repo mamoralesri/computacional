@@ -193,7 +193,7 @@ Para explorar las primeras o últimas filas de un data  frame grande sin saturar
 ```{r}
 #| echo: true
 
-head(datos)
+head(datos,3)
 
 ```
 
@@ -287,6 +287,9 @@ rownames(datos)
 colnames(datos) 
 ```
 
+
+
+
 ## Recuperar nombres de columnas 
 
 Para recuperar los dombres de las columnas usamos `colnames`, de la siguiente forma
@@ -294,6 +297,18 @@ Para recuperar los dombres de las columnas usamos `colnames`, de la siguiente fo
 ```{r}
 # columnas 
 colnames(datos) 
+```
+
+
+## Nombres de filas y columnas al tiempo
+
+La función `dimnames()` regresa una lista cuya primera componente tiene el vector de nombres de fila y la segunda el vector de nombres de columnas.  
+
+```{r}
+#| echo: true
+
+dimnames(datos)
+
 ```
 
 
