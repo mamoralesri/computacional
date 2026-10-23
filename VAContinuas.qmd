@@ -1,0 +1,614 @@
+---
+title: "Cálculos con variables continuas"
+subtitle: "Densidades, distribución, quantiles y generación de numeros aleatorios" 
+date: today
+date-format: "DD/MM/YYYY"
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
+    highlight: "tango"
+    center: true
+    transition: fade
+    lang: es
+    code-fold: true
+    scrollable: true
+  beamer:
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
+    slide-level: 2
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
+toc: true
+editor: source  
+---
+
+```{r}
+#| echo: false
+sombreado2<-function(mu=0,sigma=1,minsomb=-Inf,maxsomb=NULL,gris=0.45,two.sided=FALSE){
+  if(is.numeric(sigma)){
+    if(sigma<0){stop("la desviación estándar debe ser un número positivo")}
+  }else{stop("La desviación debe ser numérica")}
+  if(is.null(maxsomb)){maxsomb<- mu-sigma}
+  
+  if(minsomb>=maxsomb){stop("El límite inferior de la sombra debe ser menor que el superior")}
+  linf<-mu-3.5*sigma
+  lsup<-mu+3.5*sigma
+  x<-pretty(c(linf,lsup),1000)
+  y<-dnorm(x,mean=mu,sd=sigma)
+  plot(x,y,type="l",xlim=range(x),  ylim=range(y),  axes=F,xlab="",ylab="",lwd=3,lty=1 )
+  if(two.sided){
+  polygon(c(-Inf,x[x>=-Inf & x <=Inf],Inf),c( 0, dnorm(x[x>=-Inf & x <=Inf],mu,sigma),0 ), col=gray(0.3) )
+  polygon(c(minsomb,x[x>=minsomb & x <=maxsomb],maxsomb),c( 0, dnorm(x[x>=minsomb & x <=maxsomb],mu,sigma),0 ), col=gray(1) )
+  }else{polygon(c(minsomb,x[x>=minsomb & x <=maxsomb],maxsomb),c( 0, dnorm(x[x>=minsomb & x <=maxsomb],mu,sigma),0 ), col=gray(gris) )}
+  
+  abline(h=0)
+}
+```
+
+
+# Introducción
+
+## Introducción
+
+Se presenta el código `R` para evaluar la función de densidad, de distribución, los cuantiles y la generación de números aleatorios usando los modelos continuos de uso común: normal, uniforme, exponencial.
+
+Al finalizar la clase el estudiante estará en capacidad de usar `R` para evaluar la función de densidad, llevar a cabo el cálculo de probabilidades acumuladas, usando la función de distribución, cuantiles y generar datos pseudo aleatorios usando estos modelos.
+
+# Funciones para modelos continuos con R
+
+## Funciones `d`: *density*
+
+- Función `d`: *density* permite la evaluación de la función de densidad. Por ejemplo, en el caso de la distribución normal, `dnorm(x,mean=m,sd=s)` evalúa la función $$f_X(x)=\frac{1}{s \sqrt{2\pi }}e^{-\left( x-m \right )^2/2 s^{2}}$$
+
+## Funciones `p`: *probability*
+
+- función `p`: para evaluar la función de distribución del modelo, es decir $F_X(x)=P(X\le x)=\int_{-\infty}^x f(u)du$, por ejemplo, en el caso normal `pnorm(x,mean=m,sd=s)` evalúa $$ \int_{-\infty}^x\frac{1}{s \sqrt{2\pi }}e^{-\left( u-m \right )^2/2 s^{2}}du $$
+
+## Funciones `q`: *quantile*
+
+- Función `q`: *quantile* para el cálculo de percentiles de la distribución, este método implementa la función inversa de la `p`, dada una probabilidad $p$, la función `q` regresa el valor de $x$ tal que $F_x(x)=P(X\leq x )=p$ o lo que es lo mismo, regresa $x$ tal que $$x=F^{-1}_X(p)$$ .
+
+## Funciones `r`: *random*
+
+- Función `r`: *random* Para generar (simular) datos pseudo aleatorios que siguen la distribución del modelo.
+
+# Modelo normal
+
+## Distribución normal
+
+La distribución normal es quizá la distribución continua de mayor importancia en estadística, no solo por sus aplicaciones en diferentes campos de la ciencia, sino por el papel que ha desempeñado en el desarrollo teórico de la disciplina.
+
+## Densidad normal
+
+La variable aleatoria continua $X$ se dice que tiene distribución normal de parámetros $\mu$ y $\sigma^2$ si su función de densidad está dada por \begin{equation} 
+f_X(x)=\frac{1}{\sigma \sqrt{2\pi }}e^{-\left( x-\mu\right )^2/2 \sigma^{2}} \text{, para } -\infty <x<\infty 
+\end{equation} donde $\mu$ y $\sigma$ son números reales tales que $-\infty<\mu<\infty$ y $0<\sigma<\infty$, $e$ es el numero de Euler, la base de los logaritmos naturales y $\pi$ es la conocida constante, $\pi=3.141593\ldots$.
+
+## Distribución normal, distintas $\sigma$
+
+```{r,echo=FALSE,eval=TRUE}
+z = pretty(c(qnorm(0.001,10,3),qnorm(0.999,10,3)),300)
+y1=dnorm(z, 10, 1)
+y2=dnorm(z, 10,2)
+y3=dnorm(z, 10,3) 
+plot(z,y1,lwd=2,col='black',type='l') 
+lines(z,y2,lwd=2,col='red') 
+lines(z,y3,lwd=2,col='blue')
+legend('topleft',legend = expression(sigma == 1, sigma == 2, sigma == 3),col=c('black','red','blue'),lty = 1,cex=0.75,bty='o', bg = "gray90")
+```
+
+## Distribucion normal, distintas $\sigma$
+
+
+```{r,echo=TRUE,eval=FALSE}
+z = pretty(c(qnorm(0.001,10,3),qnorm(0.999,10,3)),300)
+y1=dnorm(z, 10, 1)
+y2=dnorm(z, 10,2)
+y3=dnorm(z, 10,3) 
+plot(z,y1,lwd=2,col='black',type='l') 
+lines(z,y2,lwd=2,col='red') 
+lines(z,y3,lwd=2,col='blue')
+legend('topleft',legend = expression(sigma == 1, sigma == 2, sigma == 3),
+       col=c('black','red','blue'),lty = 1,bg = "gray90")
+```
+
+## Distribucion normal, distintas $\mu$
+
+```{r,echo=TRUE,eval=TRUE}
+z = pretty(c(qnorm(0.001,8,2),qnorm(0.999,12,3)),300)
+y1=dnorm(z, 8, 2)
+y2=dnorm(z, 10,2)
+y3=dnorm(z, 12,2) 
+plot(z,y1,lwd=2,col='black',type='l') 
+lines(z,y2,lwd=2,col='red') 
+lines(z,y3,lwd=2,col='blue')
+legend('topleft',legend =expression(mu==8,mu==10,mu==12),
+       col=c('black','red','blue'),lty = 1)
+```
+
+## Uso de `curve()` 
+
+Aunque podemos crear un vector `x` y evaluar la función `d` para graficar la densidad con `plot(x, y)`, R ofrece la función `curve()`, diseñada específicamente para dibujar funciones matemáticas de forma rápida.
+
+```{r}
+#| echo: true
+
+# Graficamos la densidad de una normal estándar directamente
+curve(dnorm(x, mean = 10, sd = 2), 
+      from = 4, to = 16, 
+      col = "purple", lwd = 3,
+      ylab = "Densidad", xlab = "x",
+      main = "Uso de la función curve()")
+```
+
+## Varias curvas  
+
+```{r}
+#| echo: true
+
+# 1. Dibujamos la primera curva (establece el lienzo y los ejes)
+# Usamos 'from' y 'to' para definir el rango del eje x (basado en la campana más ancha)
+curve(dnorm(x, mean = 10, sd = 1), 
+      from = 1, to = 19, 
+      lwd = 2, col = 'black', 
+      ylab = "Densidad", xlab = "z")
+
+# 2. Superponemos la segunda curva usando add = TRUE
+curve(dnorm(x, mean = 10, sd = 2), 
+      lwd = 2, col = 'red', 
+      add = TRUE)
+
+# 3. Superponemos la tercera curva usando add = TRUE
+curve(dnorm(x, mean = 10, sd = 3), 
+      lwd = 2, col = 'blue', 
+      add = TRUE)
+
+# 4. Agregamos la leyenda exactamente igual que antes
+legend('topleft', 
+       legend = expression(sigma == 1, sigma == 2, sigma == 3),
+       col = c('black', 'red', 'blue'), 
+       lty = 1, bg = "gray90")
+```
+
+
+
+## Función de distribución de una normal 
+
+
+Si $X$ tiene distribución normal con
+parámetros  $\mu$ y  $\sigma$, lo cual simbolizaremos como $X\sim N(\mu,\sigma^2)$, su función de distribución es
+$$ 
+F_{X}(x)=\int_{-\infty}^{x} \frac{1}{\sigma
+\sqrt{2\pi
+}}e^{-\left( t-\mu \right) ^{2}/2\sigma ^{2}}dt  
+$$
+
+## Observación 
+
+
+
+A diferencia de la distribución uniforme o la exponencial, cuya función de distribución se obtiene con una  fórmula, esta integral  no tiene una solución cerrada,  es decir, dados los valores de $x$, $\mu$ y $\sigma$, no hay una fórmula que podamos evaluar. 
+
+## Distribución  normal ejemplo  (I)
+
+Debido a muchas fuentes de error independientes, la longitud del diámetro de una pieza de máquina fabricada se distribuye normalmente con media  $10cm$ y desviación estándar $0.35cm$. 
+
+
+
+
+* Si las especificaciones requieren que la longitud esté entre $9.5cm$ y $10.5cm$, ¿qué proporción de las piezas fabricadas serán rechazadas en promedio?
+
+* Si el encargado de control de calidad puede ajustar las maquinas de tal forma que se disminuya la desviación estándar del proceso ¿en que valor deberá ajustar $\sigma$ para que el porcentaje de piezas rechazadas sea de solo el 5%?  
+
+## Solución 
+
+Sea $X$ la longitud del diámetro, de acuerdo con los datos del problema $X\sim N(10,0.35^2)$. Se rechazan las piezas cuya medida del diámetro queda por fuera del intervalo $(9.5,10.5)$ 
+
+
+
+
+
+
+## Solución (gráfico)
+
+```{r}
+#| echo: false
+#| fig-cap: "Área sombreada, probabilidad solicitada"
+
+sombreado2(minsomb=-2,maxsom=2 ,gris=1,two.sided=TRUE)
+mtext("9.5",side=1,line=0.2,at=-2,cex=0.5,las=3)
+mtext("10.5",side=1,line=0.2,at=2,cex=0.5,las=3)
+
+```
+
+## Solución  (cont) 
+
+El ejercicio pide calcular $P(X < 9.5)+P(X > 10.5)$, que corresponde al área sombreada en la figura, lo cual es equivalente a calcular $1-P(9.5\leq X \leq 10.5)$, es decir, uno menos el área en blanco de la figura. 
+$$\begin{aligned}
+1-P(9.5\leq X \leq 10.5)&=1-( P(X\leq 10.5) -P(X\leq 9.5) ) \\
+&=1- (F_X(10.5)-F_X(9.5) )\\
+&=1-(0.92344-0.07656) =1-0.84688\\
+&=0.15313 
+\end{aligned} $$
+
+## Cálculos con R
+
+A continuación los cálculos usando `R`
+
+```{r,echo=TRUE} 
+1-(pnorm(10.5,mean=10,sd=0.35)-pnorm(9.5,mean=10,sd=0.35))
+```
+
+
+## Otra forma sumando las dos colas  
+
+```{r,echo=TRUE} 
+pnorm(9.5,mean=10,sd=0.35)+pnorm(10.5,mean=10,
+sd=0.35,lower.tail = FALSE)
+```
+
+## Solución parte b)
+
+- Necesitamos que el área en las dos colas sea 0.05.
+- Equivalente a que el área en  la cola sopuerior sea 0.025
+- El valor que en una normal estándar deja 0.025 en la cola superior es 
+
+```{r}
+#| echo: true
+
+qnorm(0.025,lower.tail = FALSE)
+
+```
+
+- Por tanto estandarizando  
+$$\frac{x-\mu}{\sigma}=\frac{10.5-10}{\sigma}=1.959964$$ 
+- De donde $$\sigma=\frac{10.5-10}{1.959964}=0.2551067$$ 
+
+## Otra forma (gráfica)  
+
+Función que toma $\sigma$ y regresa el área de las dos colas. 
+
+```{r}
+#| echo: true
+#| 
+area=function(s){
+ pnorm(9.5,mean=10,sd=s)+pnorm(10.5,mean=10,
+sd=s,lower.tail = FALSE)
+}
+```
+
+```{r}
+#| echo: true
+
+# valores de sigma 
+x = seq(0.15, 0.35, length.out = 500) 
+# valores del área para esos sigmas  
+y = area(x)
+```
+
+## Gráfico 
+
+```{r}
+#| echo: true
+
+
+# Gráfico base
+plot(x, y, type="l", col="blue", lwd=2,
+     xlab=expression(sigma), 
+     ylab="Proporción de piezas rechazadas",
+     main="Búsqueda gráfica de la desviación estándar")
+```
+
+
+
+
+
+## Gráfico 
+
+
+
+```{r}
+#| echo: false 
+
+# Interpolación inversa: buscar el valor de x (sigma) cuando y es exactamente 0.05
+sigma_buscado = approx(x = y, y = x, xout = 0.05)$y
+
+# Visualización de la intersección en el gráfico
+
+
+# Gráfico base
+plot(x, y, type="l", col="blue", lwd=2,
+     xlab=expression(sigma), 
+     ylab="Proporción de piezas rechazadas",
+     main="Búsqueda gráfica de la desviación estándar")
+
+abline(h = 0.05, col="red", lty=2)                  # Línea horizontal en y = 0.05
+abline(v = sigma_buscado, col="darkgreen", lty=2)   # Línea vertical en el sigma encontrado
+points(sigma_buscado, 0.05, pch=19, col="black")    # Punto de cruce
+
+```
+
+
+## Interpolación inversa 
+
+Buscar el valor de $x$ $(\sigma)$ cuando $y$ es exactamente 0.05 
+
+```{r}
+#| echo: true  
+
+
+sigma_buscado = approx(x = y, y = x, xout = 0.05)$y 
+```
+
+Al invertir temporalmente quién es "x" y quién es "y" dentro de la función, `R` busca en el vector de áreas el valor $0.05$ y devuelve la desviación estándar $\sigma$ correspondiente.
+
+## Ejercicio 
+
+Se regula una máquina despachadora de café para que sirva un promedio de 200 mililitros por vaso. Si la cantidad de bebida se distribuye normalmente con una desviación estándar de 15 mililitros. 
+
+- ¿Qué fracción de los vasos contendrán más de 191 mililitros? 
+
+
+
+
+- ¿Cuál es la probabilidad de que un vaso contenga entre 209 y 224 mililitros? 
+
+
+- ¿Cuántos vasos probablemente se derramarán si se utilizan vasos de 230 mililitros para las siguientes 1.000 bebidas?
+
+
+
+
+- ¿Por debajo de qué valor obtendremos un 25% de las bebidas más pequeñas?
+
+
+## Solución  
+
+
+- ¿Qué fracción de los vasos contendrán más de 191 mililitros? 
+
+```{r}
+#| echo: true
+
+# se pide P(X>191)
+pnorm(191,200,15,lower.tail = FALSE)
+```
+
+
+
+ 
+
+- ¿Cuál es la probabilidad de que un vaso contenga entre 209 y 224 mililitros? 
+
+```{r}
+#| echo: true
+
+# se pide P(209 < X <  224)
+pnorm(224,200,15)-pnorm(209,200,15)
+```
+
+
+
+
+## Solución  (cont)
+
+- ¿Cuántos vasos probablemente se derramarán si se utilizan vasos de 230 mililitros para las siguientes 1.000 bebidas?
+
+```{r}
+#| echo: true
+
+round( pnorm(230,200,15,lower.tail = FALSE)*1000 )  
+```
+
+
+
+
+- ¿Por debajo de qué valor obtendremos un 25% de las bebidas más pequeñas?
+
+```{r}
+#| echo: true
+
+# un caso de cuantiles 
+qnorm(0.25,200,15)
+```
+
+
+# Modelo exponencial 
+
+## Distribución exponencial 
+
+La distribución exponencial es una distribución continua bastante utilizada
+en diversos campos, como en el análisis de confiabilidad en ingeniería, de datos de sobrevivencia en medicina y biología, entre otros. Se dice que una variable aleatoria tiene distribución exponencial con parámetro $\lambda>0$, si su función de densidad es de la forma
+$$
+f_{X}(x)=\left\{
+\begin{array}{ll}
+ \lambda e ^{-\lambda x} & x > 0 \\
+0 &\text{en cualquier otro caso}
+\end{array}
+\right. 
+$$
+
+## Función de distribución exponencial
+
+Si $X$ es una variable aleatoria cuya función de densidad es la anterior, entonces su función de distribución esta dada por  
+$$
+F_{X}(x)=\left\{
+\begin{array}{ll}
+0 & \text{ si } x\leq 0 \\
+1-e^{-\lambda x} & \text{ si } x> 0\\
+\end{array}
+\right.  
+$$
+
+## Distribución exponencial, ejemplo  
+
+La duración (en horas) $T$ de un componente electrónico es una variable
+aleatoria con distribución exponencial de parámetro $\lambda=0.01$
+
+* Calcule la probabilidad de que el componente funcione por mas de 200
+horas.
+*  Simule 300 datos de este modelo, grafique el histograma de los datos junto con la densidad. 
+
+* Grafique la función de distribución 
+
+## Solución 
+
+Se está pidiendo la probabilidad de que la duración, $T$,  del componente sea mayor que 200 horas, es decir 
+$$\begin{aligned}
+P(T>200)&=1-P(T\leq 200
+)\\ 
+&=1-F(200)=1-[1-e^{-0.01\times 200}]\\
+&=e^{-2}=0.13533
+\end{aligned}$$
+
+
+```{r}
+#| echo: true
+
+1-pexp(200,rate=0.01)
+```
+
+
+En el código anterior el argumento `rate` corresponde al parámetro de la distribución, es decir, $\lambda$.    
+
+## Histograma con la densidad 
+
+```{r}
+#| echo: true
+#| 
+datos=rexp(300,rate = 0.01)  # note el uso de 'r'
+x=pretty(c(min(datos),max(datos)),500)
+y=dexp(x,rate = 0.01) # note el uso de 'd' 
+hist(datos,freq = FALSE,main="")
+lines(x,y,col='red',lwd=3)
+```
+
+## Reproducibilidad: La función `set.seed()`
+
+Cuando utilizamos las funciones de la familia `r` (como `rnorm` o `rexp`), `R` genera números pseudoaleatorios. Esto significa que cada vez que ejecutemos el código, obtendremos resultados diferentes.
+
+Para asegurar que nuestros resultados sean **reproducibles** (es decir, que cualquier persona que corra nuestro código obtenga exactamente los mismos números y el mismo gráfico), debemos fijar una "semilla" inicial.
+
+```{r}
+#| echo: true
+
+# Fijamos la semilla
+set.seed(123)
+
+# Generamos los datos
+datos = rexp(300, rate = 0.01)
+head(datos)
+```
+
+
+
+
+
+##  Gráfica de la distribución  
+
+```{r}
+#| echo: true
+
+x=pretty(c(qexp(0.001,0.01),qexp(0.999,0.01)),300) # note el uso de 'q' 
+y=pexp(x,rate = 0.01) # note el uso de 'p'  
+plot(x,y,type='l')
+```
+
+
+## Para consultar 
+
+- Distribución uniforme.
+- Distribución t.
+- Distribución ji-cuadrado.
+- Distribución F. 
+- Distribución Gamma. 

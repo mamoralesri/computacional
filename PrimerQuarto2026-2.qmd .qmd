@@ -1,0 +1,51 @@
+---
+title: "Mi primer informe en Quarto"
+author: "Mario Morales"
+format: pdf 
+---
+
+# Informe computacional
+
+## Introducción
+
+Este es mi primer documento hecho usando **Quarto Markdown**, que es un entorno que permite la creación de documentos con calidad profesional, mezclando texto, código, salidas de código y ecuaciones en un mismo archivo. Las ecuaciones se construyen usando \LaTeX, que es el estándar internacional para escritura de símbolos *matemáticos*. \LaTeX te permite: 
+
+* Escribir todo tipo de símbolos matemáticos
+  * Alfabeto griego: $\alpha,\beta, \ldots,\omega$ 
+  * Integrales: $\int_a^bf(x)dx$ 
+  * Operadores relacionales: $\leq,\geq, \subset, \cup$
+* Enumerar y citar ecuaciones.
+* Centrar y desplegar ecuaciones.
+
+1.  Escribir todo tipo de símbolos matemáticos
+    * Alfabeto griego: $\alpha,\beta, \ldots,\omega$ 
+    * Integrales: $\int_a^bf(x)dx$ 
+    * Operadores relacionales: $\leq,\geq, \subset,\cup$ 
+1.  Enumerar y citar ecuaciones.
+1.  Centrar y desplegar ecuaciones.
+
+
+## Ejecutando código R 
+
+Ahora aprenderemos a insertar y ejecutar código R en un documento de Quarto.
+
+```{r}
+#| echo: true  
+#| results: hide
+#| eval: true   
+
+## Esto es lo que se conoce como un Chunk de código 
+x=rbinom(20,prob = 0.6, size = 10)
+y=sample(c("TRUE","FALSE"),20,replace = TRUE)
+z=sample(c("Hombre","Mujer"),20,replace = TRUE)
+datos=data.frame(x,y,z)
+head(datos) 
+```
+
+En el código anterior se crea un `data.frame` con `r nrow(datos)` filas y `r ncol(datos)` columnas. 
+
+
+
+
+
+

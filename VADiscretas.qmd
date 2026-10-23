@@ -1,0 +1,873 @@
+---
+title: "Cálculos con variables discretas"
+subtitle: "Probabilidades puntuales, acumuladas, quantiles y generación de numeros aleatorios" 
+date: today
+date-format: "DD/MM/YYYY"
+author: 
+  - name: Mario Morales
+    orcid: 0000-0001-8814-0179
+    email: mamorales@correo.unicordoba.edu.co
+    url: https://mariomorales.xyz/
+    affiliations:
+      - name: Universidad de Córdoba, Montería
+format: 
+  revealjs:
+    theme: default 
+    css: estilos2.css
+    include-before-body: logo2.html
+    mainfont: "Arial" 
+    slide-level: 2
+    embed-resources: true
+    toc-depth: 1 
+    highlight: "tango"
+    center: true
+    transition: fade
+    lang: es
+    code-fold: true
+    scrollable: true
+  beamer:
+    aspectratio: 169
+    theme: default
+    navigation: horizontal
+    number-sections: false
+    include-in-header:
+      - text: |
+          \setbeamertemplate{headline}{} % Elimina la cabecera del tema Madrid
+          \setbeamertemplate{section in head/foot}{} % Limpia la numeración de secciones
+          \renewcommand{\contentsname}{Índice}
+          \renewcommand{\refname}{Referencias}
+          \renewcommand{\figurename}{Figura}
+          \renewcommand{\tablename}{Tabla}
+          \logo{%
+            \begin{tabular}{c}
+              \includegraphics[height=1.2cm]{EscudoU.png}
+            \end{tabular}%
+          }
+          % --- CONFIGURACIÓN DE COLORES INSTITUCIONALES ---
+          \definecolor{UnicorGreen}{HTML}{024426}
+          \definecolor{UnicorText}{HTML}{F9F9F9}
+          \definecolor{UnicorWhite}{HTML}{FFFFFF}
+          \definecolor{UnicorGold}{HTML}{D1B061}
+          
+          % Aplicación al fondo y texto general
+          \setbeamercolor{background canvas}{bg=UnicorGreen}
+          \setbeamercolor{normal text}{fg=UnicorText}
+          
+          % Aplicación a títulos y cabeceras
+          %\setbeamercolor{title}{fg=UnicorWhite}
+          \setbeamercolor{frametitle}{fg=UnicorWhite}
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % Aplicación a viñetas y estructura
+          \setbeamercolor{structure}{fg=UnicorWhite}
+          \setbeamercolor{itemize item}{fg=UnicorWhite}
+          \setbeamercolor{itemize subitem}{fg=UnicorWhite}
+          \setbeamercolor{enumerate item}{fg=UnicorWhite}
+          
+          % Forzar a LaTeX a repintar el texto general al iniciar el documento
+          \AtBeginDocument{\usebeamercolor[fg]{normal text}}
+          
+          % Aplicación a hipervínculos
+          \hypersetup{colorlinks=true, urlcolor=UnicorGold, linkcolor=UnicorWhite} 
+          
+          % --- ACTIVAR ESTILO DE BLOQUES Y SOMBRAS (ESTILO MADRID) ---
+          \useinnertheme[shadow=true]{rounded}
+          
+          % --- COLORES DEL RECUADRO DEL TÍTULO PRINCIPAL ---
+          % Fondo dorado con texto verde
+          \setbeamercolor{title}{bg=UnicorGold, fg=UnicorGreen}
+          \setbeamercolor{frametitle}{fg=UnicorWhite} % Mantiene el título de las diapositivas normal
+          \setbeamercolor{framesubtitle}{fg=UnicorWhite}
+          
+          % --- COLORES PARA TEOREMAS, DEFINICIONES Y BLOQUES ---
+          % Título del bloque (Fondo dorado, texto verde)
+          \setbeamercolor{block title}{bg=UnicorGold, fg=UnicorGreen}
+          % Cuerpo del bloque (Fondo blanco, texto verde)
+          \setbeamercolor{block body}{bg=UnicorWhite, fg=UnicorGreen}
+          
+          \AtBeginDocument{
+            \author{%
+              \begin{tabular}{c}
+                Mario A. Morales Rivera \\
+                \footnotesize \texttt{mamorales@correo.unicordoba.edu.co} \\
+                \footnotesize Universidad de Córdoba
+              \end{tabular}
+            }
+            \institute{} 
+          }
+          % --- LIMPIAR DIAPOSITIVAS DE SECCIÓN (ELIMINAR "SECTION X") ---
+          \setbeamertemplate{section page}{
+            \begin{center}
+              \begin{beamercolorbox}[sep=12pt,center,rounded=true,shadow=true]{title}
+                \usebeamerfont{title}\insertsection\par
+              \end{beamercolorbox}
+            \end{center}
+          }
+    slide-level: 2
+    fonttheme: default 
+    keep-tex: true
+    lang: es
+
+toc: true
+editor: source  
+---
+
+# Introducción
+
+## Introducción
+
+Estudiamos en esta clase los modelos de probabilidad asociados a las variables aleatorias discretas de uso frecuente. Definimos el modelo de Bernoulli, binomial, geométrico, binomial negativo, hipergeométrico y de Poisson, estableciendo los supuestos que deben cumplir los experimentos aleatorios que dan lugar a ellos. Al finalizar la clase el estudiante estará en capacidad de usar R para llevar a cabo el cálculo de probabilidades puntuales y acumuladas, cuantiles y generar datos pseudo aleatorios usando estos modelos.
+
+# Funciones para modelos discretos con R
+
+## Funciones `d`: *density*
+
+- función `d`: *density* permite el calculo de probabilidades puntuales, es decir, con esta función se evalúa la función de probabilidad.
+
+Por ejemplo, en el caso de la distribución binomial, `dbinom(x,n,pi)` evalúa la función $$\binom{n}{x}\pi^{x}(1-\pi)^{(n-x)}$$
+
+## Funciones `p`: *probability*
+
+- función `p`: para evaluar la función de distribución del modelo definido.
+
+Por ejemplo, en el caso binomial evalúa $$\sum_{k=0}^x\binom{n}{k}\pi^{k}(1-\pi)^{(n-k)}$$
+
+## Funciones `r`: *random*
+
+Las funciones `r`: *random* se usan para generar (simular) datos pseudo aleatorios que siguen la distribución del modelo.
+
+## Funciones `q`: *quantile*
+
+- Las funciones `q`: *quantile* se usan para el cálculo de percentiles de la distribución.
+
+- Este método implementa la función inversa de la `cdf`. 
+
+::: callout-important
+Dada una probabilidad $p$, la función `q` regresa el valor mas pequeño $x$ tal que $P(X\leq x )\ge p$.
+:::
+
+## Modelo  Binomial (I) 
+
+Un experimento aleatorio que consiste de 
+
+- $n$  repeticiones independientes de experimentos de Bernoulli, 
+
+- la probabilidad de éxito, $\pi$, de cada experimento permanece constante, se conoce como un experimento `Binomial`.
+
+- la variable de interés es el número de éxitos en los $n$ ensayos. 
+
+
+## Ejemplos de experimentos Binomiales
+
+
+
+- Lanzar tres  monedas y contar el número de sellos, que consideraremos éxitos. 
+- Examinar  20 ratas de laboratorio después de someterlas a cierta dieta y observar si desarrollaron cáncer de estómago (éxito). 
+- Se someten insectos a cierta concentración de un veneno durante 30 minutos y al final, para cada uno, se registra si sobrevive (fracaso) o no (éxito).
+- Se eligen 100 personas al azar del censo electoral y se registra, para cada uno si votará (éxito) o no (fracaso) por cierto candidato a un cargo de elección popular. 
+
+
+## Modelo  Binomial (II) 
+
+En cada uno de los experimentos anteriores, nos interesa registrar el número de éxitos en los $n$ ensayos de Bernoulli. Sea  $X$ la función que toma cada punto del espacio muestral del experimento y le hace corresponder el número de éxitos, necesitamos una fórmula que nos permita calcular las probabilidades asociadas a cada posible valor que toma la función. 
+
+## Modelo  Binomial (III)
+
+Suponga que se lanzan tres monedas (o una moneda tres veces) y registramos el resultado en el lado que queda hacia arriba (Cara o Sello). Consideremos la función (variable aleatoria) que asigna a cada punto del espacio muestral el número de sellos.
+
+
+##  
+
+```{r, engine='tikz'}
+#| echo: false
+#| fig-cap: "Mapeo de los resultados a la variable aleatoria X"
+#| fig-align: center
+
+\begin{tikzpicture}[scale=1]
+\draw (1,3) ellipse (1.1cm and 2.5cm);
+\draw (4,3) ellipse (1.1cm and 2.5cm);
+\path(1,5.7) node {$S$};
+\path(4,5.7) node {$R$};
+\path(2.5,5.7)  node[above] {$X$};
+\draw[->] (1.2, 5.7) -- (3.8, 5.7);
+\path(1,5) node {$CCC$};
+\path(1,4.5) node {$CCS$};
+\path(1,4) node {$CSC$};
+\path(1,3.5) node {$CSS$};
+\path(1,3.0) node {$SCC$};
+\path(1,2.5) node {$SCS$};
+\path(1,2.0) node {$SSC$};
+\path(1,1.5) node {$SSS$};
+\path(4,4.5) node {$0$};
+\path(4,3.5) node {$1$};
+\path(4,2.5) node {$2$};
+\path(4,1.5) node {$3$};
+\draw[->] (1.5,5) -- (3.8,4.5);
+\draw[->] (1.5,4.5) -- (3.8,3.5); % a uno
+\draw[->] (1.5,4.0) -- (3.8,3.5); % a uno
+\draw[->] (1.5,3.5) -- (3.8,2.5); % a dos
+\draw[->] (1.5,3.0) -- (3.8,3.5); % a uno
+\draw[->] (1.5,2.5) -- (3.8,2.5); % a dos
+\draw[->] (1.5,2) -- (3.8,2.5); % a dos
+\draw[->] (1.5,1.5) -- (3.8,1.5); % a dos
+\end{tikzpicture}
+
+``` 
+
+
+## Modelo  Binomial (III)
+
+
+- En la figura  se muestra el diagrama de flechas de la función, $SSC$ significa que la primera moneda resultó cara, la segunda y la tercera sello. Por la forma que se ha definido la función, $X(SSC)\to 2$, ya que el punto tiene dos sellos.
+
+- Para calcular $P(X=2)$ se tiene en cuenta que  los ensayos son independientes, además, considerando $S$ como éxito y $C$ fracaso, con probabilidad $\pi$ y $1-\pi$ respectivamente, la probabilidad conjunta del resultado $SSC$ es $$P(SSC)=P(S)P(S)P(C)=\pi^2(1-\pi)$$  
+
+
+##  Modelo  Binomial (IV) 
+
+
+- Por la definición dada en la sección anterior, debido a que hay tres puntos en $S$ que se asignan a 2 por la función, entonces 
+$$P(X=2)=P(\{CSS,SCS,SSC\})=3\pi^2(1-\pi)$$
+con un razonamiento similar se calculan las probabilidades de $X=0$, $X=1$ y $X=3$ que se muestran en la tabla 
+
+## Modelo  Binomial (V) 
+
+- Supongamos que se lanzan $n$ monedas y a cada punto del espacio muestral de este experimento hacemos corresponder el número de sellos en la cara superior, supongamos que se obtienen $x$ sellos y $n-x$ caras, con $x=0,1,2,\ldots,n$.
+
+- Por el supuesto de independencia, sin importar la posición en que aparezcan los sellos y las caras la probabilidad de un punto con $x$ sellos y $n-x$ caras es   $\pi^x(1-\pi)^{n-x}$ y hay $\tbinom{n}{x}$ formas de salir $x$ sellos, por tanto $$P(X=x)=\binom{n}{x}\pi^x(1-\pi)^{n-x}$$     
+
+## Modelo  Binomial (VI) 
+
+- En conclusión, si $X$ es la variable aleatoria que cuenta el número de éxitos en $n$ ensayos de Bernoulli, independientes, con probabilidad de éxito constante $\pi$, su función de probabilidad esta dada por    
+$$
+f_X(x)=P(X=x)=\begin{cases}
+\binom{n}{x}\pi^{x}(1-\pi)^{(n-x)} \text{ para } x=0,1,2,\ldots,  n  \\
+0 \text{ en cualquier otro }  x \in R 
+\end{cases}  
+$$
+
+## Función de distribución
+
+La función de distribución de $X$ es 
+
+$$
+F_X(x)=P(X\leq x)=
+\sum_{k=0}^x\binom{n}{k}\pi^{k}(1-\pi)^{(n-k)} 
+$$
+
+## Modelo  Binomial, ejemplo con 4 monedas 
+
+Primero construiremos el espacio muestral y obtendremos los posibles valores de la variable  
+
+```{r}
+#| echo: true
+
+###0 es cara ,  1 sello  
+res<-expand.grid(M1=0:1,M2=0:1,M3=0:1,M4=0:1) 
+head(res)
+```
+
+## Binomial 4 monedas: Valores de la variable 
+```{r}
+#| echo: true
+
+res$NoS<-apply(res,1,sum) 
+head(res)
+```
+
+Valores de la variable No. de sellos 
+
+```{r}
+#| echo: true
+
+table(res$NoS)
+```
+
+
+## Binomial 4 monedas: probabilidades
+
+- Probabilidades puntuales (estas se obtienen con `dbinom`)
+
+```{r}
+#| echo: true
+
+table(res$NoS)/length(res$NoS)
+
+```
+
+## Binomial 4 monedas: acumulados 
+
+- Probabilidades acumuladas (estas se obtienen con `pbinom`)   
+
+```{r}
+#| echo: true
+
+cumsum( table(res$NoS) ) /length(res$NoS)
+```
+
+
+## Binomial 4 monedas: probabilidades puntuales  
+
+- Calcular la probabilidad que al lanzar 4 monedas se obtengan exactamente 2 sellos 
+
+```{r}
+#| echo: true
+
+dbinom(x=2,size = 4,prob = 1/2)
+```
+
+- Calcular todas las probabilidades puntuales $(0,1,\cdots 4)$ al lanzar 4 monedas 
+
+```{r}
+#| echo: true
+
+x=0:4
+dbinom(x,size = 4,prob = 1/2)
+```
+
+
+## Binomial 4 monedas: graficar la funcion de probabilidad  
+
+
+
+- Calcular todas las probabilidades puntuales $(0,1,\cdots,  4)$ al lanzar 4 monedas y guardarlas en `y` 
+
+```{r , echo = TRUE}
+x=0:4
+y=dbinom(x,size = 4,prob = 1/2)
+```
+
+
+## Graficar 
+
+```{r , echo = TRUE}
+plot(x,y)
+```
+
+
+## Binomial 4 monedas: probabilidades acumuladas  
+
+- Calcular la probabilidad que al lanzar 4 monedas se obtengan  2 sellos o menos  
+
+```{r}
+#| echo: true
+
+pbinom(q=2, size = 4,prob = 1/2)
+```
+
+## Binomial 4 monedas: probabilidades acumuladas   
+
+- Calcular todas las probabilidades acumuladas  $(0,1,\cdots 4)$ al lanzar 4 monedas 
+
+```{r}
+#| echo: true
+
+x=0:4
+pbinom(x,size = 4,prob = 1/2)
+```
+
+
+## Binomial 4 monedas: graficar la funcion de distribucion
+
+ 
+
+- Calcular todas las probabilidades acumuladas  $(0,1,\cdots 4)$, se guardan en `y`
+
+```{r , echo = TRUE}
+x=0:4
+y=pbinom(x,size = 4,prob = 1/2)
+```
+
+
+## Graficar 
+
+```{r , echo = TRUE}
+plot(x,y)
+```
+
+
+## Binomial 4 monedas: graficar la funcion de distribucion como una escalonada 
+
+- Calcular todas las probabilidades acumuladas  $(0,1,\cdots 4)$, se guardan en `y`
+
+```{r}
+#| echo: true
+
+
+x=pretty(-2:5,500)
+y=pbinom(x,size = 4,prob = 1/2)
+```
+
+## Graficar 
+
+```{r}
+#| echo: true
+
+plot(x,y,type="p",pch=20)
+
+```
+
+
+## Binomial 4 monedas: calcular cuantiles 
+
+- Si $X$ es una binomial de parametros $\pi=0.5$ y $n=4$ obtener  $x$ tal que   $P(X \le x )=0.6875)$
+
+```{r , echo = TRUE}
+qbinom(0.6875,size = 4,prob = 1/2)
+```
+
+
+## Binomial 4 monedas: calcular cuantiles (II)
+
+```{r , echo = FALSE}
+x=pretty(-2:5,500)
+y=pbinom(x,size = 4,prob = 1/2)
+```
+
+```{r , echo = FALSE}
+plot(x,y,type="p",pch=20)
+x1=0:4
+y1=pbinom(x1,4,1/2)
+abline(h=0.5,lty=2,col="red")
+```
+
+
+## Binomial 4 monedas: calcular cuantiles (III)
+
+```{r}
+#| echo: true
+
+qbinom(0.5,size = 4,prob = 1/2)
+
+pbinom(2,size = 4,prob = 1/2)
+```
+
+
+
+## Binomial 4 monedas: simular datos 
+
+- Lanzar las 4 monedas 10 veces 
+
+```{r , echo = TRUE}
+rbinom(10,4,1/2)
+```
+
+## Binomial 4 monedas: simular datos 
+
+- Lanzar las 4 monedas 500 veces, calcular las frecuencias relativas y realizar un gráfico donde se comparen con las probabilidades teóricas . 
+
+```{r}
+#| echo: true 
+
+datos=rbinom(500,4,1/2)
+frel=table(datos)/length(datos)
+```
+
+## Graficar  
+
+```{r}
+#| echo: true 
+
+plot(x1,frel,type='h')
+```
+
+
+
+## Binomial 4 monedas: simular datos 
+
+- Lanzar las 4 monedas 500 veces, calcular las frecuencias relativas y realizar un gráfico donde se comparen con las probabilidades teóricas . 
+
+```{r , echo = TRUE}
+datos=rbinom(500,4,1/2)
+frel=table(datos)/length(datos)
+x1=0:4;y1=dbinom(x1,4,0.5)
+plot(x1,frel,type='h',lwd=4)
+lines(x1,y1,lty=2,col='red')
+```
+
+## Graficar 
+
+
+```{r}
+#| echo: true
+
+
+plot(x1,frel,type='h',lwd=4)
+lines(x1,y1,lty=2,col='red')
+```
+
+
+## Binomial 4 monedas: simular datos 
+
+- Lanzar las 4 monedas 500 veces, pero cambiando la probabilidad de sello a 0.8, calcular las frecuencias relativas y realizar un gráfico donde se comparen con las probabilidades teóricas pero asumiendo $\pi=0,5$ . 
+
+```{r , echo = TRUE}
+datos=rbinom(1500,4,0.7)
+frel=table(datos)/length(datos)
+x1=0:4
+y1=dbinom(x1,4,0.5)
+plot(x1,frel,type='h',lwd=4)
+lines(x1,y1,lty=2,col='red')
+```
+
+
+
+## Binomial 4 monedas: simular datos 
+
+```{r , echo = TRUE}
+hist(datos,freq = FALSE) 
+```
+
+
+## Binomial ejemplo 
+
+Si $X$ es una variable aleatoria con distribución binomial
+de parámetros $n=18$ y $p=0.1$, 
+
+- Calcular $P(X=2)$ 
+```{r , echo = TRUE}
+dbinom(2,18,0.1)
+```
+
+
+
+- Calcular $P(X \geq 3)=1-P(X\leq 2)$ 
+
+
+
+```{r , echo = TRUE}
+1-pbinom(2,18,0.1)
+```
+
+
+## Modelo binomial, gráfica  ejercicio 
+
+Graficar las funciones de probabilidad de varias variables aleatorias con distribución binomial en un mismo plano, por ejemplo, a continuación se hace la gráfica de la función de probabilidad binomial con: 
+
+- $n=10$ y $p=0.1$ 
+- $n=10$ y $p=0.5$
+- $n=10$  $p=0.9$
+
+## Modelo binomial, gráfica 
+
+```{r , echo = FALSE,fig.width=12, fig.height=8}
+# n=10 p=0.1
+y<-dbinom(0:10,10,0.1)
+plot(0:10,y,type="b",col="red",pch=20)
+# n=10 p=0.5
+y<-dbinom(0:10,10,0.5)
+points(0:10,y,type="b",col="blue",pch=21)
+# n=10 p=0.9
+y<-dbinom(0:10,10,0.9)
+points(0:10,y,type="b",col="green",pch=22)
+legend("top",c("n = 10  p = 0.1" ,"n = 10 p = 0.5","n = 10 p = 0.9"),pch=c(20,21,22),col=c("red","blue","green"))
+```
+
+
+## Modelo binomial, gráfica 
+
+```{r}
+#| echo: true
+#| eval: true
+
+# n=10 p=0.1
+y<-dbinom(0:10,10,0.1)
+plot(0:10,y,type="b",col="red",pch=20)
+# n=10 p=0.5
+y<-dbinom(0:10,10,0.5)
+points(0:10,y,type="b",col="blue",pch=21)
+# n=10 p=0.9
+y<-dbinom(0:10,10,0.9)
+points(0:10,y,type="b",col="green",pch=22)
+
+legend("top",c("n = 10  p = 0.1" ,"n = 10 p = 0.5","n = 10 p = 0.9") ,
+       pch=c(20,21,22),col=c("red","blue","green"))
+
+## 
+
+
+```
+
+
+
+# Distribución geométrica 
+
+## Distribución geométrica
+
+Suponga un experimento donde se tiene:
+
+* Una serie de ensayos de Bernoulli, 
+* Independientes,
+* probabilidad de éxito constante $p$
+* Registramos el número de ensayos hasta obtener el primer éxito.
+
+## Distribución geométrica
+
+
+Sea $X$ es el número de ensayos realizados hasta la obtención del primer éxito entonces $X$ tiene una distribución geométrica con parámetro $p$ y
+
+$$ f_X(x)=P(X=x)=(1-p)^{x-1}p \hbox{ para } x=1,2,3 \cdots$$
+
+## Distribución geométrica, ejemplo 
+
+Si $X$ es geométrica con $p=0.1$ calcular $P(X=5)$.
+
+**OBSERVACION:** Para el calculo con el modelo geométrico con R hay que tener en cuenta que para  R la variable aleatoria cuenta el número de fracasos antes del  primer éxito, llamémoslo $Y$, entonces se tiene que $X=Y+1$ y por tanto $Y=X-1$ es el valor que hay que entregar a la función. Así que $P(X=5)$ se calcula mediante 
+```{r , echo = TRUE}
+dgeom(4,0.1)
+```
+
+
+## Distribución geométrica, ejemplo 
+
+* Si $X$ es geométrica con $p=0.1$ calcular  la probabilidad acumulada hasta 125, esto es,  $P(X\leq 125)$
+
+```{r , echo = TRUE}
+pgeom(124,0.01)
+# equivalente a
+sum(dgeom(0:124,0.01))
+```
+
+## Distribución geométrica, ejemplo  
+
+* Si $X$ es geométrica con $p=0.01$ obtener el menor valor de $x$ tal que $P(X\leq x)\geq 0.95$
+
+```{r , echo = TRUE}
+qgeom(0.95,0.01)
+```
+
+## Distribución geométrica, ejemplo 
+
+Si $X$ es geométrica con $p=0.01$, generar 200 datos   que sigan este modelo, graficar el histograma junto con la función de probabilidad. 
+```{r , echo = TRUE}
+datos<-rgeom(200,prob = 0.01)
+h<-hist(datos,plot=FALSE)
+h$counts
+h$breaks
+names(h)
+```
+
+## Distribución geométrica, ejemplo 
+
+```{r , echo = TRUE}
+minx=min(h$breaks)
+maxx=max(h$breaks)
+x=minx:maxx
+y=dgeom(x,prob=0.01)
+hist(datos,freq=FALSE)
+lines(x,y,col="red",lwd=3)
+```
+
+# Distribución binomial negativa 
+
+## Distribución binomial negativa
+
+Suponga un experimento donde se tiene:
+
+* Una serie de ensayos Bernoulli, 
+* Independientes,
+* probabilidad de éxito constante $p$
+* Registramos el número de ensayos hasta obtener $r$ éxitos.
+
+## Distribución binomial negativa
+
+
+Sea $X$ es el número de ensayos realizados hasta la obtención del $r-$ésimo éxito, entonces $X$ tiene una distribución binomial negativa con parámetros $p$ y $r=1,2,3,\ldots$  
+
+$$f_X(x;p,r)=\binom{x-1}{r-1}(1-p)^{x-r}p^r, \hbox { para } x=r, r+1 , r+2, 
+\cdots$$ 
+
+
+
+## Distribucion binomial negativa con R 
+
+ 
+::: callout-important
+Para R la variable aleatoria $X$ cuenta el número de fracasos antes de los $r$ éxitos, por tanto, para calcular la probabilidad de que una variable aleatoria binomial negativa $X$ sea igual a $x$, es equivalente a calcular la probabilidad de que $Y=X-r$ sea igual a $x-r$ es decir $P(X=x)= P(Y=x-r)$ con $Y=X-r$. Luego a \texttt{R} hay que entregarle $x-r$ para que calcule $P(X=x)$.
+:::
+
+## Distribución binomial negativa, Ejemplo 
+
+En un departamento de control de calidad se inspeccionan las unidades terminadas que provienen de una linea de ensamble. Se piensa que la proporción de unidades defectuosas es $0.05$.
+
+* ¿Cuál es la probabilidad de que sea necesario inspeccionar 20 unidades hasta encontrar 2 defectuosas?
+
+* ¿Cuál es la probabilidad de tener que realizar 30 ensayos o menos para encontrar  encontrar 3 defectuosas? Se pide $$P(X\leq 30)$$ con $X$ una binomial negativa de parámetros $r=3$ y $p=0.05$ 
+
+## Distribución binomial negativa, Solución  
+
+```{r , echo = TRUE}
+dnbinom(x = 18,size = 2,prob = 0.05)
+```
+
+```{r , echo = TRUE}
+pnbinom(27,3,0.05)
+```
+
+## Distribución binomial negativa, ejemplo 
+
+Si $X$ es una variable aleatoria con distribución binomial negativa de parámetros $r=3$ y $p=0.05$, obtener el menor valor de $x$ tal que $P(X\leq x)\geq 0.5$   
+
+```{r , echo = TRUE}
+qnbinom(p = 0.5,size = 3,prob = 0.05)
+```
+
+## Distribución binomial negativa 
+
+
+### Simulación 
+
+Generar 200 datos de una variable aleatoria con distribución binomial negativa de parámetros $r=5$ y $p=0.01$, realizar el histograma junto con la función de probabilidad. 
+
+```{r , echo = TRUE,eval=FALSE}
+datos=rnbinom(200,size = 5,prob = 0.1)
+h<-hist(datos,prob=TRUE)
+minx=min(h$breaks)
+maxx=max(h$breaks)
+x=minx:maxx
+y=dnbinom(x,size = 5,prob=0.1)
+lines(x,y,col="red",lwd=3)
+```
+
+## Distribución binomial negativa 
+
+```{r , echo = FALSE}
+datos=rnbinom(200,size = 5,prob = 0.1)
+h<-hist(datos,prob=TRUE)
+minx=min(h$breaks)
+maxx=max(h$breaks)
+x=minx:maxx
+y=dnbinom(x,size = 5,prob=0.1)
+lines(x,y,col="red",lwd=3)
+```
+
+
+# Distribución hipergeométrica
+
+## Distribución hipergeométrica
+
+Un conjunto de $N$ objetos contiene
+
+* $m$ $(m\leq N)$ elementos con el
+atributo $A$, los cuales se consideran éxitos.
+* $n=N-m$ sin el atributo ($A^c$)
+* Se toma una muestra de tamaño $k$, $(k\leq N)$ al azar (sin remplazo).
+* Sea $X$ el número de éxitos (elementos con el atributo $A$)  en la muestra.
+
+## Distribución hipergeométrica 
+
+Entonces $X$ tiene **distribución hipergeométrica** con función de probabilidad.
+$$f_X(x)=\frac{\binom{m}{x}\binom{n}{k-x}}{\binom{N}{k}} \hbox{  con } x=0,1,\ldots,\min\{m,k\}$$
+
+## Distribución hipergeométrica, esquema 
+```{r, engine='tikz'}
+#| echo: false
+#| fig-cap: "Esquematización de una distribución  hipergeométrica \\$m+n=N\\$"
+#| fig-align: center
+
+\begin{tikzpicture}[scale=1]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% No borrar esto, es el sistema de coordenadas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\foreach \x in {1,...,12} \draw (\x,-0.15) node { \x}; % etiquetas x
+%\foreach \x in {1,...,12} \draw (\x,6.15) node { \x}; % etiquetas x
+%\foreach \y in {0,...,6} \draw (-.15,\y) node { \y}; % etiquetas y
+%\draw [step=1.0cm,gray,dashed] (0,0) grid (12,6);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fin del sistema de coordenadas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\draw (0,0) rectangle (6.4,4);
+\path(0,4)  node[below right] {$A$};
+\path(6,4)  node[below left] {$A^c$};
+\path(1.5,0)  node[above] {{\small $m$--objetos}};
+\path(4.5,0)  node[above] {{\small $n$--objetos}};
+\draw[dashed] (2.8,0) -- (3,1)--(3.1,2)--(2.8,3)--(3.2,4);
+\draw (3,2) ellipse (1.7cm and 1.1cm);
+\path(2,2.2)  node[above] {$x$};
+\path(4,2.6)  node[above right] {{\small Muestra  $(k)$}};
+\path(5.5,4)  node[above] {{\small $N$--objetos}};
+\end{tikzpicture}
+%\selectlanguage{spanish} % Retorna a spanish
+```
+
+
+
+
+
+## Distribución hipergeométrica, ejemplo 
+
+Un lote de piezas contiene 100 de un proveedor local de tuberías, y 300 de un proveedor de otro estado. Si se eligen 10 piezas al azar y sin remplazo 
+
+* ¿Cuál es la probabilidad que 5 provengan del proveedor local? 
+* ¿Cuál es la probabilidad de que 3 o menos  provengan del proveedor local?
+* Obtenga el menor valor de $x$ tal que $P(X\leq x)\geq 0.95$ 
+
+
+## Distribución hipergeométrica, solución 
+
+En este caso se toma como éxito que el origen de la pieza sea del proveedor local. Sea $X$ el número de piezas del proveedor local en la muestra, entonces $X$ tiene distribución hipergeométrica con parámetros $m=100$, $n=300$, $k=10$  
+
+```{r , echo = TRUE}
+dhyper(5, m = 100, n=300, k=10)
+phyper(3, m = 100, n=300, k=10)
+qhyper(0.95, m = 100, n=300, k=10)
+```
+
+
+## Distribuciones Binomial e hipergeométrica
+
+### Aproximación de la distribución hipergeométrica a una binomial. 
+Si $X$ es hipergeométrica de parámetros $m$, $n$ y $k$, cuando el tamaño de la muestra $k$ es pequeño en comparación con $N=m+n$, las probabilidades asociadas a los valores de $X$ se pueden aproximar usando una binomial de parámtros $p=\frac{k}{N}$ y $k$. En términos prácticos puede considerarse que la aproximación es buena cuando $\frac{k}{N}<0.05$ 
+
+## Distribuciones Binomial e hipergeométrica 
+
+### Ejemplo:
+Si $Y$ es hipergeométrica con $m=1000$, $n=3000$, $k=70$, en un gráfico compare las probabilidades hipergeométricas con las binomiales. En este caso la hipergeometrica se aproxima a una binomial con $\pi=70/1000=`r 70/1000`$ y $n=k=70$. Note que $k/N=70/4000=`r 70/4000`<0.05$ por tanto la aproximación de la hipergeométrica por la binomial seria *buena*  
+
+## Distribuciones Binomial e hipergeométrica 
+
+Probabilidades calculadas con la hipergeometrica
+
+### Solución 
+```{r , echo = TRUE}
+# parámetros de la hipergeometrica 
+m=1000
+n=3000
+k=70
+# valores de x
+x=0:min(c(m,k))  
+yh=dhyper(x,m = m,n = n,k = k)
+```
+
+## Distribuciones Binomial e hipergeométrica 
+
+Probabilidades calculadas con la binomial
+
+### Solución
+
+```{r , echo = TRUE}
+p=m/(m+n) # probabilidad de éxito 
+yb=dbinom(x,size=k,prob = p)
+```
+
+
+## Distribuciones Binomial e hipergeométrica 
+
+```{r , echo = TRUE}
+plot(x,yh,type='b',col='black')
+lines(x,yb,type='b',col='red')
+legend('top',legend= c('Hipergeo','Binomial'),col=c('black','red'),lty=2,pch=1)
+```
+
+
+## Para consultar 
+
+* Distribución de Poisson 
+* Aproximación de la distribución de Poisson a la Binomial. 
+
+
+
+
+
+
