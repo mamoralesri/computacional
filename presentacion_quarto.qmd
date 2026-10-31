@@ -1,0 +1,353 @@
+---
+title: "Producción de Documentos Científicos con Quarto"
+subtitle: "Estadística Computacional"
+author: "Mario Morales"
+lang: es
+format:
+  revealjs:
+    theme: sky
+    slide-number: true
+    code-line-numbers: true
+    highlight-style: arrow
+    transition: fade
+    scrollable: true
+    chalkboard: true
+execute:
+  echo: true
+  eval: true
+  warning: false
+---
+
+## Los cuatro ejes de un documento en Quarto
+
+En este curso utilizaremos **Quarto** para producir reportes técnico-científicos totalmente reproducibles que integran narrativa matemática y computación estadística:
+
+1. **YAML y Configuración Global:** Define el formato de salida (`pdf`, `html`, `revealjs`), el idioma, el motor de LaTeX y opciones generales.
+2. **Markdown Estructurado:** Formato de texto enriquecido, listas anidadas, secciones jerárquicas y bloques de ejercicios (`#exm-`).
+3. **LaTeX Matemático:** Fórmulas en línea, ecuaciones numeradas y referenciadas (`#eq-`), entornos alineados (`aligned`) y funciones a trozos (`cases`).
+4. **Chunks de Código (R y Python):** Inserción de código ejecutable, control de salidas (`#|`), anotaciones (`#<1>`), código en línea y figuras referenciadas (`#fig-`).
+
+---
+
+# 1. El Encabezado YAML y Configuraciones Globales
+
+## Estructura del YAML para documentos PDF
+
+El bloque YAML se ubica siempre al inicio del archivo `.qmd` delimitado por tres guiones (`---`). Controla el aspecto y comportamiento global del documento:
+
+```yaml
+---
+title: "Variables discretas y gráficos con R"
+author: "Mario Morales"
+format: 
+  pdf:
+    pdf-engine: xelatex 
+    lang: es 
+    code-line-numbers: true 
+    highlight-style: arrow
+number-sections: true
+number-depth: 3
+---
+```
+
+* `pdf-engine: xelatex`: Motor moderno que soporta tildes y fuentes del sistema sin inconvenientes.
+* `lang: es`: Traduce automáticamente palabras clave como *Figura*, *Tabla*, *Índice* o *Ejercicio*.
+* `code-line-numbers: true`: Numera todas las líneas de código del documento.
+* `number-sections: true`: Numera automáticamente las secciones (`1`, `1.1`, `1.1.1`).
+
+---
+
+# 2. Markdown: Texto, Listas y Bloques
+
+## Formato de texto y jerarquía de secciones
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Sintaxis en `.qmd`
+```markdown
+# Nivel 1: Modelos discretos
+## Nivel 2: Experimento de Bernoulli {#sec-Bernoulli}
+### Nivel 3: Ciclo `for`
+
+Es un experimento con dos resultados: 
+*éxito* (o _éxito_) y **fracaso** (o __fracaso__).
+
+1. Si resulta éxito toma el valor de *uno*.
+    a. Sub-ítem 1
+    b. Sub-ítem 2
+2. Si resulta fracaso toma el valor de **cero**.
+
+Como estudiamos en la sección -@sec-Bernoulli...
+```
+:::
+
+::: {.column width="50%"}
+### Resultado compilado
+
+**1. Modelos discretos**  
+**1.1 Experimento de Bernoulli**  
+**1.1.1 Ciclo `for`**
+
+Es un experimento con dos resultados: *éxito* y **fracaso**.
+
+1. Si resulta éxito toma el valor de *uno*.
+    a. Sub-ítem 1
+    b. Sub-ítem 2
+2. Si resulta fracaso toma el valor de **cero**.
+
+Como estudiamos en la sección 1.1...
+:::
+
+::::
+
+---
+
+## Bloques de Ejercicios y Llamadas (Callouts)
+
+Podemos crear entornos numerados para ejercicios, teoremas o ejemplos utilizando tres puntos (`:::`) y el prefijo `#exm-`:
+
+### Sintaxis en `.qmd`
+```markdown
+:::{#exm-DistribucionNormal} 
+Si $X$ es una variable aleatoria con distribución normal de media $\mu=10$ y desviación estándar $\sigma=2$:
+
+a. Graficar su función de densidad.
+b. Calcular $P(8.5\leq X \leq 11.5)$.
+:::
+```
+
+### Resultado compilado
+:::{#exm-DistribucionNormal}
+Si $X$ es una variable aleatoria con distribución normal de media $\mu=10$ y desviación estándar $\sigma=2$:
+
+a. Graficar su función de densidad.
+b. Calcular $P(8.5\leq X \leq 11.5)$.
+:::
+
+---
+
+# 3. LaTeX: Ecuaciones, Alineación y Casos
+
+## Fórmulas en línea y Ecuaciones Numeradas
+
+* **En línea:** Se encierra entre signos de pesos simples: `$\pi$` produce $\pi$, y `$0 \leq \pi \leq 1$` produce $0 \leq \pi \leq 1$.
+* **En bloque numerado:** Se usa doble signo de pesos `$$` acompañado de una etiqueta `{#eq-nombre}` pegada al cierre:
+
+```markdown
+$$
+P(X=x)=f_X(x)=\binom{n}{x}\pi^x(1-\pi)^{n-x} \text{ para } x=0,1,\ldots ,n 
+$${#eq-funcionProbBin}
+
+En R, la función `dbinom` evalúa la expresión dada en -@eq-funcionProbBin (o @eq-funcionProbBin).
+```
+
+**Resultado:**
+$$
+P(X=x)=f_X(x)=\binom{n}{x}\pi^x(1-\pi)^{n-x} \text{ para } x=0,1,\ldots ,n 
+$${#eq-funcionProbBin}
+
+En R, la función `dbinom` evalúa la expresión dada en -@eq-funcionProbBin (o @eq-funcionProbBin).
+
+---
+
+## Ecuaciones Centradas y Alineadas (`aligned`)
+
+Cuando necesitamos desarrollar una demostración o deducción paso a paso alineando los signos de igualdad (`&=`), utilizamos el entorno `\begin{aligned} ... \end{aligned}`:
+
+```markdown
+$$
+\begin{aligned}
+\sigma^2_X &= E\left[(X - E(X))^2\right] \\
+           &= \sum_{x \in R} (x - \mu_X)^2 f_X(x) \\
+           &= \sum_{x=0}^n (x - n\pi)^2 \binom{n}{x}\pi^x(1-\pi)^{n-x} \\
+           &= n\pi(1-\pi)
+\end{aligned}
+$${#eq-varianzaBin}
+```
+
+**Resultado:**
+$$
+\begin{aligned}
+\sigma^2_X &= E\left[(X - E(X))^2\right] \\
+           &= \sum_{x \in R} (x - \mu_X)^2 f_X(x) \\
+           &= \sum_{x=0}^n (x - n\pi)^2 \binom{n}{x}\pi^x(1-\pi)^{n-x} \\
+           &= n\pi(1-\pi)
+\end{aligned}
+$${#eq-varianzaBin}
+
+---
+
+## Funciones Definidas a Trozos (`cases`)
+
+Para definir funciones de probabilidad discretas, densidades continuas o variables indicadoras por ramas, empleamos el entorno `\begin{cases} ... \end{cases}`:
+
+```markdown
+$$
+f_X(x) = \begin{cases} 
+\pi & \text{si } x = 1 \text{ (Éxito)} \\ 
+1 - \pi & \text{si } x = 0 \text{ (Fracaso)} \\ 
+0 & \text{en cualquier otro caso} 
+\end{cases}
+$${#eq-bernoulliCasos}
+```
+
+**Resultado:**
+$$
+f_X(x) = \begin{cases} 
+\pi & \text{si } x = 1 \text{ (Éxito)} \\ 
+1 - \pi & \text{si } x = 0 \text{ (Fracaso)} \\ 
+0 & \text{en cualquier otro caso} 
+\end{cases}
+$${#eq-bernoulliCasos}
+
+---
+
+# 4. Inserción de Código (R y Python) y Opciones de Chunks
+
+## Bloques de código ejecutable en R y Python
+
+Un bloque (*chunk*) se abre con ```` ```{r} ```` o ```` ```{python} ```` y las opciones internas se especifican en las primeras líneas usando el comentario especial `#|`:
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### En lenguaje R
+````markdown
+```{{r}}
+#| echo: true
+#| eval: true
+set.seed(1234)
+p = 0.4
+res = sample(c("E","F"), 1, prob=c(p, 1-p))
+x = ifelse(res == "E", 1, 0)
+cat("Resultado:", res, "-> x =", x)
+```
+````
+```{r}
+#| echo: false
+set.seed(1234)
+p = 0.4
+res = sample(c("E","F"), 1, prob=c(p, 1-p))
+x = ifelse(res == "E", 1, 0)
+cat("Resultado:", res, "-> x =", x)
+```
+:::
+
+::: {.column width="50%"}
+### En lenguaje Python
+````markdown
+```{{python}}
+#| echo: true
+#| eval: false
+import numpy as np
+np.random.seed(1234)
+p = 0.4
+res = np.random.choice(["E", "F"], p=[p, 1-p])
+x = 1 if res == "E" else 0
+print(f"Resultado: {res} -> x = {x}")
+```
+````
+:::
+
+::::
+
+---
+
+## Principales opciones de configuración `#|`
+
+| Opción | Valores | Función en el documento compilado |
+| :--- | :--- | :--- |
+| `#| echo:` | `true` / `false` | Muestra u oculta el código fuente en el reporte final. |
+| `#| eval:` | `true` / `false` | Ejecuta o no el código (útil para mostrar sintaxis sin correrla). |
+| `#| include:` | `true` / `false` | Si es `false`, ejecuta el código en silencio pero no muestra ni código ni salida. |
+| `#| warning:` | `true` / `false` | Oculta los mensajes de advertencia (*warnings*) de librerías como `ggplot2`. |
+| `#| error:` | `true` / `false` | Permite controlar si se muestran errores de ejecución en el documento. |
+| `#| code-line-numbers:` | `true` / `"6"` | Numera las líneas del bloque o resalta líneas específicas (ej. línea `"6"`). |
+
+---
+
+## Anotaciones en el código y Código en Línea
+
+Podemos explicar líneas específicas usando marcadores `# <1>`, `# <2>` e insertar resultados directamente dentro de un párrafo con `` `r #variable` ``:
+
+```{r}
+#| echo: true
+#| eval: true
+p = 0.4                                          # <1>
+n = 10                                           # <2>
+cont0 = 0; cont1 = 0
+for(i in 1:n){                                   # <3>
+  res = sample(c("E","F"), 1, prob = c(p, 1-p))  # <4>
+  x = ifelse(res == "E", 1, 0)                   # <5>
+  if(x == 1){ cont1 = cont1 + 1 } else { cont0 = cont0 + 1 }
+}
+```
+1. Se fija la probabilidad de éxito $\pi = 0.4$.
+2. Se fija el número de repeticiones $n = 10$.
+3. Inicia el bucle `for`.
+4. Se simula el experimento de Bernoulli.
+5. Se asigna el valor a la variable aleatoria e incrementa el contador.
+
+* **Código en línea:** Escribir `` En esta simulación se obtuvieron `r "\u0060r cont1\u0060"` unos y `r "\u0060r cont0\u0060"` ceros `` produce automáticamente:  
+  *"En esta simulación se obtuvieron `r cont1` unos y `r cont0` ceros."*
+
+---
+
+## Figuras, Dimensiones y Referencias Cruzadas
+
+Para que un gráfico sea numerado y referenciable, su etiqueta `#| label:` **debe** iniciar con el prefijo `fig-` y contar con `#| fig-cap:`:
+
+:::: {.columns}
+
+::: {.column width="52%"}
+````markdown
+```{{r}}
+#| echo: true
+#| label: fig-DensidadNormal
+#| fig-cap: "Gráfica de la densidad normal con $\\mu=10$ y $\\sigma=2$"
+#| fig-width: 6
+#| fig-height: 4.2
+mu = 10
+s = 2
+x = pretty(c(mu - 3*s, mu + 3*s), 500) 
+y = dnorm(x, mean = mu, sd = s) 
+plot(x, y, type = "l", col = "red", 
+     lwd = 2, ylab = "Densidad")
+```
+
+Como se aprecia en la figura -@fig-DensidadNormal...
+````
+:::
+
+::: {.column width="48%"}
+```{r}
+#| echo: false
+#| label: fig-DensidadNormal
+#| fig-cap: "Gráfica de la densidad normal con $\\mu=10$ y $\\sigma=2$"
+#| fig-width: 6
+#| fig-height: 4.2
+mu = 10
+s = 2
+x = pretty(c(mu - 3*s, mu + 3*s), 500) 
+y = dnorm(x, mean = mu, sd = s) 
+plot(x, y, type = "l", col = "red", lwd = 2, ylab = "Densidad")
+```
+Como se aprecia en la figura -@fig-DensidadNormal...
+:::
+
+::::
+
+
+
+## Práctica para los Estudiantes
+
+Crear un documento Quarto (`.qmd`) compilado a **PDF** que cumpla con los siguientes requisitos:
+
+1. **YAML completo:** Título, autor, idioma español (`lang: es`), numeración de secciones y líneas de código activadas.
+2. **Sección teórica en LaTeX:** 
+   * Escribir la función de densidad de las distribuciones **Uniforme Continua** (usando `\begin{cases}`) y **Exponencial** (numerada con `{#eq-exponencial}`).
+   * Desarrollar en un entorno `\begin{aligned}` el cálculo de una probabilidad acumulada.
+3. **Sección computacional en R:**
+   * Ejemplificar el uso de las 4 funciones (`d`, `p`, `q`, `r`) para las distribuciones Uniforme, Exponencial, $t$-Student y $\chi^2$.
+   * Incluir al menos un histograma de datos simulados superpuesto con su curva teórica de densidad, etiquetado con `#| label: fig-...` y citado en el texto.

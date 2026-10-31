@@ -2,30 +2,33 @@
 title: "Mi primer informe en Quarto"
 author: "Mario Morales"
 format: pdf 
+code-line-numbers: true
+lang: es 
+number-sections: true
+
 ---
 
 # Informe computacional
 
 ## Introducción
 
-Este es mi primer documento hecho usando **Quarto Markdown**, que es un entorno que permite la creación de documentos con calidad profesional, mezclando texto, código, salidas de código y ecuaciones en un mismo archivo. Las ecuaciones se construyen usando \LaTeX, que es el estándar internacional para escritura de símbolos *matemáticos*. \LaTeX te permite: 
+Este es mi primer documento hecho usando **Quarto Markdown**, que es un entorno que permite la creación de documentos con calidad profesional, mezclando texto, código, salidas de código y ecuaciones en un mismo archivo. Las ecuaciones se construyen usando \LaTeX, que es el estándar internacional para escritura de símbolos *matemáticos*. \LaTeX te permite:
 
-* Escribir todo tipo de símbolos matemáticos
-  * Alfabeto griego: $\alpha,\beta, \ldots,\omega$ 
-  * Integrales: $\int_a^bf(x)dx$ 
-  * Operadores relacionales: $\leq,\geq, \subset, \cup$
-* Enumerar y citar ecuaciones.
-* Centrar y desplegar ecuaciones.
+- Escribir todo tipo de símbolos matemáticos
+  - Alfabeto griego: $\alpha,\beta, \ldots,\omega$
+  - Integrales: $\int_a^bf(x)dx$
+  - Operadores relacionales: $\leq,\geq, \subset, \cup$
+- Enumerar y citar ecuaciones.
+- Centrar y desplegar ecuaciones.
 
 1.  Escribir todo tipo de símbolos matemáticos
-    * Alfabeto griego: $\alpha,\beta, \ldots,\omega$ 
-    * Integrales: $\int_a^bf(x)dx$ 
-    * Operadores relacionales: $\leq,\geq, \subset,\cup$ 
-1.  Enumerar y citar ecuaciones.
-1.  Centrar y desplegar ecuaciones.
+    - Alfabeto griego: $\alpha,\beta, \ldots,\omega$
+    - Integrales: $\int_a^bf(x)dx$
+    - Operadores relacionales: $\leq,\geq, \subset,\cup$
+2.  Enumerar y citar ecuaciones.
+3.  Centrar y desplegar ecuaciones.
 
-
-## Ejecutando código R 
+## Ejecutando código R {#sec-codigoR}
 
 Ahora aprenderemos a insertar y ejecutar código R en un documento de Quarto.
 
@@ -42,7 +45,102 @@ datos=data.frame(x,y,z)
 head(datos) 
 ```
 
-En el código anterior se crea un `data.frame` con `r nrow(datos)` filas y `r ncol(datos)` columnas. 
+En el código anterior se crea un `data.frame` con `r nrow(datos)` filas y `r ncol(datos)` columnas.
+
+::: {#exm-DistribucionNormal}
+### Distribución normal
+
+Si $X$ es una variable aleatoria con distribución normal de media $\mu=10$ y desviación estándar $\sigma=2$:
+
+a.  Graficar su función de densidad.
+b.  Calcular $P(8.5\leq X \leq 11.5)$.
+:::
+
+::: callout-note
+Una forma visualmente elegante de escribir una nota. Elegante
+:::
+
+::: callout-tip
+Una forma visualmente elegante de escribir un tip.
+:::
+
+::: callout-warning
+Una forma visualmente elegante de escribir una advertencia
+:::
+
+
+::: callout-caution 
+Una forma visualmente elegante de escribir cuidado !!!
+:::
+
+::: callout-important 
+Una forma visualmente elegante de escribir importante !!!
+:::
+
+
+# Matemáticas con \LaTeX 
+
+$$
+P(X=x)=f_X(x)=\binom{n}{x}\pi^x(1-\pi)^{n-x} \text{ para } x=0,1,\ldots ,n 
+$${#eq-funcionProbBin}
+
+
+
+$$
+P(X=x)=f_X(x)=\binom{n}{x}\pi^x(1-\pi)^{n-x}  \hbox{ para }  x=0,1, \ldots  ,n 
+$${#eq-fdpBinom} 
+
+
+En la ecuación -@eq-funcionProbBin tenemos la función de masa de probabilidad de una variable aleatoria discreta binomial. De igual forma te toca resolver el ejercicio número -@exm-DistribucionNormal que se encuentra en la sección -@sec-codigoR.
+
+### Alineaciones 
+
+$$
+\begin{aligned}
+S^2&=\frac{\sum\limits_{i=1}^n(x_i-\bar x)^2}{n-1} \\
+ &=\frac{\sum\limits_{i=1}^n x_i^2-n\bar x^2}{n-1} \\
+ &=\frac{SCE}{n-1} 
+\end{aligned}
+$$
+
+### Casos 
+
+$$
+f_X(x)=\begin{cases}
+\pi &\text{ si } x=1 \\
+1-\pi &\text{ si }  x=0 \\
+0 &\text{ en cualquier otro caso }  
+\end{cases}
+$$
+
+# Figuras 
+
+## Figuras realizadas con código
+
+Insertaremos la gráfica de la densidad normal con media $\mu=10$ y desviación estándar $\sigma=2$, el gráfico se muestra en la figura -@fig-DensidadNormal  
+
+```{r}
+#| echo: false 
+#| fig-cap: "Densidad normal con $\\mu=10$ y $\\sigma=2$"
+#| label: fig-DensidadNormal 
+#| fig-width: 6
+#| fig-height: 4.2
+
+mu=10
+s=2
+x=pretty( c(mu-3.5*s,mu+3.5*s), 500) 
+y=dnorm(x,mu,s) 
+plot(x,y,type='l',col="red",lwd=3)  
+```
+
+
+## Figuras importadas desde archivo
+
+![Escudo institucional](EscudoU.png){#fig-EscudoU width="25%"} 
+
+En la figura -@fig-EscudoU tenemos el escudo de la universidad insertado desde un archivo externo. 
+
+
 
 
 
